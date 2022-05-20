@@ -8,6 +8,3 @@
 //    12-May-2022 change "none" to "" on x.style.display
 //    15-May=2022 remove fShowHelp()
 
-function fClearServerProfilePage() {
-    fClearExtras();
-}

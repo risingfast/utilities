@@ -14,7 +14,6 @@
     <META name="author" content="risingfast">
     <TITLE>Environment</TITLE>
     <LINK rel="stylesheet" type="text/css" href="index.css">
-    <LINK rel="stylesheet" type="text/css" href="environment.css">
     <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
 </HEAD>
 
@@ -36,8 +35,6 @@
 <!--    17-Oct-2021 - fix the title                                                                                 -->
 <!--    11-May-2022 - add <ASIDE3> corner image caption grid area                                                   -->
 <!--    15-May-2022 - add common.js                                                                                 -->
-<!--    17-May-2022 - expand clear function                                                                         -->
-<!--    17-May-2022 - remove inline styles                                                                          -->
 <!--                                                                                                                -->
 <!-- <BODY> region for all content including header and footer .................................................... -->
 
@@ -66,16 +63,16 @@
             <MAIN id="MAIN1">
 
                 <SECTION>
-                    <DIV id="heading-div">
+                    <DIV style="width:80%; margin: auto; max-width:800px; text-align:center;">
                         <H3>Environment Variables</H3>
                     </DIV>
 
 <!-- entry fields and options....................................................................................... -->
 
-                    <DIV id="options-div">
-                            <DIV id ="optionslist-div">
-                                <LABEL for="action">Action:</LABEL>
-                                <SELECT id="action" name="action" onchange="fSetAction()">
+                    <DIV style="width:80%; margin: auto; max-width:800px; text-align:left;">
+                            <DIV>
+                                <LABEL for="action" style="width:100px">Action:</LABEL>
+                                <SELECT id="action" style="margin-left: 52px; margin-bottom:10px" name="action" onchange="fSetAction()">
                                     <OPTION value="Choose" selected>Choose</OPTION>
                                     <OPTION value="ShowAllValues">Show all values</OPTION>
                                     <OPTION value="ShowNonNullsOnly">Non-NULL values only</OPTION>
@@ -83,62 +80,58 @@
                                     <OPTION value="QueryString">Query String only</OPTION>
                                 </SELECT>
                             </DIV>
-                            <DIV id="submit-div">
-                                    <BUTTON id="submitButton" onclick="fGetResults()" disabled>Submit</BUTTON>
+                            <DIV>
+                                    <BUTTON id="submitButton" style="margin:0px 0px 10px 0px" onclick="fGetResults()" disabled>Submit</BUTTON>
                             </DIV>
                     </DIV>
                 </SECTION>
 
 <!-- results area................................................................................................... -->
 
-            <DIV ID="results-div">
-                <TEXTAREA id="results-area" rows="25">
+            <DIV ID="resultsDiv" style="width:80%; margin:auto">
+                <TEXTAREA id="ResultArea" rows="25" style="width:100%; margin:auto; display:none">
                 </TEXTAREA>
             </DIV>
 
 <!-- buttons to show and hide help & internals  .................................................................... -->
 
-            <DIV id="MOREBTTNS">
+            <DIV id="HELP">
+                <BUTTON onclick="fClearPage()">Clear</BUTTON>
                 <BUTTON onclick="fShowHelp()">Help</BUTTON>
-                <BUTTON onclick="fClearEnvironmentPage()">Clear</BUTTON>
             </DIV>
 
 <!-- help text controlled by button ................................................................................ -->
 
-            <DIV id="HELPDIV" class="help">
-                <P>
-                    Choose an action then 'Submit'<BR>
-                    1. Show All Values: show all environment variables.<BR>
-                    2. Non-NULL values only: show only environment variables with non-NULL values.<BR>
-                    3. NULL values only: show only environment variables with non-NULL values<BR>
-                    4. Query String only: show only the query string environment variable value.<BR>
-                    5. Choose 'Clear' to reset the page to original settings
-                </P>
+            <DIV id="HELPTXT">
+                <DIV id="HELPDIV" class="help">
+                    <P>
+                        Choose an action then 'Submit'<BR>
+                        1. Show All Values: show all environment variables.<BR>
+                        2. Non-NULL values only: show only environment variables with non-NULL values.<BR>
+                        3. NULL values only: show only environment variables with non-NULL values<BR>
+                        4. Query String only: show only the query string environment variable value.<BR><BR>
+                        Choose 'Clear' to reset the page to original settings
+                    </P>
+                </DIV>
             </DIV>
 
 <!-- internals controlled by button ................................................................................ -->
 
+                <BR>
                 <DIV id="INTERNALS">
-                    <DETAILS id="internals-details">
+                    <DETAILS>
                         <SUMMARY>
                             Internals
                         </SUMMARY>
                         <P>
                             html file: /var/www.html/environment.html<BR>
                             js file: /var/www.html/environment.js<BR>
-                            js file: /var/www.html/common.js<BR>
                             css file: /var/www.html/css/index.css<BR>
-                            css file: /var/www.html/css/environment.css<BR>
-                            corner image: /var/www/html/cornerImage.png<BR>
-                            background image: /var/www/html/background.jpg<BR>
                             cgi file: /usr/lib/environment.cgi<BR>
                             source code: C<BR>
                         </P>
                     </DETAILS>
                 </DIV>
-
-                <SCRIPT src="environment.js"></SCRIPT>
-                <SCRIPT src="common.js"></SCRIPT>
 
             </MAIN>
 
@@ -147,8 +140,6 @@
             <ASIDE id="ASIDE1">
                     <H3 id=ASIDE1H3>Changes 2021</H3>
                 <UL ID="ASIDE1UL">
-                    <LI class="ASIDE1LI">17-Oct: remove inline styles</LI>
-                    <LI class="ASIDE1LI">17-Oct: expand clear function</LI>
                     <LI class="ASIDE1LI">17-Oct: fix the title</LI>
                     <LI class="ASIDE1LI">16-Oct: add 'choose' action</LI>
                     <LI class="ASIDE1LI">20-Sep: non-CGI results</LI>
@@ -184,6 +175,9 @@
             </FOOTER>
         </DIV>
     </DIV>
+
+    <SCRIPT src="environment.js"></SCRIPT>
+    <SCRIPT src="common.js"></SCRIPT>
 
 </BODY>
 

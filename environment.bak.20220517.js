@@ -14,7 +14,6 @@
 //    11-May-2022 - capitalize helpDiv
 //    12-May-2022 - change "none" to "" on x.style.display
 //    15-May-2022 - remove fShowHelp()
-//    17-May-2022 - expand Clear function()
 //
 
 // globals
@@ -27,7 +26,7 @@ function fSetAction() {
     var sChoice = document.getElementById("action").value;
 
     var s = document.getElementById("submitButton");
-    var r = document.getElementById("results-div");
+    var r = document.getElementById("resultsDiv");
     if (sChoice == "Choose") {
         var s = document.getElementById("submitButton");
         s.disabled = true;
@@ -38,9 +37,9 @@ function fSetAction() {
     }
 }
 
-// function for button to clear page .................................................................................
+// functions for buttons to clear page .................................................................................
 
-function fClearEnvironmentPage() {
+function fClearPage() {
     var x = document.getElementById("HELPDIV");
     x.style.display = "";
 
@@ -50,25 +49,23 @@ function fClearEnvironmentPage() {
     var s = document.getElementById("submitButton");
     s.disabled = true;
 
-    var r = document.getElementById("results-area");
-    r.value = "";
-
-    fClearExtras();
+    var r = document.getElementById("resultsDiv");
+    r.style.display = "";
 }
 
 // function to ajax fetch the environment from the server
 
 async function fGetResults() {
     
-    var r = document.getElementById("results-div");
+    var r = document.getElementById("resultsDiv");
     r.style.display = "block";
     
     let response = await fetch(uri1 + '?' + document.getElementById("action").value);
     if (response.ok) {
         let text = await response.text();
         console.log(text.slice(0, 80));
-        document.getElementById("results-area").style.display="inline-block";
-        document.getElementById("results-area").value=text;
+        document.getElementById("ResultArea").style.display="inline-block";
+        document.getElementById("ResultArea").value=text;
     } else {
         alert("HttpError: " + response.status);
     }

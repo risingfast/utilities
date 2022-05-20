@@ -14,7 +14,6 @@
     <META name="author" content="risingfast">
     <TITLE>Server Profile</TITLE>
     <LINK rel="stylesheet" type="text/css" href="index.css">
-    <LINK rel="stylesheet" type="text/css" href="serverProfile.css">
     <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
 </HEAD>
 
@@ -41,8 +40,6 @@
 <!--   16-Oct-2021 - expand internals                                                                                -->
 <!--   11-May-2022 - add <ASIDE3> for corner image caption                                                           -->
 <!--   15-May-2022 - add script common.js                                                                            -->
-<!--   17-May-2022 - extend clear function                                                                           -->
-<!--   17-May-2022 - remove inline styles                                                                            -->
 <!--                                                                                                                 -->
 <!-- <BODY> region for all content including header and footer ..................................................... -->
 
@@ -71,60 +68,65 @@
             <MAIN ID="MAIN1">
 
                 <SECTION>
-                    <DIV id="heading-div">
+                    <DIV style="width:80%; margin: auto; max-width:800px; text-align:center">
                         <H3>Server Profile</H3>
                     </DIV>
                 </SECTION>
                 
-                <DIV id="results-div">
-                    <SCRIPT>
-                        type="text/javascript"; 
-                        language="JavaScript";
-                        var ServerSysName;
-                        var ServerNodeName;
-                        var ServerRelease;
-                        var ServerVersion;
-                        var ServerMachine;
-                        var ServerDomainName;
-                    </SCRIPT>
+                <SECTION>
+                    <DIV STYLE="width:80%; margin: auto; max-width:800px; text-align:left">
+                        <SCRIPT>
+                            type="text/javascript"; 
+                            language="JavaScript";
+                            var ServerSysName;
+                            var ServerNodeName;
+                            var ServerRelease;
+                            var ServerVersion;
+                            var ServerMachine;
+                            var ServerDomainName;
+                        </SCRIPT>
 
-                <SCRIPT
-                    src="/cgi-bin/serverProfile.cgi">
-                </SCRIPT>
+                        <SCRIPT
+                            src="/cgi-bin/serverProfile.cgi">
+                        </SCRIPT>
 
-                    <SCRIPT>
-                        document.write('The server system name is: ' + ServerSysName);
-                        document.write("\n");
-                        document.write('<br>The server node name is: ' + ServerNodeName);
-                        document.write("\n");
-                        document.write('<br>The server release is: ' + ServerRelease);
-                        document.write("\n");
-                        document.write('<br>The server version is: ' + ServerVersion);
-                        document.write("\n");
-                        document.write('<br>The server machine is: ' + ServerMachine);
-                    </SCRIPT>
-                </DIV>
+                        <SCRIPT>
+                            document.write('The server system name is: ' + ServerSysName);
+                            document.write("\n");
+                            document.write('<br>The server node name is: ' + ServerNodeName);
+                            document.write("\n");
+                            document.write('<br>The server release is: ' + ServerRelease);
+                            document.write("\n");
+                            document.write('<br>The server version is: ' + ServerVersion);
+                            document.write("\n");
+                            document.write('<br>The server machine is: ' + ServerMachine);
+                        </SCRIPT>
+                    </DIV>
+                    <BR>
+                </SECTION>
 
-<!-- buttons to show and hide help and clear help and internals .................................................... -->
+<!-- buttons to show and hide help ................................................................................. -->
 
-                <DIV id="MOREBTTNS">
+                <DIV id="HELP">
                     <BUTTON onclick="fShowHelp()">Help</BUTTON>
-                    <BUTTON onclick="fClearServerProfilePage()">Clear</BUTTON>
                     <BR>
                 </DIV>
 
 <!-- help text controlled by button ................................................................................ -->
 
-                <DIV id="HELPDIV" class="help">
-                    <P>
-                        There is no help available for this page 'serverProfile.html'<BR>
-                    </P>
+                <DIV id="HELPTXT">
+                    <DIV id="HELPDIV" class="help">
+                        <P>
+                            There is no help applicable to 'serverProfile'<BR>
+                        </P>
+                    </DIV>
                 </DIV>
 
 <!-- internals text ................................................................................................ -->
 
+                <BR>
                 <DIV id="INTERNALS">
-                    <DETAILS id="internals-details">
+                    <DETAILS>
                         <SUMMARY>
                             Internals
                         </SUMMARY>
@@ -150,7 +152,6 @@
             <ASIDE ID="ASIDE1">
                     <H3 ID=ASIDE1H3>Changes 2021-22</H3>
                 <UL ID="ASIDE1UL">
-                    <LI CLASS="ASIDE1LI">17-May: remove inline styles</LI>
                     <LI CLASS="ASIDE1LI">11-May: add corner image caption</LI>
                     <LI CLASS="ASIDE1LI">16-Oct: expand internals</LI>
                     <LI CLASS="ASIDE1LI">09-Oct: create serverProfile.js</LI>
