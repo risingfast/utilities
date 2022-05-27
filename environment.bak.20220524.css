@@ -5,7 +5,6 @@
 /* Templates:                                                                                                        */
 /* Log:                                                                                                              */
 /*    17-May-2022 - start                                                                                            */
-/*    24-May-2022 - change marging spacing from 5px to 10px                                                          */
 /*                                                                                                                   */
 
 #heading-div{
@@ -17,8 +16,8 @@
 
 #submit-div {
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #options-div {
@@ -26,19 +25,19 @@
     margin: auto;
     max-width:800px;
     text-align: left;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #optionslist-div {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 #results-div {
     margin: auto;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     width: 80%;
 }
 
