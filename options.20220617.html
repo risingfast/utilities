@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+
+<!-- <HEAD> region for meta tags ................................................................................... -->
+
+<HTML lang="en">
+
+<HEAD>
+    <META charset="UTF-8">
+    <META name="viewport" content="width=device-width, initial-scale=1.0">
+    <META http-equiv="X-UA-Compatible" content="ie=edge">
+    <META name="description" content="options for gjarman2020.com website">
+    <META name="keywords" content="html, css, cgi">
+    <META name="generator" content="vim">
+    <META name="author" content="gjarman2020">
+    <TITLE>Template</TITLE>
+    <LINK rel="stylesheet" type="text/css" href="common.css">
+    <LINK rel="stylesheet" type="text/css" href="options.css">
+    <LINK rel="shortcut icon" href="letterRF.png" type="image/png">
+</HEAD>
+
+<!-- Comments region ............................................................................................... -->
+<!--                                                                                                                 -->
+<!-- options.html -  options for gjarman2020.com website pages                                                       -->
+<!-- References:                                                                                                     -->
+<!--      https://www.youtube.com/watch?v=qTGbWfEEnKI                                                                -->
+<!--          Easily Structure your Layout with CSS Grid's 'grid-template-areas'                                     -->
+<!-- Templates:                                                                                                      -->
+<!--      none                                                                                                       -->
+<!-- Log:                                                                                                            -->
+<!--    16-Sep-2021 - start                                                                                          -->
+<!--                                                                                                                 -->
+<!-- <body> region for all content including header and footer ..................................................... -->
+
+<body onload="fSetCornerImage()">
+    <div id="WRAPPER1">
+        <div id="WRAPPER2">
+            <header id="HEADER1">
+                <div id="HEADER1DIV">
+                     <h2>gjarman2020.com</h2>
+                </div>
+            </header>
+            <nav id="NAV1">
+                    <H3 id="NAV1H3">Links</h3>
+                <ul ID="NAV1UL">
+                    <li class="NAV1LI"><A class="active" href="http://gjarman2020.com">Home</A></li>
+                    <li class="NAV1LI"><A href="http://gjarman2020.com/d_ajaxFetch.html">Latest</A></Li>
+                    <li class="NAV1LI"><A href="http://gjarman2020.com/d_template.html">Template</A></li>
+                    <li class="NAV1LI"><A href="http://gjarman2020.com/email.html">Email</A></li>
+                    <li class="NAV1LI"><A href="http://gjarman2020.com/about.html">About</A></li>
+                </ul>
+            </nav>
+
+<!-- <main> region for main content and background image ........................................................... -->
+
+            <main id="MAIN1">
+
+                <div style="width:80%; margin: auto; max-width:800px; text-align:center;">
+                    <h2>Options</h2>
+                    <p>Option settings for gjarman2020.com</p>
+                </div>
+
+<!-- corner-image policy div ............................................................................................ -->
+
+                <div id="cornerimagepolicy-div">
+                    <label id="cornerimagepolicy-label" for="cornerimagepolicy-select">Corner Image Policy:</label>
+                        <select id="cornerimagepolicy-select" onchange="fSetCornerImagePolicy()">
+                            <option value="choose" selected>Choose</option>
+                            <option value="lock image">Lock image</option>
+                            <option value="unlock image">Unlock image</option>
+                        </select>
+                </div>
+
+<!-- corner-image choice div ............................................................................................ -->
+
+                <div id="cornerimagechoice-div">
+                    <label id="cornerimagechoice-label" for="cornerimagechoice-select">Corner Image Choice:</label>
+                        <select id="cornerimagechoice-select" onchange="fSetCornerImageChoice()">
+                            <option value="choose" selected>Choose</option>
+                            <option value="randomize image">Randomize image</option>
+                            <option value="matilda cook in Melbourne">Matilda Cook in Melbourne</option>
+                        </select>
+                </div>
+
+                <div style="width:80%; margin: auto; max-width:800px;">
+                    <h3>Images</h3>
+                        <Ol id="OL1">
+                            <li>Choose Corner Image</li>
+                            <li>Lock Corner Image</li>
+                            <li>Change Background Image</li>
+                        </ol>
+                </div>
+
+                <div style="width:80%; margin: auto; max-width:800px;">
+                    <h3>Privacy</h3>
+                        <ol id="OL2">
+                            <li>Show Current User</li>
+                            <li>Show User IP Address</li>
+                            <li>Show Session Time</li>
+                            <li>Show Access Log</li>
+                        </ol>
+                </div>
+
+                <div style="width:80%; margin: auto; max-width:800px;">
+                    <h3>Colors</h3>
+                        <ol id="OL2">
+                            <li>Change Color Schem</li>
+                        </ol>
+                </div>
+
+
+<!-- buttons to show and hide help ................................................................................. -->
+
+                <div id="MOREBTTNS">
+                    <button onclick="fShowHelp()">Help</button>
+                    <button onclick="fClearOptionsFields()">Clear</button>
+                    <br>
+                </div>
+
+<!-- help text controlled by button ................................................................................ -->
+
+                <div id="HELPDIV">
+                    <p>
+                    There is no help available for this page 'options.html'<br>
+                    </p>
+                </div>
+
+<!-- internals text ................................................................................................ -->
+
+               <div id="INTERNALS">
+                    <details id="internals-details">
+                        <summary>
+                            Internals
+                        </summary>
+                        <p>
+                            html file: /var/www.html/options.html<br>
+                            css file: /var/www/html/css/options.css<br>
+                            css file: /var/www/html/css/common.css<br>
+                            js file: /var/www/html/css/options.js<br>
+                            js file: /var/www/html/css/common.js<br>
+                            cgi directory: /usr/lib/cgi-bin/<br>
+                            corner image: /var/www/html/cornerImage.png<br>
+                            background image: /var/www/html/background.jpg<br>
+                            CGI source code: c<br>
+                        </p>
+                    </details>
+               </div>
+
+                <script src="options.js"></script>
+                <script src="common.js"></script>
+
+            </main>
+
+<!-- <aside1> region for change log ................................................................................ -->
+
+            <aside id="ASIDE1">
+                    <h3 id=ASIDE1H3>Changes 2021-22</h3>
+                <ul ID="ASIDE1UL">
+                    <li class="ASIDE1LI">16-Jun: start<n/li>
+                </ul>
+            </aside>
+
+<!-- <aside2> region for corner image .............................................................................. -->
+
+            <aside id="ASIDE2">
+                <div id="ASIDE2DIV">
+                     <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
+                </div>
+            </aside>
+
+<!-- <aside3> region for corner image caption ...................................................................... -->
+
+            <aside id="ASIDE3">
+                <div id="ASIDE3DIV">
+                    <p id="ASIDE3-PARA">
+                    Matilda Cook in Magpies uniform before her next netball game 2022
+                    </p>
+                </div>
+            </aside>
+
+<!-- <footer> region for page footer ............................................................................... -->
+
+            <footer id="FOOTER1">
+                <div id="FOOTER1DIV">
+                    <p>&copy; 2020 gjarman2020.com ... /var/www/html/options.html</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
+
