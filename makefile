@@ -20,7 +20,7 @@ SQL1FLAGS=-I/usr/include/mysql
 # SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions
+all: environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog
 
 environment: environment.c
 	$(CC) $(CFLAGS) $@ $^ $(SQL2FLAGS)
@@ -34,5 +34,14 @@ utilitiesFetchOptions: utilitiesFetchOptions.c ../shared/rf50.c ../shared/cs50.c
 utilitiesUpdateOptions: utilitiesUpdateOptions.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
 
+saveCornerImageNumber: saveCornerImageNumber.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
+fetchCornerImageNumber: fetchCornerImageNumber.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
+utilitiesFetchAccessLog: utilitiesFetchAccessLog.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
 clean:
-	rm -f *.o *.s *.i environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions
+	rm -f *.o *.s *.i environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog

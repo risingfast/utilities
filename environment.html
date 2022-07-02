@@ -20,7 +20,7 @@
 
 <!-- Comments region .............................................................................................. -->
 <!--                                                                                                                -->
-<!-- numVars.html -  grid layout of server environment                                                              -->
+<!-- environment.html -  grid layout of server environment                                                          -->
 <!-- References:                                                                                                    -->
 <!--      https://www.youtube.com/watch?v=qTGbWfEEnKI                                                               -->
 <!--          Easily Structure your Layout with CSS Grid's 'grid-template-areas'                                    -->
@@ -40,10 +40,11 @@
 <!--    17-May-2022 - remove inline styles                                                                          -->
 <!--    22-May-2022 - lowercase html tags                                                                           -->
 <!--    01-Jun-2022 - add cornerimage rotation                                                                      -->
+<!--    26-Jun-2022 - add footer options                                                                            -->
 <!--                                                                                                                -->
 <!-- <body> region for all content including header and footer .................................................... -->
 
-<body onload="fcSetCornerImage()">
+<body onload="fcSetCornerImage(), fcSetFooterOptions()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -60,6 +61,7 @@
                     <li class="NAV1LI"><a href="http://www.risingfast.com/d_template.html">Template</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/email.html">Email</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
                 </ul>
             </nav>
 
@@ -180,6 +182,12 @@
 <!-- <FOOTER> region for page footer ............................................................................... -->
 
             <footer id="FOOTER1">
+                <div id="FOOTER1OPTIONS-DIV">
+                    Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
+                    Background Image: <label id="footeroptionsbackgroundimage"></label>;
+                    Show Current User: <label id="footeroptionsshowuser"></label>;
+                    Show Access Log: <label id="footeroptionsshowlog"></label>
+                </div>
                 <div id="FOOTER1DIV">
                     <p>&copy; 2020 www.risingfast.com ... /var/www/html/environment.html</p>
                 </div>

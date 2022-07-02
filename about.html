@@ -48,13 +48,13 @@
 <!--    16-May-2022 remove extra <BR> tags                                                                           -->
 <!--    23-May-2022 lowercase html tags                                                                              -->
 <!--    31-May-2022 add cornerimage rotation                                                                         -->
-<!--    23-Jun-2022 add add options footer                                                                         -->
+<!--    23-Jun-2022 add add options footer                                                                           -->
 <!--                                                                                                                 -->
 <!-- ............................................................................................................... -->
 
 <!-- <body> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetRandomCornerImage(), fcSetFooterOptions()">
+<body onload="fcSetCornerImage(), fcSetFooterOptions()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -70,6 +70,7 @@
                     <li class="NAV1LI"><a href="http://www.risingfast.com/d_template.html">Template</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/email.html">Email</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
                 </ul>
             </nav>
 
@@ -173,7 +174,6 @@
             <footer id="FOOTER1">
                 <div id="FOOTER1OPTIONS-DIV">
                     Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
-                    Current Image Number: <label id="footeroptionscinumber"></label>;
                     Background Image: <label id="footeroptionsbackgroundimage"></label>;
                     Show Current User: <label id="footeroptionsshowuser"></label>;
                     Show Access Log: <label id="footeroptionsshowlog"></label>

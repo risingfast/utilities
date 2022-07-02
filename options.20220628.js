@@ -6,15 +6,11 @@
 //    18-Jun-2022 move fSetCornerImage() to common.js
 //    18-Jun-2022 add fSetCornerImageChoice()
 //    23-Jun-2022 rename fSetCornerImageChoice() to fSetCornerImageBehaviourButton()
-//    29-Jun-2022 expand fSetShowAccessLog()
-//    01-Jul-2022 add fSetShowAccessLog() to fSetOptions()
 
 // define uti's for cgi database fetches and updates
 
-const uri01 = "http://www.risingfast.com/cgi-bin/utilitiesUpdateOptions.cgi";
-const uri02 = "http://www.risingfast.com/cgi-bin/utilitiesFetchOptions.cgi";
-const uri03 = "http://www.risingfast.com/cgi-bin/utilitiesFetchAccessLog.cgi";
-// const uri03 = "http://www.risingfast.com/cgi-bin/showText.cgi";
+const uri103 = "http://www.risingfast.com/cgi-bin/utilitiesUpdateOptions.cgi";
+const uri104 = "http://www.risingfast.com/cgi-bin/utilitiesFetchOptions.cgi";
 
 function fSetCornerImageBehaviourButton() {
     let cic = document.getElementById("cornerimagechoice-select");
@@ -40,7 +36,7 @@ function fSetCornerImageBehaviourButton() {
 // function to ajax fetch the current option settings and set them on the options page
 
 async function fSetOptions() {
-    let response = await fetch(uri02);
+    let response = await fetch(uri104);
     if (response.ok) {
         var options= [];
         let text = await response.text();
@@ -67,7 +63,6 @@ async function fSetOptions() {
     document.getElementById("showaccesslog-select").value = options[3][2];
     fcSetFooterOptions();
     fSetCornerImageBehaviourButton();
-    fSetShowAccessLog();                    // show the access log if the user saved this setting as 'Yes'
     return;
 }
 
@@ -80,7 +75,7 @@ async function fSaveOptions() {
     let sShowUser = encodeURIComponent(document.getElementById("showuser-select").value);
     let sShowLog = encodeURIComponent(document.getElementById("showaccesslog-select").value);
 
-    let sRequest = uri01 + '?' + 'behaviour=' + sBehaviour +
+    let sRequest = uri103 + '?' + 'behaviour=' + sBehaviour +
                             '&' + 'background=' + sBackground +
                             '&' + 'showuser=' + sShowUser +
                             '&' + 'showlog=' + sShowLog;
@@ -98,26 +93,10 @@ async function fSaveOptions() {
 }
 
 async function fSetBackgroundImageChoice() {
-    let sBackgroundImageChoice = document.getElementById("backgroundimagechoice-select").value + ".jpg";
-        document.getElementById("MAIN1").style.backgroundImage = "url(" + sBackgroundImageChoice + ")";
-    }
+}
 
 async function fSetShowUserChoice() {
 }
 
-// function to ajax consolidate the Apache2 access logs and fetch text from the server and paste it to a textarea
-
 async function fSetShowAccessLog() {
-    if (document.getElementById("showaccesslog-select").value === "Yes") {
-        document.getElementById("accesslog-textarea").style.display = "block";
-        let response = await fetch(uri03);
-        if (response.ok) {
-            let text = await response.text();
-            document.getElementById("accesslog-textarea").value=text;
-        } else {
-            alert("HttpError: " + response.status);
-        }
-    } else {
-        document.getElementById("accesslog-textarea").style.display = "none";
-    }
 }

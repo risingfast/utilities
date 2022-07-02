@@ -42,7 +42,6 @@ char caShowUser[MAXLEN] = {'\0'};
 char caShowLog[MAXLEN] = {'\0'};
 char caStringBuf[MAXLEN] = {'\0'};
 char *sTemp = NULL;
-int  iNumber = 0;
 char caDelimiter[] = "&";
 
 int main(void) {
@@ -70,7 +69,7 @@ int main(void) {
 
 // check for a NULL query string -------------------------------------------------------------------------------------=
 
-//    setenv("QUERY_STRING", "behaviour=Randomized&number=5&background=Test%20Flowers&showuser=Suppressed&&showlog=No", 1);
+//    setenv("QUERY_STRING", "behaviour=Randomized&background=Test%20Flowers&showuser=Suppressed&&showlog=No", 1);
 
     sParam = getenv("QUERY_STRING");
 
@@ -81,8 +80,8 @@ int main(void) {
         return 1;
     }
 
-    printf("QUERY_STRING: %s", getenv("QUERY_STRING"));
-    printf("\n\n");
+//    printf("QUERY_STRING: %s", getenv("QUERY_STRING"));
+//    printf("\n\n");
 
 //  get the content from QUERY_STRING and tokenize based on '&' character----------------------------------------------
 
@@ -90,9 +89,6 @@ int main(void) {
     sscanf(sTemp, "behaviour=%[^\n]s", caStringBuf);
     strcpy(caBehaviour, fUrlDecode(caStringBuf));
 
-    sTemp = strtok(NULL, caDelimiter);
-    sscanf(sTemp, "number=%d", &iNumber);
-    
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "background=%[^\n]s", caStringBuf);
     strcpy(caBackground, fUrlDecode(caStringBuf));
@@ -105,7 +101,7 @@ int main(void) {
     sscanf(sTemp, "showlog=%[^\n]s", caStringBuf);
     strcpy(caShowLog, fUrlDecode(caStringBuf));
 
-    printf("Behavior=%s, Number=%d, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, iNumber, caBackground, caShowUser, caShowLog);
+//    printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);
 
 // test for an empty QUERY_STRING -------------------------------------------------------------------------------------
 
@@ -122,23 +118,7 @@ int main(void) {
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Corner Image Choice';", caBehaviour);
 
-    printf("SQL: %s\n\n", caSQL);
-
-    if(mysql_query(conn, caSQL) != 0)
-    {
-        printf("\n");
-        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
-        printf("\n\n");
-        return -1;
-    }
-
-// set a SQL query and update corner image number ---------------------------------------------------------------------
-
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
-                   "SET `Option Setting` = %d "
-                   "WHERE `Option Name` = 'Corner Image Number';", iNumber);
-
-    printf("SQL: %s\n\n", caSQL);
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {
@@ -154,7 +134,7 @@ int main(void) {
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Background Choice';", caBackground);
 
-    printf("SQL: %s\n\n", caSQL);
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {
@@ -170,7 +150,7 @@ int main(void) {
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Show Current User';", caShowUser);
 
-    printf("SQL: %s\n\n", caSQL);
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {
@@ -186,7 +166,7 @@ int main(void) {
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Show Access Log';", caShowLog);
 
-    printf("SQL: %s\n\n", caSQL);
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {

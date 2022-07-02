@@ -31,8 +31,6 @@
 <!--    18-Sep-2021 - add options                                                                                    -->
 <!--    23-Jun-2022 - add options to step through corner images                                                      -->
 <!--    26-Jun-2022 - set corner image behaviour                                                                     -->
-<!--    01-Jul-2022 - add a help entry on access log updates                                                         -->
-<!--    01-Jul-2022 - trigger access log on page load/refresh                                                        -->
 <!--                                                                                                                 -->
 <!-- <body> region for all content including header and footer ..................................................... -->
 
@@ -172,8 +170,8 @@
                 <div id="showaccesslog-div">
                     <label id="showaccesslog-label" for="showaccesslog-select">Show Access Log</label>
                         <select id="showaccesslog-select" onchange="fSetShowAccessLog()">
-                            <option value="No">No</option>
                             <option value="Yes">Yes</option>
+                            <option value="No">No</option>
                         </select>
                 </div>
 
@@ -184,12 +182,6 @@
                     <button onclick="fcShowHelp()">Help</button>
                     <button onclick="fClearOptionsFields()">Clear</button>
                     <br>
-                </div>
-
-<!-- accesslog div ................................................................................................. -->
-
-                <div id="accesslog-div">
-                    <textarea id="accesslog-textarea" rows="20"></textarea>
                 </div>
 
 <!-- help text controlled by button ................................................................................ -->
@@ -204,7 +196,6 @@
                     the corner image behaviour option determines if and how the corner image changes<br>
                     options set on this page are visible in the footer region of every page<br>
                     options can only be set and changed on this page
-                    access log entries are updated every minute in the background and not in real time
                     </p>
                 </div>
 
@@ -239,7 +230,7 @@
             <aside id="ASIDE1">
                     <h3 id=ASIDE1H3>Changes 2021-22</h3>
                 <ul ID="ASIDE1UL">
-                    <li class="ASIDE1LI">01-Jul: implement access log<n/li>
+                    <li class="ASIDE1LI">26-Jun: set corner image behaviour<n/li>
                     <li class="ASIDE1LI">23-Jun: add image buttons<n/li>
                     <li class="ASIDE1LI">22-Jun: add image modes<n/li>
                     <li class="ASIDE1LI">22-Jun: add options footer<n/li>

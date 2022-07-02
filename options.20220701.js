@@ -7,7 +7,6 @@
 //    18-Jun-2022 add fSetCornerImageChoice()
 //    23-Jun-2022 rename fSetCornerImageChoice() to fSetCornerImageBehaviourButton()
 //    29-Jun-2022 expand fSetShowAccessLog()
-//    01-Jul-2022 add fSetShowAccessLog() to fSetOptions()
 
 // define uti's for cgi database fetches and updates
 
@@ -67,7 +66,6 @@ async function fSetOptions() {
     document.getElementById("showaccesslog-select").value = options[3][2];
     fcSetFooterOptions();
     fSetCornerImageBehaviourButton();
-    fSetShowAccessLog();                    // show the access log if the user saved this setting as 'Yes'
     return;
 }
 
