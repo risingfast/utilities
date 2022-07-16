@@ -13,15 +13,14 @@
 //    16-Oct-2021 - add logic for 'Choose' option and clear page
 //    11-May-2022 - capitalize helpDiv
 //    12-May-2022 - change "none" to "" on x.style.display
-//    15-May-2022 - remove fShowHelp()
 //    17-May-2022 - expand Clear function()
 //    01-Jun-2022 - add cornerimage rotation()
+//    18-Jun-2022 - move fSetCornerImage() to common.js()
 //
 
 // globals
 
 const uri1 = "http://www.risingfast.com/cgi-bin/environment.cgi";
-const uri2 = "http://www.risingfast.com/cgi-bin/setCornerImage.cgi";
 
 // function to set document model values to match action chosen by the user ............................................
 
@@ -55,7 +54,7 @@ function fClearEnvironmentPage() {
     var r = document.getElementById("results-area");
     r.value = "";
 
-    fClearExtras();
+    fcClearExtras();
 }
 
 // function to ajax fetch the environment from the server
@@ -71,23 +70,6 @@ async function fGetResults() {
         console.log(text.slice(0, 80));
         document.getElementById("results-area").style.display="inline-block";
         document.getElementById("results-area").value=text;
-    } else {
-        alert("HttpError: " + response.status);
-    }
-}
-
-// function to ajax fetch the current corner image and captiona
-
-async function fSetCornerImage() {
-    let response = await fetch(uri2);
-    if (response.ok) {
-        let text = await response.text();
-        let array = text.split("\n");
-        array.pop();                      // remove the last element (empty element) created by the split("\n")
-        let intRecords = array.length/3;
-        let intRecordSelected = Math.trunc(Math.random() * intRecords);
-        document.getElementById("ASIDE2IMG").src=array[intRecordSelected * 3]
-        document.getElementById("ASIDE3-PARA").innerHTML=array[(intRecordSelected * 3) + 1];
     } else {
         alert("HttpError: " + response.status);
     }
