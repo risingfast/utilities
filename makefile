@@ -15,12 +15,12 @@
 # Variables
 
 CC=gcc
-CFLAGS=-g -o
+CFLAGS=-Wall -g -o
 SQL1FLAGS=-I/usr/include/mysql
 # SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog
+all: environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog authenticateUser
 
 environment: environment.c
 	$(CC) $(CFLAGS) $@ $^ $(SQL2FLAGS)
@@ -43,5 +43,8 @@ fetchCornerImageNumber: fetchCornerImageNumber.c ../shared/rf50.c ../shared/cs50
 utilitiesFetchAccessLog: utilitiesFetchAccessLog.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
 
+authenticateUser: authenticateUser.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
+
 clean:
-	rm -f *.o *.s *.i environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog
+	rm -f *.o *.s *.i environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog authenticateUser
