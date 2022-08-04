@@ -40,7 +40,6 @@ char caDelimiter[] = "&";
 
 int main(void) {
 
-    int i;
     char caSQL[SQL_LEN] = {'\0'};
 
 // print the html content type and <head> block -----------------------------------------------------------------------

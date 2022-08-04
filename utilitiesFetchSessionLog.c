@@ -1,10 +1,10 @@
-/*  utilitiesFetchOptions.c - CGI to fetch options from mySQL
+/*  utilitiesFetchSessionLog.c - CGI to fetch the web session log
  *  Author: Geoffrey Jarman
- *  Started: 20-Jan-2022
+ *  Started: 24-Jul-2022
  *  References:
  *      http://www6.uniovi.es/cscene/topics/web/cs2-12.xml.html
  *  Log:
- *      04-Jan-2022 copied from bookInquiry2.c
+ *      24-Jul-2022 - started. by copying from bookCharacters.c 
  *  Enhancements:
 */
 
@@ -17,34 +17,30 @@
 #include "../shared/rf50.h"
 
 #define SQL_LEN 5000
-#define HDG_LEN 1000
 
 #define MAXLEN 1024
 
 // global declarations
 
-char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address 
-// char *sgServer = "35.188.123.150";                                                             //mysqlServer GCP IP address
-char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
-//char *sgUsername = "root";                                                                 // mysqlSerer GCP logon username
+char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
+char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
 char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
 MYSQL_ROW row;
+MYSQL_FIELD *fields;
 
-char caText[MAXLEN] = {'\0'};
-char caTopic[MAXLEN] = {'\0'};
-char *sTopic = NULL;
-char caFilterTemp[MAXLEN] = {'\0'};
-char caFilter[MAXLEN + 2] = {'\0'};
-char *sFilter = NULL;
+int  iTitleID = 0;
 char *sParams = NULL;
 char *sSubstring = NULL;
+char *sFilter =  NULL;
 char caDelimiter[] = "&";
+char caFilterTemp[MAXLEN] = {'\0'};
+char caFilter[MAXLEN + 2] = {'\0'};
 
-void fPrintResult(char *, char *, char *);
+void fPrintResult(char *);
 
 int main(void) {
 
@@ -54,7 +50,7 @@ int main(void) {
 
     printf("Content-type: text/html\n\n");
 
-// Initialize a connection and connect to the database$$
+// Initialize a connection and connect to the database ----------------------------------------------------------------
 
     conn = mysql_init(NULL);
 
@@ -68,15 +64,20 @@ int main(void) {
         return  EXIT_FAILURE;
     }
 
-    sprintf(caSQL, "SELECT WO.`Option ID` as 'ID' "
-                   ", WO.`Option Name` as 'Name' "
-                   ", WO.`Option Setting` as 'Setting' "
-                   "FROM risingfast.`Web Options` WO ");
-    fPrintResult(sTopic, sFilter, caSQL);
+    sprintf(caSQL, "SELECT WS.`Session ID`, "
+                    "       WU.`User Short Name`, "
+                    "       WU.`User Full Name`, "
+                    "       WS.`Session Datetime` "
+                    " FROM risingfast.`Web Sessions` WS "
+                    " LEFT JOIN risingfast.`Web Users` WU ON WS.`User ID` = WU.`User ID` "
+                    " ORDER BY WS.`Session ID` DESC");
+
+    fPrintResult(caSQL);
+    
     return 0;
 }
 
-void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
+void fPrintResult(char *caSQL)
 {
     int iColCount = 0;
 
@@ -103,36 +104,41 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
 // fetch the number of fields in the result
     
     iColCount = mysql_num_fields(res);
+    fields = mysql_fetch_fields(res);
     
     mysql_data_seek(res, 0);
     
+// print the column headings
+
+    for(int i = 0; i < iColCount; i++)
+    {
+        if (i - iColCount + 1 == 0) {
+            printf("             %s", fields[i].name);
+        } else {
+            printf("%s  ", fields[i].name);
+        }
+    }
+    printf("\n");
+
 // print each row of results
 
-     while((row = mysql_fetch_row(res)) != NULL)
+    while((row = mysql_fetch_row(res)) != NULL)
     {
-        for (int i = 0; i < iColCount; i++)
+        for(int i = 0; i < iColCount; i++)
         {
-            if(i == 0)
-            {
-                printf("%4s,", row[i]);
-            }
-            else if (i == iColCount - 1)
-            {
-                if (row[i] != NULL) {
-                    printf("%s", row[i]);
-                } else {
-                    ;
-                }
-            }
-            else {
-                if (row[i] != NULL) {
-                    printf("%s,", row[i]);
-                } else {
-                    ;
-                }
+            if (i == 0) {
+                printf("%-10s  ", row[i]);
+            } else if (i == 1) {
+                printf("%-15s  ", row[i]);
+            } else if (i == 2) {
+                printf("%-22s       ", row[i]);
+            } else if (i - iColCount + 1 == 0) {
+                printf("%s (GMT - 5)", row[i]);
+                printf("\n");
+            } else {
+                printf("%s ", row[i]);
             }
         }
-        printf("\n");
     }
 
     mysql_free_result(res);

@@ -7,12 +7,15 @@
 //    18-Jun-2022 add fSetCornerImageChoice()
 //    23-Jun-2022 rename fSetCornerImageChoice() to fSetCornerImageBehaviourButton()
 //    29-Jun-2022 expand fSetShowAccessLog()
+//    01-Jul-2022 add fSetShowAccessLog() to fSetOptions()
 
 // define uti's for cgi database fetches and updates
 
 const uri01 = "http://www.risingfast.com/cgi-bin/utilitiesUpdateOptions.cgi";
 const uri02 = "http://www.risingfast.com/cgi-bin/utilitiesFetchOptions.cgi";
 const uri03 = "http://www.risingfast.com/cgi-bin/utilitiesFetchAccessLog.cgi";
+const uri04 = "http://www.risingfast.com/cgi-bin/utilitiesFetchSessionLog.cgi";
+
 // const uri03 = "http://www.risingfast.com/cgi-bin/showText.cgi";
 
 function fSetCornerImageBehaviourButton() {
@@ -66,6 +69,7 @@ async function fSetOptions() {
     document.getElementById("showaccesslog-select").value = options[3][2];
     fcSetFooterOptions();
     fSetCornerImageBehaviourButton();
+    fSetShowAccessLog();                    // show the access log if the user saved this setting as 'Yes'
     return;
 }
 
@@ -107,7 +111,7 @@ async function fSetShowUserChoice() {
 
 async function fSetShowAccessLog() {
     if (document.getElementById("showaccesslog-select").value === "Yes") {
-        document.getElementById("accesslog-textarea").style.display = "block";
+        document.getElementById("accesslog-div").style.display = "block";
         let response = await fetch(uri03);
         if (response.ok) {
             let text = await response.text();
@@ -116,6 +120,23 @@ async function fSetShowAccessLog() {
             alert("HttpError: " + response.status);
         }
     } else {
-        document.getElementById("accesslog-textarea").style.display = "none";
+        document.getElementById("accesslog-div").style.display = "none";
+    }
+}
+
+// function to show the session log from mySQL.risingfast.sessions
+
+async function fSetShowSessionLog() {
+    if (document.getElementById("showsessionlog-select").value === "Yes") {
+        document.getElementById("sessionlog-div").style.display = "block";
+        let response = await fetch(uri04);
+        if (response.ok) {
+            let text = await response.text();
+            document.getElementById("sessionlog-textarea").value=text;
+        } else {
+            alert("HttpError: " + response.status);
+        }
+    } else {
+        document.getElementById("sessionlog-div").style.display = "none";
     }
 }

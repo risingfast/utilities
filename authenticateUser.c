@@ -23,6 +23,7 @@
 //      17-Jul-2022 add database check for a valid user and password
 //      18-Jul-2022 add session table insert
 //      18-Jul-2022 add cookie UUID to session record
+//      29-Jul-2022 fix bug inserting new session record if no value user authenticated
 //  Enhancements (0):
 //
 
@@ -40,7 +41,6 @@
 #define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                         // size of formatted characer UUID
 #define MAXLEN 1024
 #define SQL_LEN 5000                                                      // max length of SQL query
-
 // global declarations
 
 char *sgServer = "192.168.0.13";                                        //mysqlServer LCL IP address
@@ -67,6 +67,7 @@ int main(void) {
     uuid_t myUuid;                                               // raw or binary UUID type variable
 
 //  setenv("QUERY_STRING", "Username=scook&Password=Sssp4atta", 1);
+//  setenv("QUERY_STRING", "Username=gjarman&Password=Mpa4egu9", 1);
 
 // check for an existing oookie named 'gj2020InstanceID' --------------------------------------------------------------
 
@@ -118,48 +119,48 @@ int main(void) {
             printf("\n\n");
             return -1;
         }
-    
+    }
+
     // store the result of the query
-    
-        res = mysql_store_result(conn);
-        if(res == NULL)
-        {
-            printf("%s() -- no results returned", __func__);
-            printf("\n");
-    
-            mysql_free_result(res);
-            return -1;
-        }
-    
-        mysql_data_seek(res, 0);
-    
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return -1;
+    }
+
+    mysql_data_seek(res, 0);
+
     // fetch the password for the user from the database and validate against the password input
-    
-        if((row = mysql_fetch_row(res)) != NULL)
-        {
-            if (row[1] == NULL) {
-                bUserIsAuthenticated = false;
-            }
-            else if (strcmp(row[1], caPassword) == 0) {
-                bUserIsAuthenticated = true;
-                iUserID = atoi(row[0]);
-            } else {
-                bUserIsAuthenticated = false;
-            }
+
+    if((row = mysql_fetch_row(res)) != NULL)
+    {
+        if (row[1] == NULL) {
+            bUserIsAuthenticated = false;
         }
+        else if (strcmp(row[1], caPassword) == 0) {
+            bUserIsAuthenticated = true;
+            iUserID = atoi(row[0]);
+        } else {
+            bUserIsAuthenticated = false;
+        }
+    }
     
     //  create a new UUID if user is authenticated and the cookie gj2020InstanceID  does not exist ------------------------
 
     if ((bCookieExists == false) && (bUserIsAuthenticated == true)) {
         uuid_generate_random(myUuid);
         uuid_unparse(myUuid, caCookieVal);
-    }
 
-    //  create a session record in web sessions table
-    
+    //  create a session record in web sessions table  with the new UUID
+
         sprintf(caSQL2, "INSERT INTO risingfast.`Web Sessions` "
-                       "(`User ID`, `Session Cookie`) VALUES (%d, '%s')", iUserID, caCookieVal);
-    
+                        "(`User ID`, `Session Cookie`) VALUES (%d, '%s')", iUserID, caCookieVal);
+
         if(mysql_query(conn, caSQL2) != 0)
         {
             printf("\n");

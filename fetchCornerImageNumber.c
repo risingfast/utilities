@@ -47,8 +47,6 @@ void fPrintResult(char *, char *, char *);
 
 int main(void) {
 
-    int i;
-    char caOrder[] = {'A', 'S', 'C', '\0'};
     char caSQL[SQL_LEN] = {'\0'};
 
 // print the html content type and <head> block -----------------------------------------------------------------------
@@ -80,8 +78,6 @@ int main(void) {
 
 void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
 {
-    int iColCount = 0;
-
     if(mysql_query(conn, caSQL) != 0)
     {
         printf("\n");
@@ -103,8 +99,6 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
     }
     
 // fetch the number of fields in the result
-    
-    iColCount = mysql_num_fields(res);
     
     mysql_data_seek(res, 0);
     

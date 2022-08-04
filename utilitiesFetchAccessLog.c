@@ -20,7 +20,6 @@ int main() {
     FILE *f;
     f = fopen (DATAFILE, "r+");
     char cyText[MAXLEN];
-    int i = 0;
 
 // print the html content type and <head> block
 

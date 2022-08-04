@@ -79,6 +79,7 @@
     margin-bottom: 10px;
     max-width: 800px;
     text-align: left;
+    display: none               /* suppress div until method can be found */
 }
 
 #showuser-label {
@@ -95,7 +96,54 @@
     text-align: left;
 }
 
+#showsessionlog-div {
+    width: 80%;
+    margin: auto; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 800px;
+    text-align: left;
+}
+
 #showaccesslog-label {
     display: inline-block;
     width:180px;
 }
+
+#showsessionlog-label {
+    display: inline-block;
+    width:180px;
+}
+
+#accesslog-div {
+    width: 80%;
+    margin: auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    max-width: 800px;
+    display: none;
+}
+
+#sessionlog-div {
+    width: 80%;
+    margin: auto;
+    margin-top:10px;
+    margin-bottom:10px;
+    max-width: 800px;
+    display: none;
+}
+
+#accesslog-textarea{
+    width: 100%;
+    margin: auto;
+    background-color: lightgrey;
+    display: block;
+}
+
+#sessionlog-textarea{
+    width: 100%;
+    margin: auto;
+    background-color: lightgrey;
+    display: block;
+}
+

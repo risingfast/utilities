@@ -46,10 +46,11 @@
 <!--   23-May-2022 - lowercase html tags                                                                             -->
 <!--   01-Jun-2022 - add cornerimage rotation                                                                        -->
 <!--   27-Jun-2022 - add footer options                                                                              -->
+<!--   22-Jul-2022 - add session div, secured div and authentication link                                            -->
 <!--                                                                                                                 -->
 <!-- <body> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetCornerImage(), fcSetFooterOptions()">
+<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -67,8 +68,17 @@
                     <li class="NAV1LI"><a HREF="http://www.risingfast.com/email.html">Email</a></li>
                     <li class="NAV1LI"><a HREF="http://www.risingfast.com/about.html">About</a></li>
                     <li class="NAV1LI"><a HREF="http://www.risingfast.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
                 </ul>
             </nav>
+
+<!-- <SESSION1> region for session information .................................................................... -->
+
+            <aside id="SESSION1">
+                    <h3 id=SESSION1H3>Current Session</h3>
+                    <p id="SESSION1PARA">
+                    </p>
+            </aside>
 
 <!-- <MAIN> region for main content and background image ........................................................... -->
 
@@ -78,33 +88,39 @@
                     <h3>Server Profile</h3>
                 </div>
 
-                <div id="results-div">
-                    <script>
-                        type="text/javascript"; 
-                        language="JavaScript";
-                        var ServerSysName;
-                        var ServerNodeName;
-                        var ServerRelease;
-                        var ServerVersion;
-                        var ServerMachine;
-                        var ServerDomainName;
-                    </script>
+                <div id="unsecured-div">
+                    <p>Authentication is required for this page (via: Home >> Utilities >> Authenticate)</p>
+                </div>
 
-                    <script
-                        src="/cgi-bin/serverProfile.cgi">
-                    </script>
+                <div id="secured-div">
+                    <div id="results-div">
+                        <script>
+                            type="text/javascript"; 
+                            language="JavaScript";
+                            var ServerSysName;
+                            var ServerNodeName;
+                            var ServerRelease;
+                            var ServerVersion;
+                            var ServerMachine;
+                            var ServerDomainName;
+                        </script>
 
-                    <script>
-                        document.write('The server system name is: ' + ServerSysName);
-                        document.write("\n");
-                        document.write('<br>The server node name is: ' + ServerNodeName);
-                        document.write("\n");
-                        document.write('<br>The server release is: ' + ServerRelease);
-                        document.write("\n");
-                        document.write('<br>The server version is: ' + ServerVersion);
-                        document.write("\n");
-                        document.write('<br>The server machine is: ' + ServerMachine);
-                    </script>
+                        <script
+                            src="/cgi-bin/serverProfile.cgi">
+                        </script>
+
+                        <script>
+                            document.write('The server system name is: ' + ServerSysName);
+                            document.write("\n");
+                            document.write('<br>The server node name is: ' + ServerNodeName);
+                            document.write("\n");
+                            document.write('<br>The server release is: ' + ServerRelease);
+                            document.write("\n");
+                            document.write('<br>The server version is: ' + ServerVersion);
+                            document.write("\n");
+                            document.write('<br>The server machine is: ' + ServerMachine);
+                        </script>
+                    </div>
                 </div>
 
 <!-- buttons to show and hide help and clear help and internals .................................................... -->
@@ -154,6 +170,8 @@
             <aside id="ASIDE1">
                     <h3 id=ASIDE1H3>Changes 2021-22</h3>
                 <ul id="ASIDE1UL">
+                    <li class="ASIDE1LI">22-Jul: add authenticate link</li>
+                    <li class="ASIDE1LI">22-Jul: show session block</li>
                     <li class="ASIDE1LI">27-Jun: add footer options</li>
                     <li class="ASIDE1LI">01-Jun: add cornerimage rotation</li>
                     <li class="ASIDE1LI">22-May: lowercase html tags</li>

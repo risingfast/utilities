@@ -41,10 +41,11 @@
 <!--    22-May-2022 - lowercase html tags                                                                           -->
 <!--    01-Jun-2022 - add cornerimage rotation                                                                      -->
 <!--    26-Jun-2022 - add footer options                                                                            -->
+<!--    22-Jul-2022 - add session div, secured div and authentication link                                          -->
 <!--                                                                                                                -->
 <!-- <body> region for all content including header and footer .................................................... -->
 
-<body onload="fcSetCornerImage(), fcSetFooterOptions()">
+<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthorization()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -62,8 +63,17 @@
                     <li class="NAV1LI"><a href="http://www.risingfast.com/email.html">Email</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/about.html">About</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
                 </ul>
             </nav>
+
+<!-- <SESSION1> region for session information .................................................................... -->
+
+            <aside id="SESSION1">
+                    <h3 id=SESSION1H3>Current Session</h3>
+                    <p id="SESSION1PARA">
+                    </p>
+            </aside>
 
 <!-- <main> region for main content and background image ........................................................... -->
 
@@ -75,19 +85,25 @@
 
 <!-- entry fields and options....................................................................................... -->
 
-                <div id="options-div">
-                    <div id ="optionslist-div">
-                        <label for="action">Action:</label>
-                        <select id="action" name="action" onchange="fSetAction()">
-                            <option value="Choose" selected>Choose</option>
-                            <option value="ShowAllValues">Show all values</option>
-                            <option value="ShowNonNullsOnly">Non-NULL values only</option>
-                            <option value="ShowNullsOnly">NULL values only</option>
-                            <option value="QueryString">Query String only</option>
-                        </select>
-                    </div>
-                    <div id="submit-div">
-                        <button id="submitButton" onclick="fGetResults()" disabled>Submit</button>
+                <div id="unsecured-div">
+                    <p>Authentication is required for this page (via: Home >> Utilities >> Authenticate)</p>
+                </div>
+
+                <div id="secured-div">
+                    <div id="options-div">
+                        <div id ="optionslist-div">
+                            <label for="action">Action:</label>
+                            <select id="action" name="action" onchange="fSetAction()">
+                                <option value="Choose" selected>Choose</option>
+                                <option value="ShowAllValues">Show all values</option>
+                                <option value="ShowNonNullsOnly">Non-NULL values only</option>
+                                <option value="ShowNullsOnly">NULL values only</option>
+                                <option value="QueryString">Query String only</option>
+                            </select>
+                        </div>
+                        <div id="submit-div">
+                            <button id="submitButton" onclick="fGetResults()" disabled>Submit</button>
+                        </div>
                     </div>
                 </div>
 
@@ -149,6 +165,8 @@
             <aside id="ASIDE1">
                     <h3 id=ASIDE1H3>Changes 2021-22</h3>
                 <ul id="ASIDE1UL">
+                    <li class="ASIDE1LI">22-Jul: add authenticate link</li>
+                    <li class="ASIDE1LI">22-Jul: show session block</li>
                     <li class="ASIDE1LI">01-Jun: add cornerimage rotation</li>
                     <li class="ASIDE1LI">22-May: lowercase html tags</li>
                     <li class="ASIDE1LI">17-Oct: remove inline styles</li>
