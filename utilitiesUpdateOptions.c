@@ -5,6 +5,7 @@
  *      http://www6.uniovi.es/cscene/topics/web/cs2-12.xml.html
  *  Log:
  *      21-Jun-2022 start by copying bookAddBook.c and modifying
+ *      14-Aug-2022 add leftlinks setting
  *  Enhancements:
 */
 
@@ -40,6 +41,7 @@ char caBehaviour[MAXLEN] = {'\0'};
 char caBackground[MAXLEN] = {'\0'};
 char caShowUser[MAXLEN] = {'\0'};
 char caShowLog[MAXLEN] = {'\0'};
+char caLeftLinks[MAXLEN] = {'\0'};
 char caStringBuf[MAXLEN] = {'\0'};
 char *sTemp = NULL;
 char caDelimiter[] = "&";
@@ -68,7 +70,7 @@ int main(void) {
 
 // check for a NULL query string -------------------------------------------------------------------------------------=
 
-//    setenv("QUERY_STRING", "behaviour=Randomized&background=Test%20Flowers&showuser=Suppressed&&showlog=No", 1);
+//    setenv("QUERY_STRING", "behaviour=Randomized&background=Test%20Flowers&showuser=Suppressed&&showlog=No&leftlinks=Long", 1);
 
     sParam = getenv("QUERY_STRING");
 
@@ -99,6 +101,10 @@ int main(void) {
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "showlog=%[^\n]s", caStringBuf);
     strcpy(caShowLog, fUrlDecode(caStringBuf));
+
+    sTemp = strtok(NULL, caDelimiter);
+    sscanf(sTemp, "leftlinks=%[^\n]s", caStringBuf);
+    strcpy(caLeftLinks, fUrlDecode(caStringBuf));
 
 //    printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);
 
@@ -164,6 +170,22 @@ int main(void) {
     sprintf(caSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Show Access Log';", caShowLog);
+
+//    printf("SQL: %s\n\n", caSQL);
+
+    if(mysql_query(conn, caSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        return -1;
+    }
+
+// set a SQL query and update left links setting ----------------------------------------------------------------------
+
+    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
+                   "SET `Option Setting` = '%s' "
+                   "WHERE `Option Name` = 'Left Links';", caLeftLinks);
 
 //    printf("SQL: %s\n\n", caSQL);
 

@@ -12,7 +12,7 @@
     <meta name="keywords" content="html, css, cgi">
     <meta name="generator" content="vim">
     <meta name="author" content="risingfast">
-    <title>About Risingfast</TITLE>
+    <title>About</TITLE>
     <link rel="stylesheet" type="text/css" href="about.css">
     <link rel="stylesheet" type="text/css" href="common.css">
     <link rel="shortcut icon" href="letterRF.png" type="image/png">
@@ -27,34 +27,38 @@
 <!-- Templates:                                                                                                      -->
 <!--      none                                                                                                       -->
 <!-- Log:                                                                                                            -->
-<!--    07-Sep-2020 start                                                                                            -->
-<!--    08-Oct-2020 make horizontally expanable and add Internals Summary/Detail dropdown                            -->
-<!--    08-Oct-2020 add tags for normal layout of a page                                                             -->
-<!--    09-Oct-2020 center on page                                                                                   -->
-<!--    11-Oct-2020 center heading menu on page and recenter components consistently                                 -->
-<!--    11-Oct-2020 change internals to summary/detail tags                                                          -->
-<!--    21-Oct-2021 center the body of the webpage in the browser                                                    -->
-<!--    19-Sep-2021 migrate to grid layout                                                                           -->
-<!--    19-Sep-2021 change image size on media query                                                                 -->
-<!--    19-Sep-2021 add internals section in main area                                                               -->
-<!--    19-Sep-2021 add add risingfast historical text                                                               -->
-<!--    19-Sep-2021 add add help button                                                                              -->
-<!--    22-Sep-2021 change text area rows to 29                                                                      -->
-<!--    17-Oct-2021 make the text area read-only                                                                     -->
-<!--    10-May-2022 capitalize id helpdiv                                                                            -->
-<!--    11-May-2022 add <ASIDE3> for caption on the corner image                                                     -->
-<!--    15-May-2022 add common.js                                                                                    -->
-<!--    16-May-2022 add clear button                                                                                 -->
-<!--    16-May-2022 remove extra <BR> tags                                                                           -->
-<!--    23-May-2022 lowercase html tags                                                                              -->
-<!--    31-May-2022 add cornerimage rotation                                                                         -->
-<!--    23-Jun-2022 add add options footer                                                                           -->
+<!--    07-Sep-2020 - start                                                                                          -->
+<!--    08-Oct-2020 - make horizontally expanable and add Internals Summary/Detail dropdown                          -->
+<!--    08-Oct-2020 - add tags for normal layout of a page                                                           -->
+<!--    09-Oct-2020 - center on page                                                                                 -->
+<!--    11-Oct-2020 - center heading menu on page and recenter components consistently                               -->
+<!--    11-Oct-2020 - change internals to summary/detail tags                                                        -->
+<!--    21-Oct-2021 - center the body of the webpage in the browser                                                  -->
+<!--    19-Sep-2021 - migrate to grid layout                                                                         -->
+<!--    19-Sep-2021 - change image size on media query                                                               -->
+<!--    19-Sep-2021 - add internals section in main area                                                             -->
+<!--    19-Sep-2021 - add add risingfast historical text                                                             -->
+<!--    19-Sep-2021 - add add help button                                                                            -->
+<!--    22-Sep-2021 - change text area rows to 29                                                                    -->
+<!--    17-Oct-2021 - make the text area read-only                                                                   -->
+<!--    10-May-2022 - capitalize id helpdiv                                                                          -->
+<!--    11-May-2022 - add <ASIDE3> for caption on the corner image                                                   -->
+<!--    15-May-2022 - add common.js                                                                                  -->
+<!--    16-May-2022 - add clear button                                                                               -->
+<!--    16-May-2022 - remove extra <BR> tags                                                                         -->
+<!--    23-May-2022 - lowercase html tags                                                                            -->
+<!--    31-May-2022 - add cornerimage rotation                                                                       -->
+<!--    23-Jun-2022 - add add options footer                                                                         -->
+<!--    22-Jul-2022 - add session div, secured div and authentication link                                           -->
+<!--    25-Jul-2022 - add authentication anchor                                                                      -->
+<!--    06-Aug-2022 - change the title                                                                               -->
+<!--    15-Aug-2022 - add long links                                                                                 -->
 <!--                                                                                                                 -->
 <!-- ............................................................................................................... -->
 
 <!-- <body> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetCornerImage(), fcSetFooterOptions()">
+<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -65,14 +69,49 @@
             <nav id="NAV1">
                     <h3 id="NAV1H3">Links</h3>
                 <ul id="NAV1UL">
-                    <li class="NAV1LI"><a class="active" href="http://www.risingfast.com">Home</A></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_ajaxFetch.html">Latest</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_template.html">Template</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/email.html">Email</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a class="active" href="http://www.risingfast.com">Home</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/cheatsheets.html">Cheatsheets</a></li>
                     <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
                 </ul>
+                <ul id="NAV1UL2" hidden>
+                    <li class="NAV1LI"><a class="active" href="http://www.risingfast.com">Home</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/cheatsheets.html">Cheatsheets</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/guessAnIdiom.html">Guess an Idiom</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/battleShips.html">Battleships</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_regexWords.html">Crossword Helper</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/environment.html">Environment</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/serverProfile.html">Server Profile</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/simplest.html">Text Fetcher</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/helloWorld.html">Hello World!</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/tcount.html">Counter</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/multiply.html">Multiplier</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/collectText.html">Collect Text</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_ajaxFetch.html">Ajax Fetch</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_ajaxPost.html">Post Text to Server</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_template.html">Template</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/dogAPI.html">Dog API</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/email.html">Email</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/perlTest.html">Cookies</a></li>
+                    <li class="NAV1LI"><a href="http://www.risingfast.com/DOM_Drills.html">DOM Drills</a></li>
             </nav>
+
+
+<!-- <SESSION1> region for session information .................................................................... -->
+
+            <aside id="SESSION1">
+                    <h3 id=SESSION1H3>Current Session</h3>
+                    <p id="SESSION1PARA">
+                    </p>
+            </aside>
 
 <!-- <MAIN> region for main content and background image ........................................................... -->
 
@@ -82,12 +121,19 @@
                         <h3>About Risingfast</h3>
                     </div>
 
+                <div id="unsecured-div">
+                    <p><a href="http://www.risingfast.com/authenticateUser.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
+                </div>
+
+
 <!-- text area document body ....................................................................................... -->
 
+                <div id="secured-div">
                     <div id="about-div">
                         <textarea id="about-area" rows="29" readOnly>Risingfast was a seasoned five-year-old when he made the sea voyage to Melbourne in 1954 for the spring (Southern Hemisphere) carnival. He was already well known in racing circles when he arrived, but his accomplishment of winning the Spring Grand Slam put him on front pages of newspapers in Australia, New Zealand and internationally.  Although many people consider the Melbourne and Caulfield Cup handicaps to be the blue ribbon events of the carnival, racing aficionados generally agree the weight-for-age Cox Plate is the contest that establishes genuine champions.  Nowadays, the Melbourne Cup is internationally known and Rising Fast was aiming for his sixth successive win.[1] Race-goers still remember that the nine stone five pounds (59.5 kg) Rising Fast carried to win the cup in 1954, has only been exceeded by Rain Lover who carried nine stone seven pound (60.5 kg) in 1969. Nor has the race been won since by any top weighted horse, wearing number one saddle cloth, until Makybe Diva did so in 2005. Rising Fast finished the 1954 season with wins which included the Turnbull Stakes, Caulfield Stakes, Caulfield Cup, Cox Plate, Melbourne Cup, LKS Mackinnon Stakes and VRC C.B.Fisher Plate during a great spring campaign.[3] Rising Fast was ridden in the 1954 events by Melbourne jockey Bill Williamson but when he was seriously injured prior to the Caulfield Cup he was replaced by Arthur Ward. Melbourne jockey Jack Purtell took over for his next races including the Melbourne Cup, but he was replaced by Bill Williamson the following year 1955 he again won the Caulfield Cup, for the second time.  He was handicapped with the formidable top weight of ten stone in the 1955 Melbourne Cup. It was a very wet and heavy track, a holdup at the barrier caused a delay of some five minutes, Bill Williamson the jockey decided to remain in the saddle, together with the lead weights making a very heavy burden for Rising Fast. Rising Fast began well, but in the last 200 metres he was jostled offstride by Toporoa ridden by Neville Sellwood and came a close second. The crowd expected jockey Williamson to protest, but owner Leicester Spring philosophically declared it was a racing incident and the protest was not lodged.[1] However, Neville Sellwood, the rider of Toporoa, was subsequently suspended for two months for interfering with the run of Rising Fast. Had Rising Fast won his record would have been two Caulfield Cups, a Cox Plate and two Melbourne Cups, and those wins would have been in successive years.[1] When Rising Fast retired, the Moonee Valley Racing Club held a special farewell for the champion, who strode up the straight with a garland of flowers around his neck, while the band played "The Maori Farewell." Rising Fast is recognised in both Australia and New Zealand. He was inducted into both the New Zealand and Australian Racing Halls of Fame.
                        </textarea>
                     </div>
+                </div>
 
 <!-- buttons to show and hide help ................................................................................. -->
 
@@ -135,6 +181,10 @@
             <aside id="ASIDE1">
                     <h3 id=ASIDE1H3>Changes 2021-22</h3>
                 <ul id="ASIDE1UL">
+                    <li class="ASIDE1LI">15-Aug: add long links</li>
+                    <li class="ASIDE1LI">25-Jul: add authentication anchor</li>
+                    <li class="ASIDE1LI">22-Jul: add authenticate link</li>
+                    <li class="ASIDE1LI">22-Jul: show session block</li>
                     <li class="ASIDE1LI">23-Jun: add options footer</li>
                     <li class="ASIDE1LI">31-May: add cornerimage rotation</li>
                     <li class="ASIDE1LI">23-May: lowerecase html tags</li>
@@ -176,7 +226,8 @@
                     Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
                     Background Image: <label id="footeroptionsbackgroundimage"></label>;
                     Show Current User: <label id="footeroptionsshowuser"></label>;
-                    Show Access Log: <label id="footeroptionsshowlog"></label>
+                    Show Access Log: <label id="footeroptionsshowlog"></label>;
+                    Left Links: <label id="footeroptionsleftlinks"></label>
                 </div>
                 <div id="FOOTER1DIV">
                     <p>&copy; 2020 www.risingfast.com ... /var/www/html/index.html</p>
