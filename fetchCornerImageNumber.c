@@ -4,6 +4,7 @@
  *  References:
  *  Log:
  *      25-Jun-2022 copied from utilitiesFetchOptions.c
+ *      15-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
  *  Enhancements:
 */
 
@@ -22,11 +23,9 @@
 
 // global declarations
 
-char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address 
-// char *sgServer = "35.188.123.150";                                                             //mysqlServer GCP IP address
-char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
-//char *sgUsername = "root";                                                                 // mysqlSerer GCP logon username
-char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
+char *sgServer = "192.168.0.13";                                                //mysqlServer LCL IP address 
+char *sgUsername = "gjarman";                                                   // mysqlSerer LCL logon username
+char *sgPassword = "Mpa4egu$";                                                  // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 MYSQL *conn;
@@ -49,9 +48,10 @@ int main(void) {
 
     char caSQL[SQL_LEN] = {'\0'};
 
-// print the html content type and <head> block -----------------------------------------------------------------------
+// print the html content type header and CORS header block -----------------------------------------------------------------------
 
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database$$
 

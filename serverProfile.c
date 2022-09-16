@@ -7,6 +7,7 @@
 //      13-Feb-2021 reviewed all
 //      13-Feb-2021 webcode
 //      22-Sep-2021 Copied from fetch.c
+//      14-Sep-2022 Changed return of main to int
 //  References:
 //      https://c-program-example.com/2012/01/c-program-to-get-the-system-information.html
 //      https://www.willmaster.com/library/tutorials/javascript-and-cgi-talking-to-each-other.php
@@ -17,7 +18,7 @@
 #include <stdio.h>
 #include <sys/utsname.h>
 
-void main() 
+int main() 
 {
 
 // variable declarations
@@ -35,4 +36,5 @@ void main()
     printf("ServerRelease = \"%s\";\n", uname_pointer.release);
     printf("ServerVersion = \"%s\";\n", uname_pointer.version);
     printf("ServerMachine = \"%s\";\n", uname_pointer.machine);
+    return 0;
 }

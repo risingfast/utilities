@@ -20,7 +20,7 @@ SQL1FLAGS=-I/usr/include/mysql
 # SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog authenticateUser utilitiesFetchSessionLog
+all: environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog authenticateUser authenticateUser.cgi utilitiesFetchSessionLog
 
 environment: environment.c
 	$(CC) $(CFLAGS) $@ $^ $(SQL2FLAGS)
@@ -49,5 +49,8 @@ utilitiesFetchSessionLog: utilitiesFetchSessionLog.c ../shared/rf50.c ../shared/
 authenticateUser: authenticateUser.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
 
+authenticateUser.cgi: authenticateUser.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
+
 clean:
-	rm -f *.o *.s *.i environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog authenticateUser utilitiesFetchSessionLog
+	rm -f *.o *.s *.i environment serverProfile utilitiesFetchOptions utilitiesUpdateOptions saveCornerImageNumber fetchCornerImageNumber utilitiesFetchAccessLog authenticateUser authenticateUser.cgi utilitiesFetchSessionLog

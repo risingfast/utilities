@@ -41,6 +41,7 @@
 #define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                         // size of formatted characer UUID
 #define MAXLEN 1024
 #define SQL_LEN 5000                                                      // max length of SQL query
+
 // global declarations
 
 char *sgServer = "192.168.0.13";                                        //mysqlServer LCL IP address
@@ -65,6 +66,7 @@ int main(void) {
     bool   bCookieExists = false;                        // flag to indicate a session cookie exists
     bool   bUserIsAuthenticated = false;                   // flag to indicate user is authenticated
     uuid_t myUuid;                                               // raw or binary UUID type variable
+
 
 //  setenv("QUERY_STRING", "Username=scook&Password=Sssp4atta", 1);
 //  setenv("QUERY_STRING", "Username=gjarman&Password=Mpa4egu9", 1);
@@ -186,7 +188,7 @@ int main(void) {
         printf("Success - authenticated");
     }
     else if (bUserIsAuthenticated == false) {
-        printf("Authenitcation failed");
+        printf("Authentication failed");
     }
 
     return 0;
