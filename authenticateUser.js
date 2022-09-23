@@ -12,8 +12,9 @@
 //    15-May-2022 remove function showHelp() moved to common.js
 //    01-Jun-2022 add cornerimage rotation
 //    18-Jun-2022 move fSetCornerImage() to common.js
+//    16-Sep-2022 change www.risingfast.com to gjarman.com
 
-const uri1 = "http://www.risingfast.com/cgi-bin/authenticateUser.cgi";
+const uri1 = "http://gjarman2020.com/cgi-bin/authenticateUser.cgi";
 
 // functions for action buttons to display and hide help ..........................................
   
@@ -36,6 +37,7 @@ async function fAuthenticateUser() {
     if (response.ok) {
         let text = await response.text();
         document.getElementById("ResultArea").value= text;
+        fcCheckAuthentication();
     } else {
         document.getElementById("ResultArea").value= "CGI Call Failed";
     }

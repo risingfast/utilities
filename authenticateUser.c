@@ -1,4 +1,4 @@
-//  authenticateUser.c - CGI to authenticate a user from an entered string
+//  authenticateUser.c - CGI to authenticate a user from their user_id and password and create a sesion cookie if none exists
 //  Author: Geoff Jarman
 //  Started: 08/06/2020
 //  References:
@@ -24,6 +24,7 @@
 //      18-Jul-2022 add session table insert
 //      18-Jul-2022 add cookie UUID to session record
 //      29-Jul-2022 fix bug inserting new session record if no value user authenticated
+//      16-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
 //  Enhancements (0):
 //
 
@@ -123,7 +124,7 @@ int main(void) {
         }
     }
 
-    // store the result of the query
+    // store the result of the query and test for no valid result
 
     res = mysql_store_result(conn);
     if(res == NULL)
@@ -158,7 +159,7 @@ int main(void) {
         uuid_generate_random(myUuid);
         uuid_unparse(myUuid, caCookieVal);
 
-    //  create a session record in web sessions table  with the new UUID
+    //  create a session record in web sessions table  with the new UUID (cookie value)
 
         sprintf(caSQL2, "INSERT INTO risingfast.`Web Sessions` "
                         "(`User ID`, `Session Cookie`) VALUES (%d, '%s')", iUserID, caCookieVal);
@@ -172,12 +173,13 @@ int main(void) {
         }
     }
 
-//  create the HTTP headers for the cookie and the body text content-type
+//  create the HTTP headers for the cookie and the body text content-type and CORS
 
     if ((bCookieExists == false) && (bUserIsAuthenticated == true)) {
         printf("Set-Cookie: gj2020InstanceID=%s; HttpOnly\n", caCookieVal);
     }
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 //  build response and output back to requesting javascript ------------------------------------------------------------
 

@@ -8,6 +8,7 @@
 //      13-Feb-2021 webcode
 //      22-Sep-2021 Copied from fetch.c
 //      14-Sep-2022 Changed return of main to int
+//      16-Sep-2022 Add Access-Control-Allow-Origin: * CORS http header
 //  References:
 //      https://c-program-example.com/2012/01/c-program-to-get-the-system-information.html
 //      https://www.willmaster.com/library/tutorials/javascript-and-cgi-talking-to-each-other.php
@@ -26,10 +27,10 @@ int main()
     struct utsname uname_pointer;
     uname(&uname_pointer);
 
-// print content-type text/javascript to return cgi output back to the calling html page ----------
+// print content-type text/javascript and CORS http headers ----------
 
-    printf("Content-type: text/javascript");
-    printf("\n\n");
+    printf("Content-type: text/javascript\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
     printf("ServerSysName = \"%s\";\n", uname_pointer.sysname);
     printf("ServerNodeName = \"%s\";\n", uname_pointer.nodename);

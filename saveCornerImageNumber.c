@@ -4,6 +4,7 @@
  *  References:
  *  Log:
  *      25-Jun-2022 start by copying utilitiesUpdateOptions.c and modifying
+ *      16-Sep-2022 add Access-Control-Allow-Origin: * http CORS header
  *  Enhancements:
 */
 
@@ -22,9 +23,7 @@
 // global declarations
 
 char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
-// char *sgServer = "35.188.123.150"                                                              // mysqlServer GCP IP address
 char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
-// char *sgUserName = "root";                                                                     // mysqlServer GCP logon name
 char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
@@ -42,9 +41,10 @@ int main(void) {
 
     char caSQL[SQL_LEN] = {'\0'};
 
-// print the html content type and <head> block -----------------------------------------------------------------------
+// print the html content-type and CORS header block -------------------------------------------------------------------
 
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // Initialize a connection and connect to the database
 
@@ -60,7 +60,7 @@ int main(void) {
         return  EXIT_FAILURE;
     }
 
-// check for a NULL query string -------------------------------------------------------------------------------------=
+// check for a NULL query string ---------------------------------------------------------------------------------------
 
 //    setenv("QUERY_STRING", "number=35", 1);
 
@@ -76,13 +76,13 @@ int main(void) {
 //    printf("Test QUERY_STRING: %s", getenv("QUERY_STRING"));
 //    printf("\n\n");
 
-//  get the content from QUERY_STRING and tokenize based on '&' character----------------------------------------------
+//  get the content from QUERY_STRING and tokenize based on '&' character-----------------------------------------------
 
     sscanf(sParam, "number=%d", &iNumber);
 
 //    printf("Test Result: number=%d\n\n", iNumber);
 
-// test for an empty QUERY_STRING -------------------------------------------------------------------------------------
+// test for an empty QUERY_STRING --------------------------------------------------------------------------------------
 
     if (getenv("QUERY_STRING") == NULL) {
         printf("\n\n");
@@ -91,7 +91,7 @@ int main(void) {
         return 0;
     }
 
-// set a SQL query and update corner image number ---------------------------------------------------------------------
+// set a SQL query and update corner image number ----------------------------------------------------------------------
 
     sprintf(caSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = %d "

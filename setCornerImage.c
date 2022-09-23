@@ -5,6 +5,7 @@
 //  Log:
 //      30-May-2022 started by copying showText.c
 //      31-May-2022 change datafile from cornerImage.txt to cornerImageList.txt
+//      16-Sep-2022 add Access-Control-Allow-Origin: * http CORS header
 //  Enhancements(0):
 
 // includes and defines
@@ -20,9 +21,10 @@ int main() {
     f = fopen (DATAFILE, "r");
     char cyText[MAXLEN];
 
-// print the html content type and <head> block
+// print the html content-type header and CORS head block
 
-    printf("Content-type: text/html\n\n");
+    printf("Content-type: text/html\n");
+    printf("Access-Control-Allow-Origin: *\n\n");
 
 // read text from the file and print it
 
