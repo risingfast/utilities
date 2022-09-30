@@ -55,27 +55,3 @@ function fClearAuthenticateUserPage() {
     fcClearExtras();
 }
 
-
-// function to enable the Authenticate button when text is entered in the password field
-
-function fEnableAuthenticateOnInput() {
-    sPwd = document.getElementById("idPassword").value;
-    bAuth = document.getElementById("fgetResults-button");
-    if (sPwd.length > 0) {
-        bAuth.disabled = false;
-        if (event.key === 'Enter') {
-                fClickSubmitOnEnter();
-        }
-    } else {
-        bAuth.disabled = true;
-    }
-}
-
-// function to click the authenticate button when Enter is clicked in an input field
-
-function fClickSubmitOnEnter() {
-    bAuth = document.getElementById("fgetResults-button");
-    if (bAuth.disabled === false) {
-        bAuth.click();
-    }
-}
