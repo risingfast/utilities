@@ -66,13 +66,12 @@ async function fSetOptions() {
     }
     document.getElementById("cornerimagechoice-select").value = options[0][2];
     document.getElementById("backgroundimagechoice-select").value = options[1][2];
-    document.getElementById("showserverlog-select").value = options[2][2];
-    document.getElementById("showsessionlog-select").value = options[3][2];
+    document.getElementById("showuser-select").value = options[2][2];
+    document.getElementById("showaccesslog-select").value = options[3][2];
     document.getElementById("showleftlinks-select").value = options[5][2];
     fcSetFooterOptions();
     fSetCornerImageBehaviourButton();
-    fSetShowServerLog();                    // show the access log if the user saved this setting as 'Yes'
-    fSetShowSessionLog();                   // show the session log if the user saved this setting as 'Yes'
+    fSetShowAccessLog();                    // show the access log if the user saved this setting as 'Yes'
     return;
 }
 
@@ -82,14 +81,14 @@ async function fSaveOptions() {
 
     let sBehaviour = encodeURIComponent(document.getElementById("cornerimagechoice-select").value);
     let sBackground = encodeURIComponent(document.getElementById("backgroundimagechoice-select").value);
-    let sShowSession = encodeURIComponent(document.getElementById("showsessionlog-select").value);
-    let sShowServerLog = encodeURIComponent(document.getElementById("showserverlog-select").value);
+    let sShowUser = encodeURIComponent(document.getElementById("showuser-select").value);
+    let sShowLog = encodeURIComponent(document.getElementById("showaccesslog-select").value);
     let sLeftLinks = encodeURIComponent(document.getElementById("showleftlinks-select").value);
 
     let sRequest = uri01 + '?' + 'behaviour=' + sBehaviour +
                             '&' + 'background=' + sBackground +
-                            '&' + 'showuser=' + sShowSession +
-                            '&' + 'showlog=' + sShowServerLog +
+                            '&' + 'showuser=' + sShowUser +
+                            '&' + 'showlog=' + sShowLog +
                             '&' + 'leftlinks=' + sLeftLinks;
     let response = await fetch(sRequest);
     if (response.ok) {
@@ -100,8 +99,9 @@ async function fSaveOptions() {
 
     document.getElementById("footeroptionscichoice").innerHTML = decodeURIComponent(sBehaviour);
     document.getElementById("footeroptionsbackgroundimage").innerHTML = decodeURIComponent(sBackground);
-    document.getElementById("footeroptionsshowserverlog").innerHTML = decodeURIComponent(sShowServerLog);
-    document.getElementById("footeroptionsshowsession").innerHTML = decodeURIComponent(sShowSession);
+    document.getElementById("footeroptionsshowuser").innerHTML = decodeURIComponent(sShowUser);
+    document.getElementById("footeroptionsshowlog").innerHTML = decodeURIComponent(sShowLog);
+    document.getElementById("footeroptionsshowlog").innerHTML = decodeURIComponent(sShowLog);
     document.getElementById("footeroptionsleftlinks").innerHTML = decodeURIComponent(sLeftLinks);
 }
 
@@ -127,18 +127,18 @@ async function fSetShowUserChoice() {
 
 // function to ajax consolidate the Apache2 access logs and fetch text from the server and paste it to a textarea
 
-async function fSetShowServerLog() {
-    if (document.getElementById("showserverlog-select").value === "Yes") {
-        document.getElementById("serverlog-div").style.display = "block";
+async function fSetShowAccessLog() {
+    if (document.getElementById("showaccesslog-select").value === "Yes") {
+        document.getElementById("accesslog-div").style.display = "block";
         let response = await fetch(uri03);
         if (response.ok) {
             let text = await response.text();
-            document.getElementById("serverlog-textarea").value=text;
+            document.getElementById("accesslog-textarea").value=text;
         } else {
             alert("HttpError: " + response.status);
         }
     } else {
-        document.getElementById("serverlog-div").style.display = "none";
+        document.getElementById("accesslog-div").style.display = "none";
     }
 }
 
@@ -165,19 +165,19 @@ function fClearOptionsFields() {
     var x = document.getElementById("HELPDIV");
     x.style.display = "";
 
-    var ala = document.getElementById("serverlog-textarea");
+    var ala = document.getElementById("accesslog-textarea");
     ala.value = "";
 
     var sla = document.getElementById("sessionlog-textarea");
     sla.value = "";
 
-    var ald = document.getElementById("serverlog-div");
+    var ald = document.getElementById("accesslog-div");
     ald.style.display = "none";
 
     var sld = document.getElementById("sessionlog-div");
     sld.style.display = "none";
 
-    document.getElementById("showserverlog-select").value = "No";
+    document.getElementById("showaccesslog-select").value = "No";
     document.getElementById("showsessionlog-select").value = "No";
 
     fcClearExtras();

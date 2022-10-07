@@ -5,9 +5,6 @@
  *      http://www6.uniovi.es/cscene/topics/web/cs2-12.xml.html
  *  Log:
  *      21-Jun-2022 start by copying bookAddBook.c and modifying
- *      14-Aug-2022 add leftlinks setting
- *      15-Sep-2022 add Access-Control-Allow-Origin: * CORS header
- *      03-Oct-2022 change 'Show Current User' to 'Show Session Log'
  *  Enhancements:
 */
 
@@ -43,7 +40,6 @@ char caBehaviour[MAXLEN] = {'\0'};
 char caBackground[MAXLEN] = {'\0'};
 char caShowUser[MAXLEN] = {'\0'};
 char caShowLog[MAXLEN] = {'\0'};
-char caLeftLinks[MAXLEN] = {'\0'};
 char caStringBuf[MAXLEN] = {'\0'};
 char *sTemp = NULL;
 char caDelimiter[] = "&";
@@ -52,10 +48,9 @@ int main(void) {
 
     char caSQL[SQL_LEN] = {'\0'};
 
-// print the html content-type and CORS http header block -------------------------------------------------------------
+// print the html content type and <head> block -----------------------------------------------------------------------
 
-    printf("Content-type: text/html\n");
-    printf("Access-Control-Allow-Origin: *\n\n");
+    printf("Content-type: text/html\n\n");
 
 // Initialize a connection and connect to the database
 
@@ -71,9 +66,9 @@ int main(void) {
         return  EXIT_FAILURE;
     }
 
-// check for a NULL query string --------------------------------------------------------------------------------------
+// check for a NULL query string -------------------------------------------------------------------------------------=
 
-//    setenv("QUERY_STRING", "behaviour=Randomized&background=Test%20Flowers&showuser=Yes&showlog=No&leftlinks=Long", 1);   // uncomment for testing only
+//    setenv("QUERY_STRING", "behaviour=Randomized&background=Test%20Flowers&showuser=Suppressed&&showlog=No", 1);
 
     sParam = getenv("QUERY_STRING");
 
@@ -84,8 +79,8 @@ int main(void) {
         return 1;
     }
 
-//    printf("QUERY_STRING: %s", getenv("QUERY_STRING"));                                 // uncomment for testing only
-//    printf("\n\n");                                                                     // uncomment for testing only
+//    printf("QUERY_STRING: %s", getenv("QUERY_STRING"));
+//    printf("\n\n");
 
 //  get the content from QUERY_STRING and tokenize based on '&' character----------------------------------------------
 
@@ -105,11 +100,7 @@ int main(void) {
     sscanf(sTemp, "showlog=%[^\n]s", caStringBuf);
     strcpy(caShowLog, fUrlDecode(caStringBuf));
 
-    sTemp = strtok(NULL, caDelimiter);
-    sscanf(sTemp, "leftlinks=%[^\n]s", caStringBuf);
-    strcpy(caLeftLinks, fUrlDecode(caStringBuf));
-
-//    printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);  // uncomment for testing only
+//    printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);
 
 // test for an empty QUERY_STRING -------------------------------------------------------------------------------------
 
@@ -126,7 +117,7 @@ int main(void) {
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Corner Image Choice';", caBehaviour);
 
-//    printf("SQL: %s\n\n", caSQL);                                                      // uncomment for testing only
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {
@@ -142,7 +133,7 @@ int main(void) {
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Background Choice';", caBackground);
 
-//     printf("SQL: %s\n\n", caSQL);                                                      // uncomment for testing only
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {
@@ -156,9 +147,9 @@ int main(void) {
 
     sprintf(caSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
-                   "WHERE `Option Name` = 'Show Session Log';", caShowUser);
+                   "WHERE `Option Name` = 'Show Current User';", caShowUser);
 
-//    printf("SQL: %s\n\n", caSQL);                                                       // uncomment for testing only
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {
@@ -172,25 +163,9 @@ int main(void) {
 
     sprintf(caSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
-                   "WHERE `Option Name` = 'Show Server Log';", caShowLog);
+                   "WHERE `Option Name` = 'Show Access Log';", caShowLog);
 
-//    printf("SQL: %s\n\n", caSQL);                                                       // uncomment for testing only
-
-    if(mysql_query(conn, caSQL) != 0)
-    {
-        printf("\n");
-        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
-        printf("\n\n");
-        return -1;
-    }
-
-// set a SQL query and update left links setting ----------------------------------------------------------------------
-
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
-                   "SET `Option Setting` = '%s' "
-                   "WHERE `Option Name` = 'Left Links';", caLeftLinks);
-
-//    printf("SQL: %s\n\n", caSQL);                                                       // uncomment for testing only
+//    printf("SQL: %s\n\n", caSQL);
 
     if(mysql_query(conn, caSQL) != 0)
     {

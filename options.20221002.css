@@ -7,7 +7,6 @@
 /*     18-Jun-2022 - add css for additional options                                                                  */
 /*     19-Jun-2022 - add css for cornerimageno                                                                       */
 /*     14-Aug-2022 - add css for leftlinks div and label                                                             */
-/*     03-Oct-2000 - change to session and server log labelling                                                      */
 
 #heading-div {
     width: 80%;
@@ -74,12 +73,22 @@
     width:180px;
 }
 
+#showuser-div {
+    width: 80%;
+    margin: auto; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-width: 800px;
+    text-align: left;
+    display: none               /* suppress div until method can be found */
+}
+
 #showuser-label {
     display: inline-block;
     width:180px;
 }
 
-#showserverlog-div {
+#showaccesslog-div {
     width: 80%;
     margin: auto; 
     margin-top: 10px;
@@ -88,7 +97,7 @@
     text-align: left;
 }
 
-#showserverlog-label {
+#showaccesslog-label {
     display: inline-block;
     width:180px;
 }
@@ -121,7 +130,7 @@
     width:180px;
 }
 
-#serverlog-div {
+#accesslog-div {
     width: 80%;
     margin: auto;
     margin-top:10px;
@@ -139,7 +148,7 @@
     display: none;
 }
 
-#serverlog-textarea{
+#accesslog-textarea{
     width: 100%;
     margin: auto;
     background-color: lightgrey;

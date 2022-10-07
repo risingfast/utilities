@@ -1,5 +1,4 @@
-//  authenticateUser.c -- CGI to authenticate a user from an entered string by comparing to users and passwords on mySQL `web users`.
-//                     -- sets a cookie with a UUID and stores the user and UUID on mySQL `Web Sessions` 
+//  authenticateUser.c - CGI to authenticate a user from an entered string
 //  Author: Geoff Jarman
 //  Started: 08/06/2020
 //  References:
@@ -25,8 +24,7 @@
 //      18-Jul-2022 add session table insert
 //      18-Jul-2022 add cookie UUID to session record
 //      29-Jul-2022 fix bug inserting new session record if no value user authenticated
-//      16-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
-//      06-Oct-2022 check for an NULL or empty QUERY_STRING environment variable
+//      14-Sep-2022 add Access-Control-Allow-Origin: * to HTTP headers
 //  Enhancements (0):
 //
 
@@ -44,7 +42,6 @@
 #define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                         // size of formatted characer UUID
 #define MAXLEN 1024
 #define SQL_LEN 5000                                                      // max length of SQL query
-
 // global declarations
 
 char *sgServer = "192.168.0.13";                                        //mysqlServer LCL IP address
@@ -59,23 +56,22 @@ MYSQL_ROW row;
 int main(void) {
     int    iUserID = 0;                                              // user id from web users table
     char   *sParams;                                                  // pointer to the QUERY_STRING
-    char   sParamsOrig[200] = "\0";                    // pointer to the QUERY_STRING original value
     char   *sSubstring;                                                  // pointer to the substring
     char   caDelimiter[] = "&";                                                   // token delimiter
     char   caUsername[60] = "\0";                                                  // username array
     char   caPassword[60] = "\0";                                                  // password array
-    char   caSQL1[SQL_LEN] = {'\0'};                               // array to hold SQL query string
-    char   caSQL2[SQL_LEN] = {'\0'};                               // array to hold SQL query string
+    char   caSQL1[SQL_LEN] = {'\0'};                                // array to hold SQL query string
+    char   caSQL2[SQL_LEN] = {'\0'};                                // array to hold SQL query string
     char   caCookieVal[UUIDTEXTSIZE];                                                 // UUID cookie
     bool   bCookieExists = false;                        // flag to indicate a session cookie exists
     bool   bUserIsAuthenticated = false;                   // flag to indicate user is authenticated
     uuid_t myUuid;                                               // raw or binary UUID type variable
 
 
-//  setenv("QUERY_STRING", "Username=scook&Password=Sssp4atta", 1);           // uncomment for testing only
-//  setenv("QUERY_STRING", "Username=gjarman&Password=Mpa4egu9", 1);          // uncomment for testing only
+//  setenv("QUERY_STRING", "Username=scook&Password=Sssp4atta", 1);
+//  setenv("QUERY_STRING", "Username=gjarman&Password=Mpa4egu9", 1);
 
-// check for an existing oookie named 'gj2020InstanceID' ---------------------------------------------------------------
+// check for an existing oookie named 'gj2020InstanceID' --------------------------------------------------------------
 
     if (getenv("HTTP_COOKIE") == NULL) {
         bCookieExists = false;
@@ -90,48 +86,15 @@ int main(void) {
     if (bCookieExists == false) {
         sParams = getenv("QUERY_STRING");
 
-        // test if a query string is NULL or empty ---------------------------------------------------------------------
-
-        if(sParams == NULL) {
-            printf("\n");
-            printf("Query string is NULL. Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating program");
-            printf("\n\n");
-            return 1;
-        }
-
-        // test for an empty (non-NULL) query string -------------------------------------------------------------------
-
-        if(sParams[0] == '\0') {
-            printf("\n");
-            printf("Query string is empty (non-NULL). Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating program");
-            printf("\n\n");
-            return 1;
-        }
-       
-        //  get the content from QUERY_STRING and tokenize and test for valid tokens -----------------------------------
-
-        strcpy(sParamsOrig, sParams);                                          // save the original value of QUERY_STING
-
         sSubstring = strtok(sParams, caDelimiter);
         sscanf(sSubstring, "Username=%s", caUsername);
-        if (caUsername[0] == '\0') {
-             printf("\n");
-             printf("Query string \"%s\" has no username, Expecting QUERY_STRING=\"Username=<unme>&Password=<pwd>\". Terminating program", sParamsOrig);
-             printf("\n\n");
-             return 1;
-        }
 
         sSubstring = strtok(NULL, caDelimiter);
         sscanf(sSubstring, "Password=%s", caPassword);
-        if (caPassword[0] == '\0') {
-             printf("\n");
-             printf("Query string \"%s\" has no password, Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating program", sParamsOrig);
-             printf("\n\n");
-             return 1;
-        }
     }
 
-// Initialize a connection and connect to the database if no cookie exists ---------------------------------------------
+
+// Initialize a connection and connect to the database if no cookie exists
 
     if (bCookieExists == false) {
     
@@ -147,8 +110,6 @@ int main(void) {
             return  EXIT_FAILURE;
         }
     
-    // check the username and password against values on mySQL `Web Users` ---------------------------------------------
-
         sprintf(caSQL1, "SELECT WU.`User ID`, WU.`User Password` "
                        "FROM risingfast.`Web Users` WU "
                        "WHERE WU.`User Short Name` = '%s'", caUsername);
@@ -162,7 +123,7 @@ int main(void) {
         }
     }
 
-    // store the result of the query -----------------------------------------------------------------------------------
+    // store the result of the query
 
     res = mysql_store_result(conn);
     if(res == NULL)
@@ -176,7 +137,7 @@ int main(void) {
 
     mysql_data_seek(res, 0);
 
-    // fetch the password for the user from the database and validate against the password input -----------------------
+    // fetch the password for the user from the database and validate against the password input
 
     if((row = mysql_fetch_row(res)) != NULL)
     {
@@ -191,13 +152,13 @@ int main(void) {
         }
     }
     
-    //  create a new UUID if user is authenticated and the cookie gj2020InstanceID  does not exist ---------------------
+    //  create a new UUID if user is authenticated and the cookie gj2020InstanceID  does not exist ------------------------
 
     if ((bCookieExists == false) && (bUserIsAuthenticated == true)) {
         uuid_generate_random(myUuid);
         uuid_unparse(myUuid, caCookieVal);
 
-    //  create a session record in web sessions table  with the new UUID -----------------------------------------------
+    //  create a session record in web sessions table  with the new UUID
 
         sprintf(caSQL2, "INSERT INTO risingfast.`Web Sessions` "
                         "(`User ID`, `Session Cookie`) VALUES (%d, '%s')", iUserID, caCookieVal);
@@ -211,13 +172,12 @@ int main(void) {
         }
     }
 
-//  create the HTTP headers for the cookie and the body text content-type and CORS -------------------------------------
+//  create the HTTP headers for the cookie and the body text content-type
 
     if ((bCookieExists == false) && (bUserIsAuthenticated == true)) {
         printf("Set-Cookie: gj2020InstanceID=%s; HttpOnly\n", caCookieVal);
     }
-    printf("Content-type: text/html\n");
-    printf("Access-Control-Allow-Origin: *\n\n");
+    printf("Content-type: text/html\n\n");
 
 //  build response and output back to requesting javascript ------------------------------------------------------------
 

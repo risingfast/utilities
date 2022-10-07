@@ -37,11 +37,10 @@
 <!--    24-Jul-2022 - add session log                                                                                -->
 <!--    25-Jul-2022 - add authentication anchor                                                                      -->
 <!--    14-Aug-2022 - add left links option (long or short layout)                                                   -->
-<!--    03-Oct-2022 - extend secure div                                                                              -->
 <!--                                                                                                                 -->
 <!-- <body> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetCornerImage(), fSetOptions(), /* fSetShowServerLog(), fSetShowSessionLog(),*/ fcCheckAuthentication()">
+<body onload="fcSetCornerImage(), fSetOptions(), fSetShowAccessLog(), fcCheckAuthentication()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -199,11 +198,23 @@
                             </select>
                     </div>
     
-<!-- showserverlog div ............................................................................................ -->
+<!-- showuser div .................................................................................................. -->
     
-                    <div id="showserverlog-div">
-                        <label id="showserverlog-label" for="showserverlog-select">Show Webserver Log</label>
-                            <select id="showserverlog-select" onchange="fSetShowServerLog()">
+                    <div id="showuser-div">
+                        <label id="showuser-label" for="showuser-select">Show Current User</label>
+                            <select id="showuser-select" onchange="fSetShowUserChoice()">
+                                <option value="User Only">User Only</option>
+                                <option value="Suppressed">Suppressed</option>
+                                <option value="User and IP Address">User and IP Address</option>
+                                <option value="User and IP Address and Session Time">User and IP Address and Session Time</option>
+                            </select>
+                    </div>
+    
+<!-- showaccesslog div ............................................................................................. -->
+    
+                    <div id="showaccesslog-div">
+                        <label id="showaccesslog-label" for="showaccesslog-select">Show Access Log</label>
+                            <select id="showaccesslog-select" onchange="fSetShowAccessLog()">
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </select>
@@ -228,35 +239,34 @@
                                 <option value="Long">Long</option>
                             </select>
                     </div>
-
-<!-- server:log div ................................................................................................. -->
-
-                    <div id="serverlog-div">
-                        <h3>
-                            Webserver Log:<br>
-                        </h3>
-                        <textarea id="serverlog-textarea" rows="20"></textarea>
-                    </div>
-
-<!-- sessionlog div ................................................................................................ -->
-
-                    <div id="sessionlog-div">
-                        <h3>
-                            Session Log:<br>
-                        </h3>
-                        <textarea id="sessionlog-textarea" rows="20"></textarea>
-                    </div>
-
                 </div>
 
 <!-- buttons to submit option settings and show and hide help and clear the page ................................... -->
 
-                    <div id="MOREBTTNS">
-                        <button onclick="fSaveOptions()">Submit</button>
-                        <button onclick="fcShowHelp()">Help</button>
-                        <button onclick="fClearOptionsFields()">Clear</button>
-                        <br>
-                    </div>
+                <div id="MOREBTTNS">
+                    <button onclick="fSaveOptions()">Submit</button>
+                    <button onclick="fcShowHelp()">Help</button>
+                    <button onclick="fClearOptionsFields()">Clear</button>
+                    <br>
+                </div>
+
+<!-- accesslog div ................................................................................................. -->
+
+                <div id="accesslog-div">
+                    <h3>
+                        Webserver Access Log:<br>
+                    </h3>
+                    <textarea id="accesslog-textarea" rows="20"></textarea>
+                </div>
+
+<!-- sessionlog div ................................................................................................ -->
+
+                <div id="sessionlog-div">
+                    <h3>
+                        Session Log:<br>
+                    </h3>
+                    <textarea id="sessionlog-textarea" rows="20"></textarea>
+                </div>
 
 <!-- help text controlled by button ................................................................................ -->
 
@@ -305,7 +315,6 @@
             <aside id="ASIDE1">
                     <h3 id=ASIDE1H3>Changes 2021-22</h3>
                 <ul ID="ASIDE1UL">
-                    <li class="ASIDE1LI">03-Oct: extend secure div</li>
                     <li class="ASIDE1LI">14-Aug: add left links option</li>
                     <li class="ASIDE1LI">25-Jul: add authentication anchor</li>
                     <li class="ASIDE1LI">24-Jul: add a session log</li>
@@ -344,8 +353,8 @@
                 <div id="FOOTER1OPTIONS-DIV">
                     Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
                     Background Image: <label id="footeroptionsbackgroundimage"></label>;
-                    Show Webserver Log: <label id="footeroptionsshowserverlog"></label>;
-                    Show Session Log: <label id="footeroptionsshowsession"></label>;
+                    Show Current User: <label id="footeroptionsshowuser"></label>;
+                    Show Access Log: <label id="footeroptionsshowlog"></label>;
                     Left Links: <label id="footeroptionsleftlinks"><label>
                 </div>
                 <div id="FOOTER1DIV">
