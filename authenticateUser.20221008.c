@@ -27,7 +27,6 @@
 //      29-Jul-2022 fix bug inserting new session record if no value user authenticated
 //      16-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
 //      06-Oct-2022 check for an NULL or empty QUERY_STRING environment variable
-//      08-Oct-2022 use EXIT_FAILURE and EXIT_SUCCESS on return lines
 //  Enhancements (0):
 //
 
@@ -95,18 +94,18 @@ int main(void) {
 
         if(sParams == NULL) {
             printf("\n");
-            printf("Query string is NULL. Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"");
+            printf("Query string is NULL. Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating program");
             printf("\n\n");
-            return EXIT_FAILURE;
+            return 1;
         }
 
         // test for an empty (non-NULL) query string -------------------------------------------------------------------
 
         if(sParams[0] == '\0') {
             printf("\n");
-            printf("Query string is empty (non-NULL). Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"");
+            printf("Query string is empty (non-NULL). Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating program");
             printf("\n\n");
-            return EXIT_FAILURE;
+            return 1;
         }
        
         //  get the content from QUERY_STRING and tokenize and test for valid tokens -----------------------------------
@@ -117,18 +116,18 @@ int main(void) {
         sscanf(sSubstring, "Username=%s", caUsername);
         if (caUsername[0] == '\0') {
              printf("\n");
-             printf("Query string \"%s\" has no username, Expecting QUERY_STRING=\"Username=<unme>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"", sParamsOrig);
+             printf("Query string \"%s\" has no username, Expecting QUERY_STRING=\"Username=<unme>&Password=<pwd>\". Terminating program", sParamsOrig);
              printf("\n\n");
-             return EXIT_FAILURE;
+             return 1;
         }
 
         sSubstring = strtok(NULL, caDelimiter);
         sscanf(sSubstring, "Password=%s", caPassword);
         if (caPassword[0] == '\0') {
              printf("\n");
-             printf("Query string \"%s\" has no password, Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"", sParamsOrig);
+             printf("Query string \"%s\" has no password, Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating program", sParamsOrig);
              printf("\n\n");
-             return EXIT_FAILURE;
+             return 1;
         }
     }
 
@@ -159,7 +158,7 @@ int main(void) {
             printf("\n");
             printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
             printf("\n\n");
-            return EXIT_FAILURE;
+            return -1;
         }
     }
 
@@ -172,7 +171,7 @@ int main(void) {
         printf("\n");
 
         mysql_free_result(res);
-        return EXIT_FAILURE;
+        return -1;
     }
 
     mysql_data_seek(res, 0);
@@ -208,7 +207,7 @@ int main(void) {
             printf("\n");
             printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
             printf("\n\n");
-            return EXIT_FAILURE;
+            return -1;
         }
     }
 
@@ -232,5 +231,5 @@ int main(void) {
         printf("Authentication failed");
     }
 
-    return EXIT_SUCCESS;
+    return 0;
 }
