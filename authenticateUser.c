@@ -28,6 +28,7 @@
 //      16-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
 //      06-Oct-2022 check for an NULL or empty QUERY_STRING environment variable
 //      08-Oct-2022 use EXIT_FAILURE and EXIT_SUCCESS on return lines
+//      18-Oct-2022 extend MySQL initialization and shutdown operations
 //  Enhancements (0):
 //
 
@@ -132,6 +133,15 @@ int main(void) {
         }
     }
 
+// initialize the MySQL client library
+
+   if (mysql_library_init(0, NULL, NULL)) {
+   printf("Cannot initialize MySQL Client library\n");
+       return EXIT_FAILURE;
+    } else {
+       printf("MySQL Client library resources assigned\n");
+    }
+
 // Initialize a connection and connect to the database if no cookie exists ---------------------------------------------
 
     if (bCookieExists == false) {
@@ -231,6 +241,18 @@ int main(void) {
     else if (bUserIsAuthenticated == false) {
         printf("Authentication failed");
     }
+
+// close the database connection created by mysql_init(NULL) -----------------------------------------------------------
+
+    mysql_close(conn);                                                                                                                                                                                              printf("\n");
+    printf("MySQL connection is closed");
+    printf("\n\n");
+
+// free resources used by the MySQL library ----------------------------------------------------------------------------
+
+    mysql_library_end();
+    printf("MySQL library resources freed");
+    printf("\n\n");
 
     return EXIT_SUCCESS;
 }
