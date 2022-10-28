@@ -20,12 +20,12 @@
 
 #define MAXLEN 1024
 
-// global declarations
+// global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
-char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
-char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
+char *sgServer = "192.168.0.13";                                                                //mysqlServer IP address
+char *sgUsername = "gjarman";                                                               // mysqlSerer logon username
+char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
@@ -41,12 +41,45 @@ int main(void) {
 
     char caSQL[SQL_LEN] = {'\0'};
 
+// check for a NULL query string ---------------------------------------------------------------------------------------
+
+//    setenv("QUERY_STRING", "number=35", 1);
+
+    sParam = getenv("QUERY_STRING");
+
+    if(sParam == NULL) {
+        printf("\n");
+        printf("Query string is empty. Expecting QUERY_STRING=\"number=<99>\". Terminating saveCornerImageNumber.cgi");
+        printf("\n\n");
+        return 1;
+    }
+
+//  get the content from QUERY_STRING and tokenize based on '&' character-----------------------------------------------
+
+    sscanf(sParam, "number=%d", &iNumber);
+
+// test for an empty QUERY_STRING --------------------------------------------------------------------------------------
+
+    if (getenv("QUERY_STRING") == NULL) {
+        printf("\n\n");
+        printf("No parameter string passed");
+        printf("\n\n");
+        return 0;
+    }
+
 // print the html content-type and CORS header block -------------------------------------------------------------------
 
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
-// Initialize a connection and connect to the database
+// * initialize the MySQL client library -------------------------------------------------------------------------------
+
+   if (mysql_library_init(0, NULL, NULL)) {
+       printf("Cannot initialize MySQL Client library\n");
+       return EXIT_FAILURE;
+   }
+
+// Initialize a connection and connect to the database -----------------------------------------------------------------
 
     conn = mysql_init(NULL);
 
@@ -58,37 +91,6 @@ int main(void) {
         printf("Error: %s\n", mysql_error(conn));
         printf("\n");
         return  EXIT_FAILURE;
-    }
-
-// check for a NULL query string ---------------------------------------------------------------------------------------
-
-//    setenv("QUERY_STRING", "number=35", 1);
-
-    sParam = getenv("QUERY_STRING");
-
-    if(sParam == NULL) {
-        printf("\n");
-        printf("Query string is empty. No parameters passed. Terminating program");
-        printf("\n\n");
-        return 1;
-    }
-
-//    printf("Test QUERY_STRING: %s", getenv("QUERY_STRING"));
-//    printf("\n\n");
-
-//  get the content from QUERY_STRING and tokenize based on '&' character-----------------------------------------------
-
-    sscanf(sParam, "number=%d", &iNumber);
-
-//    printf("Test Result: number=%d\n\n", iNumber);
-
-// test for an empty QUERY_STRING --------------------------------------------------------------------------------------
-
-    if (getenv("QUERY_STRING") == NULL) {
-        printf("\n\n");
-        printf("No parameter string passed");
-        printf("\n\n");
-        return 0;
     }
 
 // set a SQL query and update corner image number ----------------------------------------------------------------------
@@ -108,6 +110,14 @@ int main(void) {
     }
 
     mysql_free_result(res);
+
+// * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
+
+    mysql_close(conn);
+
+// * free resources used by the MySQL library --------------------------------------------------------------------------
+
+    mysql_library_end();
 
     return 0;
 }

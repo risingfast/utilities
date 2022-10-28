@@ -21,7 +21,7 @@ CFLAGS=-Wall -g -o
 SQL1FLAGS=-I/usr/include/mysql
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats
+all: authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi
 
 authenticateUer: authenticateUser.c
 	$(CC) $(CFLAGS) $@ $^ $(SQL2FLAGS)
@@ -89,8 +89,14 @@ authenticateUser: authenticateUser.c
 authenticateUser.cgi: authenticateUser.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
 
+checkAuthentication: checkAuthentication.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
+
+checkAuthentication.cgi: checkAuthentication.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
+
 file_stats: file_stats.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
 
 clean:
-	rm -f *.o *.s *.i authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats
+	rm -f *.o *.s *.i authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi

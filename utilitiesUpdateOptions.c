@@ -8,6 +8,8 @@
  *      14-Aug-2022 add leftlinks setting
  *      15-Sep-2022 add Access-Control-Allow-Origin: * CORS header
  *      03-Oct-2022 change 'Show Current User' to 'Show Session Log'
+ *      26-Oct-2022 clean up comments
+ *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
  *  Enhancements:
 */
 
@@ -23,14 +25,12 @@
 
 #define MAXLEN 1024
 
-// global declarations
+// global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
-// char *sgServer = "35.188.123.150"                                                              // mysqlServer GCP IP address
-char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
-// char *sgUserName = "root";                                                                     // mysqlServer GCP logon name
-char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
+char *sgServer = "192.168.0.13";                                                                //mysqlServer IP address
+char *sgUsername = "gjarman";                                                              // mysqlServer logon username
+char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
@@ -57,6 +57,64 @@ int main(void) {
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
+// check for a NULL query string --------------------------------------------------------------------------------------
+
+//    setenv("QUERY_STRING", "behaviour=Randomized&background=backgroundFlowersOnFabric&showuser=Yes&showlog=No&leftlinks=Long", 1);   // uncomment for testing only
+
+    sParam = getenv("QUERY_STRING");
+
+    if(sParam == NULL) {
+        printf("Query string is empty. Expecting QUERY_STRING=\"behaviour=<>&background=<>&showUser=<>&showLog=<>&leftLinks=<>\". Terminating utiltiesUpdateOptions.cgi");
+        printf("\n\n");
+        return 1;
+    }
+
+//  get the content from QUERY_STRING and tokenize based on '&' character----------------------------------------------
+
+    sTemp = strtok(sParam, caDelimiter);
+    sscanf(sTemp, "behaviour=%[^\n]s", caStringBuf);
+    sTemp = fUrlDecode(caStringBuf);
+    strcpy(caBehaviour, sTemp);
+    free(sTemp);
+
+    sTemp = strtok(NULL, caDelimiter);
+    sscanf(sTemp, "background=%[^\n]s", caStringBuf);
+    sTemp = fUrlDecode(caStringBuf);
+    strcpy(caBackground, sTemp);
+    free(sTemp);
+
+
+    sTemp = strtok(NULL, caDelimiter);
+    sscanf(sTemp, "showuser=%[^\n]s", caStringBuf);
+    sTemp = fUrlDecode(caStringBuf);
+    strcpy(caShowUser, sTemp);
+    free(sTemp);
+
+
+    sTemp = strtok(NULL, caDelimiter);
+    sscanf(sTemp, "showlog=%[^\n]s", caStringBuf);
+    sTemp = fUrlDecode(caStringBuf);
+    strcpy(caShowLog, sTemp);
+    free(sTemp);
+
+
+    sTemp = strtok(NULL, caDelimiter);
+    sscanf(sTemp, "leftlinks=%[^\n]s", caStringBuf);
+    sTemp = fUrlDecode(caStringBuf);
+    strcpy(caLeftLinks, sTemp);
+    free(sTemp);
+
+
+    printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);  // uncomment for testing only
+
+// * initialize the MySQL client library -------------------------------------------------------------------------------
+
+   if (mysql_library_init(0, NULL, NULL)) {
+       printf("Cannot initialize MySQL Client library\n");
+
+       return EXIT_FAILURE;
+   }
+
 // Initialize a connection and connect to the database
 
     conn = mysql_init(NULL);
@@ -69,55 +127,6 @@ int main(void) {
         printf("Error: %s\n", mysql_error(conn));
         printf("\n");
         return  EXIT_FAILURE;
-    }
-
-// check for a NULL query string --------------------------------------------------------------------------------------
-
-//    setenv("QUERY_STRING", "behaviour=Randomized&background=Test%20Flowers&showuser=Yes&showlog=No&leftlinks=Long", 1);   // uncomment for testing only
-
-    sParam = getenv("QUERY_STRING");
-
-    if(sParam == NULL) {
-        printf("\n");
-        printf("Query string is empty. No parameters passed. Terminating program");
-        printf("\n\n");
-        return 1;
-    }
-
-//    printf("QUERY_STRING: %s", getenv("QUERY_STRING"));                                 // uncomment for testing only
-//    printf("\n\n");                                                                     // uncomment for testing only
-
-//  get the content from QUERY_STRING and tokenize based on '&' character----------------------------------------------
-
-    sTemp = strtok(sParam, caDelimiter);
-    sscanf(sTemp, "behaviour=%[^\n]s", caStringBuf);
-    strcpy(caBehaviour, fUrlDecode(caStringBuf));
-
-    sTemp = strtok(NULL, caDelimiter);
-    sscanf(sTemp, "background=%[^\n]s", caStringBuf);
-    strcpy(caBackground, fUrlDecode(caStringBuf));
-
-    sTemp = strtok(NULL, caDelimiter);
-    sscanf(sTemp, "showuser=%[^\n]s", caStringBuf);
-    strcpy(caShowUser, fUrlDecode(caStringBuf));
-
-    sTemp = strtok(NULL, caDelimiter);
-    sscanf(sTemp, "showlog=%[^\n]s", caStringBuf);
-    strcpy(caShowLog, fUrlDecode(caStringBuf));
-
-    sTemp = strtok(NULL, caDelimiter);
-    sscanf(sTemp, "leftlinks=%[^\n]s", caStringBuf);
-    strcpy(caLeftLinks, fUrlDecode(caStringBuf));
-
-//    printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);  // uncomment for testing only
-
-// test for an empty QUERY_STRING -------------------------------------------------------------------------------------
-
-    if (getenv("QUERY_STRING") == NULL) {
-        printf("\n\n");
-        printf("No parameter string passed");
-        printf("\n\n");
-        return 0;
     }
 
 // set a SQL query and update corner image behaviour ------------------------------------------------------------------
@@ -200,7 +209,17 @@ int main(void) {
         return -1;
     }
 
+// free memory allocated to result set 'res' ---------------------------------------------------------------------------
+
     mysql_free_result(res);
+
+// * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
+
+    mysql_close(conn);
+
+// * free resources used by the MySQL library --------------------------------------------------------------------------
+
+    mysql_library_end();
 
     return 0;
 }

@@ -6,9 +6,11 @@
 //      30-May-2022 started by copying showText.c
 //      31-May-2022 change datafile from cornerImage.txt to cornerImageList.txt
 //      16-Sep-2022 add Access-Control-Allow-Origin: * http CORS header
+//      25-Oct-2022 clean up comments
+//      25-Oct-2022 add a guard to fopen to check for NULL
 //  Enhancements(0):
 
-// includes and defines
+// includes and defines ------------------------------------------------------------------------------------------------
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,15 +20,17 @@
 int main() {
 
     FILE *f;
-    f = fopen (DATAFILE, "r");
+    if ((f = fopen (DATAFILE, "r")) == NULL) {
+        return EXIT_FAILURE;
+    }
     char cyText[MAXLEN];
 
-// print the html content-type header and CORS head block
+// print the html content-type header and CORS head block --------------------------------------------------------------
 
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
-// read text from the file and print it
+// read text from the file and print it --------------------------------------------------------------------------------
 
     while (fgets(cyText, MAXLEN, f) != NULL) {
         printf("%s", cyText);

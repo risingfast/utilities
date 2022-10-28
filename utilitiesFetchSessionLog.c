@@ -6,6 +6,8 @@
  *  Log:
  *      24-Jul-2022 - started. by copying from bookCharacters.c 
  *      15-Sep-2022 add Access-Control-Allow-Origin CORS header
+ *      26-Oct-2022 clean up comments
+ *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
  *  Enhancements:
 */
 
@@ -21,12 +23,12 @@
 
 #define MAXLEN 1024
 
-// global declarations
+// global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                               //mysqlServer IP address
-char *sgUsername = "gjarman";                                                              // mysqlSerer logon username
-char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
+char *sgServer = "192.168.0.13";                                                                //mysqlServer IP address
+char *sgUsername = "gjarman";                                                               // mysqlSerer logon username
+char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
@@ -47,12 +49,20 @@ int main(void) {
 
     char caSQL[SQL_LEN] = {'\0'};
 
-// print the html content-type header and CORS header block -----------------------------------------------------------
+// print the html content-type header and CORS header block ------------------------------------------------------------
 
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
-// Initialize a connection and connect to the database ----------------------------------------------------------------
+// * initialize the MySQL client library -------------------------------------------------------------------------------
+
+   if (mysql_library_init(0, NULL, NULL)) {
+       printf("Cannot initialize MySQL Client library\n");
+
+       return EXIT_FAILURE;
+   }
+
+// Initialize a connection and connect to the database -----------------------------------------------------------------
 
     conn = mysql_init(NULL);
 
@@ -91,7 +101,7 @@ void fPrintResult(char *caSQL)
         return;
     }
 
-// store the result of the query
+// store the result of the query ---------------------------------------------------------------------------------------
 
     res = mysql_store_result(conn);
     if(res == NULL)
@@ -103,14 +113,14 @@ void fPrintResult(char *caSQL)
         return;
     }
     
-// fetch the number of fields in the result
+// fetch the number of fields in the result ----------------------------------------------------------------------------
     
     iColCount = mysql_num_fields(res);
     fields = mysql_fetch_fields(res);
     
     mysql_data_seek(res, 0);
     
-// print the column headings
+// print the column headings -------------------------------------------------------------------------------------------
 
     for(int i = 0; i < iColCount; i++)
     {
@@ -122,7 +132,7 @@ void fPrintResult(char *caSQL)
     }
     printf("\n");
 
-// print each row of results
+// print each row of results -------------------------------------------------------------------------------------------
 
     while((row = mysql_fetch_row(res)) != NULL)
     {
@@ -143,5 +153,16 @@ void fPrintResult(char *caSQL)
         }
     }
 
-    mysql_free_result(res);
+// free memory allocated to result set 'res' ---------------------------------------------------------------------------
+
+mysql_free_result(res);
+
+// * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
+
+    mysql_close(conn);
+
+// * free resources used by the MySQL library --------------------------------------------------------------------------
+
+    mysql_library_end();
+
 }

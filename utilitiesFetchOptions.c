@@ -5,7 +5,8 @@
  *      http://www6.uniovi.es/cscene/topics/web/cs2-12.xml.html
  *  Log:
  *      04-Jan-2022 copied from bookInquiry2.c
- *      add Acces-Control-Allow-Origin: * CORS header
+ *      16-Sep-2022 add Acces-Control-Allow-Origin: * CORS header
+ *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
  *  Enhancements:
 */
 
@@ -22,12 +23,12 @@
 
 #define MAXLEN 1024
 
-// global declarations
+// global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address 
+char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address
 char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
-char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
+char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
@@ -54,7 +55,15 @@ int main(void) {
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
-// Initialize a connection and connect to the database$$
+// * initialize the MySQL client library -------------------------------------------------------------------------------
+
+   if (mysql_library_init(0, NULL, NULL)) {
+       printf("Cannot initialize MySQL Client library\n");
+
+       return EXIT_FAILURE;
+   }
+
+// Initialize a connection and connect to the database -----------------------------------------------------------------
 
     conn = mysql_init(NULL);
 
@@ -65,6 +74,7 @@ int main(void) {
         printf("\n\n");
         printf("Error: %s\n", mysql_error(conn));
         printf("\n");
+
         return  EXIT_FAILURE;
     }
 
@@ -73,7 +83,7 @@ int main(void) {
                    ", WO.`Option Setting` as 'Setting' "
                    "FROM risingfast.`Web Options` WO ");
     fPrintResult(sTopic, sFilter, caSQL);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
@@ -85,10 +95,11 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
+
         return;
     }
 
-// store the result of the query
+// store the result of the query ---------------------------------------------------------------------------------------
 
     res = mysql_store_result(conn);
     if(res == NULL)
@@ -97,10 +108,11 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
         printf("\n");
 
         mysql_free_result(res);
+
         return;
     }
     
-// fetch the number of fields in the result
+// fetch the number of fields in the result ----------------------------------------------------------------------------
     
     iColCount = mysql_num_fields(res);
     
@@ -135,5 +147,16 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
         printf("\n");
     }
 
+// free memory allocated to result set 'res' ---------------------------------------------------------------------------
+
     mysql_free_result(res);
+
+// * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
+
+    mysql_close(conn);
+
+// * free resources used by the MySQL library --------------------------------------------------------------------------
+
+    mysql_library_end();
+
 }
