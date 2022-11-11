@@ -8,12 +8,8 @@
  *      15-Sep-2022 add Access-Control-Allow-Origin CORS header
  *      26-Oct-2022 clean up comments
  *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
- *      07-Nov-2022 replace sprinrtf() with asprintf()
  *  Enhancements:
 */
-
-#define _GNU_SOURCE
-#define MAXLEN 1024
 
 #include <mysql.h>
 #include <stdio.h>
@@ -22,6 +18,10 @@
 #include <string.h>
 #include <ctype.h>
 #include "../shared/rf50.h"
+
+#define SQL_LEN 5000
+
+#define MAXLEN 1024
 
 // global declarations -------------------------------------------------------------------------------------------------
 
@@ -35,11 +35,19 @@ MYSQL_RES *res;
 MYSQL_ROW row;
 MYSQL_FIELD *fields;
 
+int  iTitleID = 0;
+char *sParams = NULL;
+char *sSubstring = NULL;
+char *sFilter =  NULL;
+char caDelimiter[] = "&";
+char caFilterTemp[MAXLEN] = {'\0'};
+char caFilter[MAXLEN + 2] = {'\0'};
+
 void fPrintResult(char *);
 
 int main(void) {
 
-    char *strSQL = NULL;
+    char caSQL[SQL_LEN] = {'\0'};
 
 // print the html content-type header and CORS header block ------------------------------------------------------------
 
@@ -68,7 +76,7 @@ int main(void) {
         return  EXIT_FAILURE;
     }
 
-    asprintf(&strSQL, "SELECT WS.`Session ID`, "
+    sprintf(caSQL, "SELECT WS.`Session ID`, "
                     "       WU.`User Short Name`, "
                     "       WU.`User Full Name`, "
                     "       WS.`Session Datetime` "
@@ -76,17 +84,16 @@ int main(void) {
                     " LEFT JOIN risingfast.`Web Users` WU ON WS.`User ID` = WU.`User ID` "
                     " ORDER BY WS.`Session ID` DESC");
 
-    fPrintResult(strSQL);
-    free(strSQL);
-
-    return EXIT_SUCCESS;
+    fPrintResult(caSQL);
+    
+    return 0;
 }
 
-void fPrintResult(char *strSQL) {
-
+void fPrintResult(char *caSQL)
+{
     int iColCount = 0;
 
-    if(mysql_query(conn, strSQL) != 0)
+    if(mysql_query(conn, caSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));

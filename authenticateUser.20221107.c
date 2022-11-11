@@ -28,15 +28,8 @@
 //      16-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
 //      06-Oct-2022 check for an NULL or empty QUERY_STRING environment variable
 //      08-Oct-2022 use EXIT_FAILURE and EXIT_SUCCESS on return lines
-//      07-Nov-2022 change sprintf() to asprintf()
 //  Enhancements (0):
 //
-
-#define HTML_LEN 60                                                         // Max length of input string from html form
-#define CGI_LEN HTML_LEN + 6                                                    // 5 for "data=" and 1 for trailing NULL
-#define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                                             // size of formatted characer UUID
-#define MAXLEN 1024
-#define _GNU_SOURCE
 
 #include <mysql.h>
 #include <stdio.h>
@@ -47,36 +40,41 @@
 #include <string.h>
 #include <ctype.h>
 #include "../shared/rf50.h"
+#define HTML_LEN 60                                     // Max length of input string from html form
+#define CGI_LEN HTML_LEN + 6                                // 5 for "data=" and 1 for trailing NULL
+#define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                         // size of formatted characer UUID
+#define MAXLEN 1024
+#define SQL_LEN 5000                                                      // max length of SQL query
 
-// global declarations -------------------------------------------------------------------------------------------------
+// global declarations
 
-char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address
-char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
-char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
+char *sgServer = "192.168.0.13";                                        //mysqlServer LCL IP address
+char *sgUsername = "gjarman";                                       // mysqlSerer LCL logon username
+char *sgPassword = "Mpa4egu$";                                 // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                             // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
 MYSQL_ROW row;
 
 int main(void) {
-    int    iUserID = 0;                                                                  // user id from web users table
-    char   *sParams;                                                                      // pointer to the QUERY_STRING
-    char   sParamsOrig[200] = "\0";                                        // pointer to the QUERY_STRING original value
-    char   *sSubstring;                                                                      // pointer to the substring
-    char   caDelimiter[] = "&";                                                                       // token delimiter
-    char   caUsername[60] = "\0";                                                                      // username array
-    char   caPassword[60] = "\0";                                                                      // password array
-    char   *strSQL1 = NULL;                                                            // array to hold SQL query string
-    char   *strSQL2 = NULL;                                                            // array to hold SQL query string
-    char   caCookieVal[UUIDTEXTSIZE];                                                                     // UUID cookie
-    bool   bCookieExists = false;                                            // flag to indicate a session cookie exists
-    bool   bUserIsAuthenticated = false;                                       // flag to indicate user is authenticated
-    uuid_t myUuid;                                                                   // raw or binary UUID type variable
+    int    iUserID = 0;                                              // user id from web users table
+    char   *sParams;                                                  // pointer to the QUERY_STRING
+    char   sParamsOrig[200] = "\0";                    // pointer to the QUERY_STRING original value
+    char   *sSubstring;                                                  // pointer to the substring
+    char   caDelimiter[] = "&";                                                   // token delimiter
+    char   caUsername[60] = "\0";                                                  // username array
+    char   caPassword[60] = "\0";                                                  // password array
+    char   caSQL1[SQL_LEN] = {'\0'};                               // array to hold SQL query string
+    char   caSQL2[SQL_LEN] = {'\0'};                               // array to hold SQL query string
+    char   caCookieVal[UUIDTEXTSIZE];                                                 // UUID cookie
+    bool   bCookieExists = false;                        // flag to indicate a session cookie exists
+    bool   bUserIsAuthenticated = false;                   // flag to indicate user is authenticated
+    uuid_t myUuid;                                               // raw or binary UUID type variable
 
 
-//  setenv("QUERY_STRING", "Username=scook&Password=Sssp4atta", 1);                        // uncomment for testing only
-   setenv("QUERY_STRING", "Username=gjarman&Password=Gssp4atta", 1);                       // uncomment for testing only
+//  setenv("QUERY_STRING", "Username=scook&Password=Sssp4atta", 1);           // uncomment for testing only
+//  setenv("QUERY_STRING", "Username=gjarman&Password=Mpa4egu9", 1);          // uncomment for testing only
 
 // check for an existing oookie named 'gj2020InstanceID' ---------------------------------------------------------------
 
@@ -134,13 +132,6 @@ int main(void) {
         }
     }
 
-// * initialize the MySQL client library -------------------------------------------------------------------------------
-
-   if (mysql_library_init(0, NULL, NULL)) {
-       printf("Cannot initialize MySQL Client library\n");
-       return EXIT_FAILURE;
-   }
-
 // Initialize a connection and connect to the database if no cookie exists ---------------------------------------------
 
     if (bCookieExists == false) {
@@ -159,11 +150,11 @@ int main(void) {
     
     // check the username and password against values on mySQL `Web Users` ---------------------------------------------
 
-        asprintf(&strSQL1, "SELECT WU.`User ID`, WU.`User Password` "
+        sprintf(caSQL1, "SELECT WU.`User ID`, WU.`User Password` "
                        "FROM risingfast.`Web Users` WU "
                        "WHERE WU.`User Short Name` = '%s'", caUsername);
     
-        if(mysql_query(conn, strSQL1) != 0)
+        if(mysql_query(conn, caSQL1) != 0)
         {
             printf("\n");
             printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
@@ -209,10 +200,10 @@ int main(void) {
 
     //  create a session record in web sessions table  with the new UUID -----------------------------------------------
 
-        asprintf(&strSQL2, "INSERT INTO risingfast.`Web Sessions` "
+        sprintf(caSQL2, "INSERT INTO risingfast.`Web Sessions` "
                         "(`User ID`, `Session Cookie`) VALUES (%d, '%s')", iUserID, caCookieVal);
 
-        if(mysql_query(conn, strSQL2) != 0)
+        if(mysql_query(conn, caSQL2) != 0)
         {
             printf("\n");
             printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
@@ -240,23 +231,6 @@ int main(void) {
     else if (bUserIsAuthenticated == false) {
         printf("Authentication failed");
     }
-
-// * free memory allocated to the 'res' result set ---------------------------------------------------------------------
-
-    mysql_free_result(res);
-
-// * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
-
-    mysql_close(conn);
-
-// * free resources used by the MySQL library --------------------------------------------------------------------------
-
-    mysql_library_end();
-
-// free the allocated space for the SQL strings ------------------------------------------------------------------------
-
-    free(strSQL1);
-    free(strSQL2);
 
     return EXIT_SUCCESS;
 }

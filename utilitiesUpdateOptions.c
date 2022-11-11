@@ -10,8 +10,11 @@
  *      03-Oct-2022 change 'Show Current User' to 'Show Session Log'
  *      26-Oct-2022 clean up comments
  *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
+ *      07-Nov-2022 change sprintf() to asprintf()
  *  Enhancements:
 */
+
+#define _GNU_SOURCE
 
 #include <mysql.h>
 #include <stdio.h>
@@ -20,8 +23,6 @@
 #include <string.h>
 #include <ctype.h>
 #include "../shared/rf50.h"
-
-#define SQL_LEN 5000
 
 #define MAXLEN 1024
 
@@ -50,7 +51,7 @@ char caDelimiter[] = "&";
 
 int main(void) {
 
-    char caSQL[SQL_LEN] = {'\0'};
+    char *strSQL = NULL;
 
 // print the html content-type and CORS http header block -------------------------------------------------------------
 
@@ -66,7 +67,7 @@ int main(void) {
     if(sParam == NULL) {
         printf("Query string is empty. Expecting QUERY_STRING=\"behaviour=<>&background=<>&showUser=<>&showLog=<>&leftLinks=<>\". Terminating utiltiesUpdateOptions.cgi");
         printf("\n\n");
-        return 1;
+        return EXIT_FAILURE;
     }
 
 //  get the content from QUERY_STRING and tokenize based on '&' character----------------------------------------------
@@ -131,82 +132,77 @@ int main(void) {
 
 // set a SQL query and update corner image behaviour ------------------------------------------------------------------
 
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
+    asprintf(&strSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Corner Image Choice';", caBehaviour);
 
-//    printf("SQL: %s\n\n", caSQL);                                                      // uncomment for testing only
 
-    if(mysql_query(conn, caSQL) != 0)
+    if(mysql_query(conn, strSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
 // set a SQL query and update background image choice------------------------------------------------------------------
 
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
+    asprintf(&strSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Background Choice';", caBackground);
 
-//     printf("SQL: %s\n\n", caSQL);                                                      // uncomment for testing only
 
-    if(mysql_query(conn, caSQL) != 0)
+    if(mysql_query(conn, strSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
 // set a SQL query and update show current user -----------------------------------------------------------------------
 
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
+    asprintf(&strSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Show Session Log';", caShowUser);
 
-//    printf("SQL: %s\n\n", caSQL);                                                       // uncomment for testing only
 
-    if(mysql_query(conn, caSQL) != 0)
+    if(mysql_query(conn, strSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
 // set a SQL query and update show access log -------------------------------------------------------------------------
 
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
+    asprintf(&strSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Show Server Log';", caShowLog);
 
-//    printf("SQL: %s\n\n", caSQL);                                                       // uncomment for testing only
 
-    if(mysql_query(conn, caSQL) != 0)
+    if(mysql_query(conn, strSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
 // set a SQL query and update left links setting ----------------------------------------------------------------------
 
-    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
+    asprintf(&strSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = '%s' "
                    "WHERE `Option Name` = 'Left Links';", caLeftLinks);
 
-//    printf("SQL: %s\n\n", caSQL);                                                       // uncomment for testing only
 
-    if(mysql_query(conn, caSQL) != 0)
+    if(mysql_query(conn, strSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
-        return -1;
+        return EXIT_FAILURE;
     }
 
 // free memory allocated to result set 'res' ---------------------------------------------------------------------------
@@ -220,6 +216,7 @@ int main(void) {
 // * free resources used by the MySQL library --------------------------------------------------------------------------
 
     mysql_library_end();
+    free(strSQL);
 
-    return 0;
+    return EXIT_SUCCESS;
 }

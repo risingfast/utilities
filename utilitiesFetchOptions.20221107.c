@@ -5,14 +5,10 @@
  *      http://www6.uniovi.es/cscene/topics/web/cs2-12.xml.html
  *  Log:
  *      04-Jan-2022 copied from bookInquiry2.c
- *      04-Oct-2022 add Acces-Control-Allow-Origin: * CORS header
- *      06-Nov-2022 changes sprintf() to as asprintf()
- *      07-Nov-2022 clean up comments and return arguments
- *      07-Nov-2022 remove unused variable declarations
+ *      add Acces-Control-Allow-Origin: * CORS header
  *  Enhancements:
 */
 
-#define _GNU_SOURCE
 #include <mysql.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,32 +17,44 @@
 #include <ctype.h>
 #include "../shared/rf50.h"
 
+#define SQL_LEN 5000
 #define HDG_LEN 1000
+
 #define MAXLEN 1024
 
-// global declarations -------------------------------------------------------------------------------------------------
+// global declarations
 
-char *sgServer = "192.168.0.13";                                                           // mysqlServer LCL IP address
-char *sgUsername = "gjarman";                                                          // mysqlServer LCL logon username
-char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
+char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address 
+char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
+char *sgPassword = "Mpa4egu$";                                                    // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
 MYSQL_ROW row;
 
-void fPrintResult(char *);
+char caText[MAXLEN] = {'\0'};
+char caTopic[MAXLEN] = {'\0'};
+char *sTopic = NULL;
+char caFilterTemp[MAXLEN] = {'\0'};
+char caFilter[MAXLEN + 2] = {'\0'};
+char *sFilter = NULL;
+char *sParams = NULL;
+char *sSubstring = NULL;
+char caDelimiter[] = "&";
+
+void fPrintResult(char *, char *, char *);
 
 int main(void) {
 
-    char *strSQL = NULL;
+    char caSQL[SQL_LEN] = {'\0'};
 
 // print the html content type header and CORS header block ------------------------------------------------------------
 
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
-// Initialize a connection and connect to the database -----------------------------------------------------------------
+// Initialize a connection and connect to the database$$
 
     conn = mysql_init(NULL);
 
@@ -60,19 +68,19 @@ int main(void) {
         return  EXIT_FAILURE;
     }
 
-    asprintf(&strSQL, "SELECT WO.`Option ID` as 'ID' "
+    sprintf(caSQL, "SELECT WO.`Option ID` as 'ID' "
                    ", WO.`Option Name` as 'Name' "
                    ", WO.`Option Setting` as 'Setting' "
                    "FROM risingfast.`Web Options` WO ");
-    fPrintResult(strSQL);
-    return EXIT_SUCCESS;
+    fPrintResult(sTopic, sFilter, caSQL);
+    return 0;
 }
 
-void fPrintResult(char *strSQL)
+void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
 {
     int iColCount = 0;
 
-    if(mysql_query(conn, strSQL) != 0)
+    if(mysql_query(conn, caSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
@@ -80,7 +88,7 @@ void fPrintResult(char *strSQL)
         return;
     }
 
-// store the result of the query ---------------------------------------------------------------------------------------
+// store the result of the query
 
     res = mysql_store_result(conn);
     if(res == NULL)
@@ -92,13 +100,13 @@ void fPrintResult(char *strSQL)
         return;
     }
     
-// fetch the number of fields in the result ----------------------------------------------------------------------------
+// fetch the number of fields in the result
     
     iColCount = mysql_num_fields(res);
     
     mysql_data_seek(res, 0);
     
-// print each row of results -------------------------------------------------------------------------------------------
+// print each row of results
 
      while((row = mysql_fetch_row(res)) != NULL)
     {
@@ -128,5 +136,4 @@ void fPrintResult(char *strSQL)
     }
 
     mysql_free_result(res);
-    free(strSQL);
 }

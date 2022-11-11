@@ -5,13 +5,8 @@
  *  Log:
  *      25-Jun-2022 start by copying utilitiesUpdateOptions.c and modifying
  *      16-Sep-2022 add Access-Control-Allow-Origin: * http CORS header
- *      07-Nov-2022 replace sprintf(() with asprintf()
- *      07-Nov-2022 clean up return values
  *  Enhancements:
 */
-
-#define MAXLEN 1024
-#define _GNU_SOURCE
 
 #include <mysql.h>
 #include <stdio.h>
@@ -20,6 +15,10 @@
 #include <string.h>
 #include <ctype.h>
 #include "../shared/rf50.h"
+
+#define SQL_LEN 5000
+
+#define MAXLEN 1024
 
 // global declarations -------------------------------------------------------------------------------------------------
 
@@ -40,9 +39,11 @@ char caDelimiter[] = "&";
 
 int main(void) {
 
-    char *strSQL = NULL;
+    char caSQL[SQL_LEN] = {'\0'};
 
 // check for a NULL query string ---------------------------------------------------------------------------------------
+
+//    setenv("QUERY_STRING", "number=35", 1);
 
     sParam = getenv("QUERY_STRING");
 
@@ -50,7 +51,7 @@ int main(void) {
         printf("\n");
         printf("Query string is empty. Expecting QUERY_STRING=\"number=<99>\". Terminating saveCornerImageNumber.cgi");
         printf("\n\n");
-        return EXIT_FAILURE;
+        return 1;
     }
 
 //  get the content from QUERY_STRING and tokenize based on '&' character-----------------------------------------------
@@ -63,7 +64,7 @@ int main(void) {
         printf("\n\n");
         printf("No parameter string passed");
         printf("\n\n");
-        return EXIT_FAILURE;
+        return 0;
     }
 
 // print the html content-type and CORS header block -------------------------------------------------------------------
@@ -94,16 +95,18 @@ int main(void) {
 
 // set a SQL query and update corner image number ----------------------------------------------------------------------
 
-    asprintf(&strSQL, "UPDATE risingfast.`Web Options` "
+    sprintf(caSQL, "UPDATE risingfast.`Web Options` "
                    "SET `Option Setting` = %d "
                    "WHERE `Option Name` = 'Corner Image Number';", iNumber);
 
-    if(mysql_query(conn, strSQL) != 0)
+    printf("SQL used: %s\n\n", caSQL);
+
+    if(mysql_query(conn, caSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
         printf("\n\n");
-        return EXIT_FAILURE;
+        return -1;
     }
 
     mysql_free_result(res);
@@ -115,7 +118,6 @@ int main(void) {
 // * free resources used by the MySQL library --------------------------------------------------------------------------
 
     mysql_library_end();
-    free(strSQL);
 
-    return EXIT_SUCCESS;
+    return 0;
 }

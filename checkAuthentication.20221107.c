@@ -7,15 +7,7 @@
 //      18-Jul-2022 -- started by copying from simplest.c
 //      21-Jul-2022 -- add unknown response for non-authenticated user
 //      20-Oct-2022 extend MySQL initialization and shutdown operations
-//      07-Nov-2022 change sprintf() to asprintf()
 //  Enhancements(0)
-
-#define _GNU_SOURCE
-#define HTML_LEN 60                                     // Max length of input string from html form
-#define CGI_LEN HTML_LEN + 6                                // 5 for "data=" and 1 for trailing NULL
-#define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                         // size of formatted characer UUID
-#define MAX_LEN 1024
-
 
 #include <stdio.h>
 #include <mysql.h>
@@ -26,6 +18,12 @@
 #include <string.h>
 #include <ctype.h>
 #include "../shared/rf50.h"
+
+#define HTML_LEN 60                                     // Max length of input string from html form
+#define CGI_LEN HTML_LEN + 6                                // 5 for "data=" and 1 for trailing NULL
+#define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                         // size of formatted characer UUID
+#define MAX_LEN 1024
+#define SQL_LEN 5000                                                      // max length of SQL query
 
 char *sgServer = "192.168.0.13";                                        //mysqlServer LCL IP address
 char *sgUsername = "gjarman";                                       // mysqlSerer LCL logon username
@@ -47,14 +45,14 @@ int main(void) {
     char caUserShortName[MAX_LEN] = {'\0'};
     char caUserFullName[MAX_LEN] = {'\0'};
     char caUserEmail[MAX_LEN] = {'\0'};
-    char *strSQL = NULL;
+    char caSQL1[SQL_LEN] = {'\0'};
     char *token;
 
 //    setenv("HTTP_COOKIE", "cookie1=18afes7a7; cookie2=28afes7a8; cookie4=48afes710; gj2020InstanceID=b471bfac-122b-4053-84e3-dddb374619ff; G_ENABLED_IDPS=google", 1);
 //    setenv("HTTP_COOKIE", "cookie2=28afes7a8; cookie4=48afes710; gj2020InstanceID=b471bfac-122b-4053-84e3-dddb374619ff; G_ENABLED_IDPS=google; cookie1=18afes7a7", 1);
 //    setenv("HTTP_COOKIE", "cookie2=28afes7a8; cookie4=48afes710; G_ENABLED_IDPS=google; cookie1=18afes7a7", 1);
 
-// print the html content type and <head> block ------------------------------------------------------------------------
+// print the html content type and <head> block -----------------------------------------------------------------------
 
    printf("Content-type: text/html\n");
    printf("Access-Control-Allow-Origin: *\n\n");
@@ -70,7 +68,7 @@ int main(void) {
         printf("%s\n", "Unknown");
         printf("%s\n", "Unknown");
         printf("%s\n", "Unknown");
-        return EXIT_FAILURE;
+        return -1;
     } else if (strcpy(caEnvVars, getenv("HTTP_COOKIE")) == NULL) {
         bCookieExists = false;
     } else if (strstr(caEnvVars, "gj2020InstanceID") == NULL) {
@@ -86,7 +84,7 @@ int main(void) {
         }
     }
 
-// fetch the username and session profile matching the session cookie --------------------------------------------------
+// fetch the username and session profile matching the session cookie
 
     if (bCookieExists) {
 
@@ -106,10 +104,10 @@ int main(void) {
             printf("\n\n");
             printf("Error: %s\n", mysql_error(conn));
             printf("\n");
-            return EXIT_FAILURE;
+            return  EXIT_FAILURE;
         }
 
-        asprintf(&strSQL, "SELECT WS.`Session ID`, "
+        sprintf(caSQL1, "SELECT WS.`Session ID`, "
                         "       WS.`User ID`, "
                         "       WU.`User Short Name`, "
                         "       WU.`User Full Name`, "
@@ -119,7 +117,7 @@ int main(void) {
                         " LEFT JOIN risingfast.`Web Users` WU ON WS.`User ID` = WU.`User ID` "
                         " WHERE WS.`Session Cookie` = '%s'", caCookieVal);
 
-        if(mysql_query(conn, strSQL) != 0)
+        if(mysql_query(conn, caSQL1) != 0)
         {
             printf("\n");
             printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
@@ -136,13 +134,13 @@ int main(void) {
             printf("\n");
 
             mysql_free_result(res);
-            return EXIT_FAILURE;
+            return -1;
         }
 
         mysql_data_seek(res, 0);
 
 
-// fetch the password for the user from the database and validate against the password input ---------------------------
+    // fetch the password for the user from the database and validate against the password input
 
         if((row = mysql_fetch_row(res)) != NULL)
         {
@@ -163,7 +161,7 @@ int main(void) {
 
         mysql_library_end();
 
-//        return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
     }
 
 // print the html page content type and <head> block -------------------------------------------------------------------
@@ -185,7 +183,6 @@ int main(void) {
         printf("%s\n", "Unknown");
         printf("%s\n", "Unknown");
     }
-    free(strSQL);
 
     return EXIT_SUCCESS;
 }

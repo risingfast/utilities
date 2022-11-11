@@ -5,8 +5,11 @@
  *  Log:
  *      25-Jun-2022 copied from utilitiesFetchOptions.c
  *      15-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
+ *      05-Nov-2022 use asprintf() instead of sprintf to define strSQL
  *  Enhancements:
 */
+
+#define _GNU_SOURCE
 
 #include <mysql.h>
 #include <stdio.h>
@@ -21,12 +24,12 @@
 
 #define MAXLEN 1024
 
-// global declarations
+// global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                //mysqlServer LCL IP address 
-char *sgUsername = "gjarman";                                                   // mysqlSerer LCL logon username
-char *sgPassword = "Mpa4egu$";                                                  // password to connect to mysqlserver
-char *sgDatabase = "risingfast";                                                // default database name on mysqlserver
+char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address
+char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
+char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
+char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
 
 MYSQL *conn;
 MYSQL_RES *res;
@@ -46,14 +49,21 @@ void fPrintResult(char *, char *, char *);
 
 int main(void) {
 
-    char caSQL[SQL_LEN] = {'\0'};
+    char *strSQL = NULL;
 
-// print the html content type header and CORS header block -----------------------------------------------------------------------
+// print the html content type header and CORS header block ------------------------------------------------------------
 
     printf("Content-type: text/html\n");
     printf("Access-Control-Allow-Origin: *\n\n");
 
-// Initialize a connection and connect to the database$$
+// * initialize the MySQL client library -------------------------------------------------------------------------------
+
+   if (mysql_library_init(0, NULL, NULL)) {
+       printf("Cannot initialize MySQL Client library\n");
+       return EXIT_FAILURE;
+   }
+
+// Initialize a connection and connect to the database -----------------------------------------------------------------
 
     conn = mysql_init(NULL);
 
@@ -67,18 +77,31 @@ int main(void) {
         return  EXIT_FAILURE;
     }
 
-    sprintf(caSQL, "SELECT WO.`Option Setting` "
-                   "FROM risingfast.`Web Options` WO "
-                   "WHERE `Option Name` = 'Corner Image Number';");
-    fPrintResult(sTopic, sFilter, caSQL);
+// set a SQL query to select the corner image number from the options table --------------------------------------------
+
+    asprintf(&strSQL, "SELECT WO.`Option Setting` "
+                    "FROM risingfast.`Web Options` WO "
+                    "WHERE `Option Name` = 'Corner Image Number';");
+
+    fPrintResult(sTopic, sFilter, strSQL);
+
+// * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
+
+    mysql_close(conn);
+
+// * free resources used by the MySQL library --------------------------------------------------------------------------
+
+    mysql_library_end();
+
+    free(strSQL);
     return 0;
 }
 
-// function to execcute the sql and print the corner image number result
+// function to execcute the sql and print the corner image number result -----------------------------------------------
 
-void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
+void fPrintResult(char *caTopic, char *caFilter, char *strSQL)
 {
-    if(mysql_query(conn, caSQL) != 0)
+    if(mysql_query(conn, strSQL) != 0)
     {
         printf("\n");
         printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
@@ -86,7 +109,7 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
         return;
     }
 
-// store the result of the query
+// store the result of the query ---------------------------------------------------------------------------------------
 
     res = mysql_store_result(conn);
     if(res == NULL)
@@ -98,15 +121,15 @@ void fPrintResult(char *caTopic, char *caFilter, char *caSQL)
         return;
     }
     
-// fetch the number of fields in the result
+// fetch the number of fields in the result ----------------------------------------------------------------------------
     
     mysql_data_seek(res, 0);
     
-// print each row of results
+// print each row of results -------------------------------------------------------------------------------------------
 
      row = mysql_fetch_row(res);
      printf("%4s", row[0]);
      printf("\n");
 
-    mysql_free_result(res);
+     mysql_free_result(res);
 }
