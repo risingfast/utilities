@@ -29,6 +29,7 @@
 //      06-Oct-2022 check for an NULL or empty QUERY_STRING environment variable
 //      08-Oct-2022 use EXIT_FAILURE and EXIT_SUCCESS on return lines
 //      07-Nov-2022 change sprintf() to asprintf()
+//      15-Nov-2022 replace strcpy() with strncpy()
 //  Enhancements (0):
 //
 
@@ -37,6 +38,7 @@
 #define UUIDTEXTSIZE sizeof(uuid_t)*2 + 5                                             // size of formatted characer UUID
 #define MAXLEN 1024
 #define _GNU_SOURCE
+#define STR_LEN 200
 
 #include <mysql.h>
 #include <stdio.h>
@@ -62,7 +64,7 @@ MYSQL_ROW row;
 int main(void) {
     int    iUserID = 0;                                                                  // user id from web users table
     char   *sParams;                                                                      // pointer to the QUERY_STRING
-    char   sParamsOrig[200] = "\0";                                        // pointer to the QUERY_STRING original value
+    char   caParamsOrig[STR_LEN] = "\0";                                   // pointer to the QUERY_STRING original value
     char   *sSubstring;                                                                      // pointer to the substring
     char   caDelimiter[] = "&";                                                                       // token delimiter
     char   caUsername[60] = "\0";                                                                      // username array
@@ -113,13 +115,13 @@ int main(void) {
        
         //  get the content from QUERY_STRING and tokenize and test for valid tokens -----------------------------------
 
-        strcpy(sParamsOrig, sParams);                                          // save the original value of QUERY_STING
+        strncpy(caParamsOrig, sParams, STR_LEN);                              // save the original value of QUERY_STRING
 
         sSubstring = strtok(sParams, caDelimiter);
         sscanf(sSubstring, "Username=%s", caUsername);
         if (caUsername[0] == '\0') {
              printf("\n");
-             printf("Query string \"%s\" has no username, Expecting QUERY_STRING=\"Username=<unme>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"", sParamsOrig);
+             printf("Query string \"%s\" has no username, Expecting QUERY_STRING=\"Username=<unme>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"", caParamsOrig);
              printf("\n\n");
              return EXIT_FAILURE;
         }
@@ -128,7 +130,7 @@ int main(void) {
         sscanf(sSubstring, "Password=%s", caPassword);
         if (caPassword[0] == '\0') {
              printf("\n");
-             printf("Query string \"%s\" has no password, Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"", sParamsOrig);
+             printf("Query string \"%s\" has no password, Expecting QUERY_STRING=\"Username=<uname>&Password=<pwd>\". Terminating \"authenticateUser.cgi\"", caParamsOrig);
              printf("\n\n");
              return EXIT_FAILURE;
         }

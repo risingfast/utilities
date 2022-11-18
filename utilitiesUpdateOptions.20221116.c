@@ -11,12 +11,10 @@
  *      26-Oct-2022 clean up comments
  *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
  *      07-Nov-2022 change sprintf() to asprintf()
- *      16-Nov-2022 change strcpy() to strncpy()
  *  Enhancements:
 */
 
 #define _GNU_SOURCE
-#define MAXLEN 1024
 
 #include <mysql.h>
 #include <stdio.h>
@@ -25,6 +23,8 @@
 #include <string.h>
 #include <ctype.h>
 #include "../shared/rf50.h"
+
+#define MAXLEN 1024
 
 // global declarations -------------------------------------------------------------------------------------------------
 
@@ -40,12 +40,12 @@ MYSQL_FIELD *fields;
 
 char *sParam = NULL;
 char *sCharacter = NULL;
-char caBehaviour[MAXLEN + 1] = {'\0'};
-char caBackground[MAXLEN + 1] = {'\0'};
-char caShowUser[MAXLEN + 1] = {'\0'};
-char caShowLog[MAXLEN + 1] = {'\0'};
-char caLeftLinks[MAXLEN + 1] = {'\0'};
-char caStringBuf[MAXLEN + 1] = {'\0'};
+char caBehaviour[MAXLEN] = {'\0'};
+char caBackground[MAXLEN] = {'\0'};
+char caShowUser[MAXLEN] = {'\0'};
+char caShowLog[MAXLEN] = {'\0'};
+char caLeftLinks[MAXLEN] = {'\0'};
+char caStringBuf[MAXLEN] = {'\0'};
 char *sTemp = NULL;
 char caDelimiter[] = "&";
 
@@ -75,34 +75,34 @@ int main(void) {
     sTemp = strtok(sParam, caDelimiter);
     sscanf(sTemp, "behaviour=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
-    strncpy(caBehaviour, sTemp, MAXLEN);
+    strcpy(caBehaviour, sTemp);
     free(sTemp);
 
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "background=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
-    strncpy(caBackground, sTemp, MAXLEN);
+    strcpy(caBackground, sTemp);
     free(sTemp);
 
 
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "showuser=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
-    strncpy(caShowUser, sTemp, MAXLEN);
+    strcpy(caShowUser, sTemp);
     free(sTemp);
 
 
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "showlog=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
-    strncpy(caShowLog, sTemp, MAXLEN);
+    strcpy(caShowLog, sTemp);
     free(sTemp);
 
 
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "leftlinks=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
-    strncpy(caLeftLinks, sTemp, MAXLEN);
+    strcpy(caLeftLinks, sTemp);
     free(sTemp);
 
 

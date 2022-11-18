@@ -8,7 +8,6 @@
 //      21-Jul-2022 -- add unknown response for non-authenticated user
 //      20-Oct-2022 extend MySQL initialization and shutdown operations
 //      07-Nov-2022 change sprintf() to asprintf()
-//      16-Nov-2022 change strcpy() to strncpy()
 //  Enhancements(0)
 
 #define _GNU_SOURCE
@@ -40,14 +39,14 @@ MYSQL_ROW row;
 int main(void) {
 
     bool bCookieExists = false;                          // flag to indicate a session cookie exists
-    char caEnvVars[MAX_LEN + 1] = {'\0'};
-    char caCookieVal[MAX_LEN + 1] = {'\0'};                 // cookie value
-    char caSessionID[MAX_LEN + 1] = {'\0'};
-    char caUserID[MAX_LEN + 1] = {'\0'};
-    char caDateTime[MAX_LEN + 1] = {'\0'};
-    char caUserShortName[MAX_LEN + 1] = {'\0'};
-    char caUserFullName[MAX_LEN + 1] = {'\0'};
-    char caUserEmail[MAX_LEN + 1] = {'\0'};
+    char caEnvVars[MAX_LEN] = {'\0'};
+    char caCookieVal[MAX_LEN] = {'\0'};                 // cookie value
+    char caSessionID[MAX_LEN] = {'\0'};
+    char caUserID[MAX_LEN] = {'\0'};
+    char caDateTime[MAX_LEN] = {'\0'};
+    char caUserShortName[MAX_LEN] = {'\0'};
+    char caUserFullName[MAX_LEN] = {'\0'};
+    char caUserEmail[MAX_LEN] = {'\0'};
     char *strSQL = NULL;
     char *token;
 
@@ -72,7 +71,7 @@ int main(void) {
         printf("%s\n", "Unknown");
         printf("%s\n", "Unknown");
         return EXIT_FAILURE;
-    } else if (strncpy(caEnvVars, getenv("HTTP_COOKIE"), MAX_LEN) == NULL) {
+    } else if (strcpy(caEnvVars, getenv("HTTP_COOKIE")) == NULL) {
         bCookieExists = false;
     } else if (strstr(caEnvVars, "gj2020InstanceID") == NULL) {
         bCookieExists = false;
@@ -147,12 +146,12 @@ int main(void) {
 
         if((row = mysql_fetch_row(res)) != NULL)
         {
-            strncpy(caSessionID, row[0], MAX_LEN);
-            strncpy(caUserID, row[1], MAX_LEN);
-            strncpy(caUserShortName, row[2], MAX_LEN);
-            strncpy(caUserFullName, row[3], MAX_LEN);
-            strncpy(caUserEmail, row[4], MAX_LEN);
-            strncpy(caDateTime, row[5], MAX_LEN);
+            strcpy(caSessionID, row[0]);
+            strcpy(caUserID, row[1]);
+            strcpy(caUserShortName, row[2]);
+            strcpy(caUserFullName, row[3]);
+            strcpy(caUserEmail, row[4]);
+            strcpy(caDateTime, row[5]);
         }
 
 // * close the database connection created by mysql_init(NULL) ---------------------------------------------------------
