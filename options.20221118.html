@@ -41,7 +41,7 @@
 <!--                                                                                                                 -->
 <!-- <body> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetCornerImage(), fSetOptions(), fSetShowAccessLog(), fcCheckAuthentication()">
+<body onload="fcSetCornerImage(), fSetOptions(), /* fSetShowServerLog(), fSetShowSessionLog(),*/ fcCheckAuthentication()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -61,17 +61,22 @@
                 </ul>
                 <ul id="NAV1UL2" hidden>
                     <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <br>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <br>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/guessAnIdiom.html">Guess an Idiom</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/battleShips.html">Battleships</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/d_regexWords.html">Crossword Helper</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                    <br>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/environment.html">Environment</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/serverProfile.html">Server Profile</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/about.html">About</a></li>
+                    <br>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/simplest.html">Text Fetcher</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/helloWorld.html">Hello World!</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/tcount.html">Counter</a></li>
@@ -84,6 +89,7 @@
                     <li class="NAV1LI"><a href="http://gjarman2020.com/email.html">Email</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/perlTest.html">Cookies</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/DOM_Drills.html">DOM Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/json4Ajax.html">JSON for Ajax</a></li>
                 </ul>
             </nav>
 
@@ -100,7 +106,7 @@
             <main id="MAIN1">
 
                 <div id="heading-div">
-                    <h2>Options</h2>
+                    <h3>Options</h3>
                     <p>Option settings for gjarman2020.com</p>
                 </div>
 
@@ -199,23 +205,11 @@
                             </select>
                     </div>
     
-<!-- showuser div .................................................................................................. -->
+<!-- showserverlog div ............................................................................................ -->
     
-                    <div id="showuser-div">
-                        <label id="showuser-label" for="showuser-select">Show Current User</label>
-                            <select id="showuser-select" onchange="fSetShowUserChoice()">
-                                <option value="User Only">User Only</option>
-                                <option value="Suppressed">Suppressed</option>
-                                <option value="User and IP Address">User and IP Address</option>
-                                <option value="User and IP Address and Session Time">User and IP Address and Session Time</option>
-                            </select>
-                    </div>
-    
-<!-- showaccesslog div ............................................................................................. -->
-    
-                    <div id="showaccesslog-div">
-                        <label id="showaccesslog-label" for="showaccesslog-select">Show Webserver Log</label>
-                            <select id="showaccesslog-select" onchange="fSetShowAccessLog()">
+                    <div id="showserverlog-div">
+                        <label id="showserverlog-label" for="showserverlog-select">Show Webserver Log</label>
+                            <select id="showserverlog-select" onchange="fSetShowServerLog()">
                                 <option value="No">No</option>
                                 <option value="Yes">Yes</option>
                             </select>
@@ -241,13 +235,13 @@
                             </select>
                     </div>
 
-<!-- accesslog div ................................................................................................. -->
+<!-- server:log div ................................................................................................. -->
 
-                    <div id="accesslog-div">
+                    <div id="serverlog-div">
                         <h3>
                             Webserver Log:<br>
                         </h3>
-                        <textarea id="accesslog-textarea" rows="20"></textarea>
+                        <textarea id="serverlog-textarea" rows="20"></textarea>
                     </div>
 
 <!-- sessionlog div ................................................................................................ -->
@@ -315,20 +309,22 @@
 <!-- <aside1> region for change log ................................................................................ -->
 
             <aside id="ASIDE1">
-                    <h3 id=ASIDE1H3>Changes 2021-22</h3>
+                    <h3 id=ASIDE1H3>Changes 2022-23</h3>
                 <ul ID="ASIDE1UL">
+                    <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
                     <li class="ASIDE1LI">03-Oct: extend secure div</li>
                     <li class="ASIDE1LI">14-Aug: add left links option</li>
                     <li class="ASIDE1LI">25-Jul: add authentication anchor</li>
                     <li class="ASIDE1LI">24-Jul: add a session log</li>
                     <li class="ASIDE1LI">22-Jul: add authenticate link</li>
                     <li class="ASIDE1LI">22-Jul: show session block</li>
-                    <li class="ASIDE1LI">01-Jul: implement access log<n/li>
-                    <li class="ASIDE1LI">23-Jun: add image buttons<n/li>
-                    <li class="ASIDE1LI">22-Jun: add image modes<n/li>
-                    <li class="ASIDE1LI">22-Jun: add options footer<n/li>
-                    <li class="ASIDE1LI">18-Jun: add options<n/li>
-                    <li class="ASIDE1LI">16-Jun: start<n/li>
+                    <li class="ASIDE1LI">01-Jul: implement access log</li>
+                    <li class="ASIDE1LI">23-Jun: add image buttons</li>
+                    <li class="ASIDE1LI">22-Jun: add image modes</li>
+                    <li class="ASIDE1LI">22-Jun: add options footer</li>
+                    <li class="ASIDE1LI">18-Jun: add options</li>
+                    <li class="ASIDE1LI">16-Jun: start</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2022</li>
                 </ul>
             </aside>
 
@@ -356,8 +352,8 @@
                 <div id="FOOTER1OPTIONS-DIV">
                     Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
                     Background Image: <label id="footeroptionsbackgroundimage"></label>;
-                    Show Webserver Log: <label id="footeroptionsshowlog"></label>;
-                    Show Session Log: <label id="footeroptionsshowuser"></label>;
+                    Show Webserver Log: <label id="footeroptionsshowserverlog"></label>;
+                    Show Session Log: <label id="footeroptionsshowsession"></label>;
                     Left Links: <label id="footeroptionsleftlinks"><label>
                 </div>
                 <div id="FOOTER1DIV">

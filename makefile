@@ -21,7 +21,7 @@ CFLAGS=-Wall -g -o
 SQL1FLAGS=-I/usr/include/mysql
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi
+all: authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesFetchOptionsJSON utilitiesFetchOptionsJSON.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi
 
 authenticateUer: authenticateUser.c
 	$(CC) $(CFLAGS) $@ $^ $(SQL2FLAGS)
@@ -46,6 +46,12 @@ utilitiesFetchOptions: utilitiesFetchOptions.c ../shared/rf50.c ../shared/cs50.c
 
 utilitiesFetchOptions.cgi: utilitiesFetchOptions.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
+
+utilitiesFetchOptionsJSON: utilitiesFetchOptionsJSON.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -ljson-c
+
+utilitiesFetchOptionsJSON.cgi: utilitiesFetchOptionsJSON.c ../shared/rf50.c ../shared/cs50.c
+	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -ljson-c
 
 utilitiesUpdateOptions: utilitiesUpdateOptions.c ../shared/rf50.c ../shared/cs50.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS)
@@ -99,4 +105,4 @@ file_stats: file_stats.c
 	$(CC) $(CFLAGS) $@ $(SQL1FLAGS) $^ $(SQL2FLAGS) -luuid
 
 clean:
-	rm -f *.o *.s *.i authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi
+	rm -f *.o *.s *.i authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesFetchOptionsJSON utilitiesFetchOptionsJSON.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi

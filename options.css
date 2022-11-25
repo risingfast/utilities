@@ -121,6 +121,32 @@
     width:180px;
 }
 
+#message-div {
+    position: relative;
+    max-width: 1440px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+#message-label {
+    font-weight: 600;
+    display: inline-block;
+    width: 100px;
+    margin-left: 10px;
+}
+
+#message-input {
+    margin: auto;
+    width:80%;
+    background-color: #E5E4E2;
+    border-color: #E5E4E2;
+    border-width: 0px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
 #serverlog-div {
     width: 80%;
     margin: auto;
@@ -133,23 +159,24 @@
 #sessionlog-div {
     width: 80%;
     margin: auto;
-    margin-top:10px;
-    margin-bottom:10px;
     max-width: 800px;
     display: none;
+    text-align: center;
 }
 
 #serverlog-textarea{
-    width: 100%;
+    width: 105%;
     margin: auto;
     background-color: lightgrey;
     display: block;
+    text-align: center;
 }
 
 #sessionlog-textarea{
-    width: 100%;
+    width: 105%;
     margin: auto;
     background-color: lightgrey;
     display: block;
+    text-align: center;
 }
 

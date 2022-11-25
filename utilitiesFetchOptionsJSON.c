@@ -1,15 +1,12 @@
-/*  utilitiesFetchOptions.c - CGI to fetch options from mySQL
+/*  utilitiesFetchOptionsJSON.c - CGI to fetch options from mySQL in JSON format
  *  Author: Geoffrey Jarman
- *  Started: 20-Jan-2022
+ *  Started: 20-Nov-2022
  *  References:
  *      http://www6.uniovi.es/cscene/topics/web/cs2-12.xml.html
  *  Log:
- *      04-Jan-2022 copied from bookInquiry2.c
- *      04-Oct-2022 add Acces-Control-Allow-Origin: * CORS header
- *      06-Nov-2022 changes sprintf() to as asprintf()
- *      07-Nov-2022 clean up comments and return arguments
- *      07-Nov-2022 remove unused variable declarations
- *      20-Nov-2022 free resources used by mySQL library
+ *      20-Nov-2022 copied from utiltiesFetchOptions.c
+ *      20-Nov-2022 remove the function fPrintResult() and inline with main()
+ *      20-Nov-2022 add the json-c library calls and test the output
  *  Enhancements:
 */
 
@@ -20,6 +17,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
+#include <json-c/json.h>
 #include "../shared/rf50.h"
 
 #define HDG_LEN 1000
@@ -40,6 +38,9 @@ void fPrintResult(char *);
 
 int main(void) {
 
+    int intColCnt = 0;
+    int intRowCnt = 0;
+    int intCurRow = 0;
     char *strSQL = NULL;
 
 // print the html content type header and CORS header block ------------------------------------------------------------
@@ -65,7 +66,7 @@ int main(void) {
         printf("\n\n");
         printf("Error: %s\n", mysql_error(conn));
         printf("\n");
-        return  EXIT_FAILURE;
+        return EXIT_FAILURE;
     }
 
     asprintf(&strSQL, "SELECT WO.`Option ID` as 'ID' "
@@ -73,9 +74,83 @@ int main(void) {
                    ", WO.`Option Setting` as 'Setting' "
                    "FROM risingfast.`Web Options` WO ");
 
-    fPrintResult(strSQL);
+    if(mysql_query(conn, strSQL) != 0)
+    {
+        printf("\n");
+        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
+        printf("\n\n");
+        return EXIT_FAILURE;
+    }
 
-// free rosources used by strSQL ---------------------------------------------------------------------------------------4dd
+// store the result of the query ---------------------------------------------------------------------------------------
+
+    res = mysql_store_result(conn);
+    if(res == NULL)
+    {
+        printf("%s() -- no results returned", __func__);
+        printf("\n");
+
+        mysql_free_result(res);
+        return EXIT_FAILURE;
+    }
+    
+// fetch the number of fields in the result and seek to the first row of results ---------------------------------------
+    
+    intColCnt = mysql_num_fields(res);
+    intRowCnt = mysql_num_rows(res);
+    
+    mysql_data_seek(res, 0);
+    
+// create a json object ------------------------------------------------------------------------------------------------
+
+    json_object *jsonOptions = json_object_new_object();
+    json_object *jsonOptionNumber;
+    json_object *jsonOptionName;
+    json_object *jsonOptionValue;
+
+
+// print each row of results -------------------------------------------------------------------------------------------
+
+     printf("{\"Options\":[\n");
+     while((row = mysql_fetch_row(res)) != NULL) {
+        for (int i = 0; i < intColCnt; i++)
+        {
+            if(i == 0)
+            {
+                jsonOptionNumber = json_object_new_string(row[i]);
+            }
+            else if (i == intColCnt - 1)
+            {
+                if (row[i] != NULL) {
+                    jsonOptionName = json_object_new_string(row[i]);
+                } else {
+                    ;
+                }
+            }
+            else {
+                if (row[i] != NULL) {
+                    jsonOptionValue = json_object_new_string(row[i]);
+                }
+            }
+        }
+        json_object_object_add(jsonOptions, "Number", jsonOptionNumber);
+        json_object_object_add(jsonOptions, "Name", jsonOptionName);
+        json_object_object_add(jsonOptions, "Value", jsonOptionValue);
+        printf("%s", json_object_to_json_string(jsonOptions));
+        if (intCurRow == intRowCnt - 1) {
+            printf("\n");
+        } else {
+            printf(",\n");
+        }
+        intCurRow++;
+    }
+     printf("]}\n");
+    
+// free resources used by the JSON datastructure -----------------------------------------------------------------------
+
+    free(jsonOptions);
+
+// free resources used by strSQL ---------------------------------------------------------------------------------------
 
     free(strSQL);
 
@@ -92,64 +167,4 @@ int main(void) {
     mysql_library_end();
 
     return EXIT_SUCCESS;
-}
-
-void fPrintResult(char *strSQL) {
-    int iColCount = 0;
-
-    if(mysql_query(conn, strSQL) != 0)
-    {
-        printf("\n");
-        printf("mysql_query() error in function %s():\n\n%s", __func__, mysql_error(conn));
-        printf("\n\n");
-        return;
-    }
-
-// store the result of the query ---------------------------------------------------------------------------------------
-
-    res = mysql_store_result(conn);
-    if(res == NULL)
-    {
-        printf("%s() -- no results returned", __func__);
-        printf("\n");
-
-        mysql_free_result(res);
-        return;
-    }
-    
-// fetch the number of fields in the result ----------------------------------------------------------------------------
-    
-    iColCount = mysql_num_fields(res);
-    
-    mysql_data_seek(res, 0);
-    
-// print each row of results -------------------------------------------------------------------------------------------
-
-     while((row = mysql_fetch_row(res)) != NULL)
-    {
-        for (int i = 0; i < iColCount; i++)
-        {
-            if(i == 0)
-            {
-                printf("%4s,", row[i]);
-            }
-            else if (i == iColCount - 1)
-            {
-                if (row[i] != NULL) {
-                    printf("%s", row[i]);
-                } else {
-                    ;
-                }
-            }
-            else {
-                if (row[i] != NULL) {
-                    printf("%s,", row[i]);
-                } else {
-                    ;
-                }
-            }
-        }
-        printf("\n");
-    }
-    return;
 }
