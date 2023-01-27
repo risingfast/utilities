@@ -9,6 +9,7 @@
  *      26-Oct-2022 clean up comments
  *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
  *      07-Nov-2022 replace sprinrtf() with asprintf()
+ *      22-Jan-2023 set freed pointers to NULL
  *  Enhancements:
 */
 
@@ -78,6 +79,7 @@ int main(void) {
 
     fPrintResult(strSQL);
     free(strSQL);
+    strSQL = NULL;
 
     return EXIT_SUCCESS;
 }

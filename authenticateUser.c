@@ -258,7 +258,9 @@ int main(void) {
 // free the allocated space for the SQL strings ------------------------------------------------------------------------
 
     free(strSQL1);
+    strSQL1 = NULL;
     free(strSQL2);
+    strSQL2 = NULL;
 
     return EXIT_SUCCESS;
 }

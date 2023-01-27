@@ -7,6 +7,7 @@
  *      20-Nov-2022 copied from utiltiesFetchOptions.c
  *      20-Nov-2022 remove the function fPrintResult() and inline with main()
  *      20-Nov-2022 add the json-c library calls and test the output
+ *      22-Jan-2033 set freed pointers to NULL
  *  Enhancements:
 */
 
@@ -17,7 +18,7 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-#include <json-c/json.h>
+#include "json-c/json.h"
 #include "../shared/rf50.h"
 
 #define HDG_LEN 1000
@@ -149,10 +150,12 @@ int main(void) {
 // free resources used by the JSON datastructure -----------------------------------------------------------------------
 
     free(jsonOptions);
+    jsonOptions = NULL;
 
 // free resources used by strSQL ---------------------------------------------------------------------------------------
 
     free(strSQL);
+    strSQL = NULL;
 
 // * free resources used by the 'res' array ----------------------------------------------------------------------------
 

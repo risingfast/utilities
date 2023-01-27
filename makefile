@@ -21,7 +21,7 @@ CFLAGS=-Wall -g -o
 SQL1FLAGS=-I/usr/include/mysql
 SQL2FLAGS=-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -lrt -lssl -lcrypto -ldl -lresolv
 
-all: authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesFetchOptionsJSON utilitiesFetchOptionsJSON.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi
+all: authenticateUser authenticateUser.cgi setCornerImage setCornerImage.cgi environment environment.cgi serverProfile serverProfile.cgi utilitiesFetchOptions utilitiesFetchOptions.cgi utilitiesUpdateOptions utilitiesUpdateOptions.cgi saveCornerImageNumber saveCornerImageNumber.cgi fetchCornerImageNumber fetchCornerImageNumber.cgi utilitiesFetchAccessLog utilitiesFetchAccessLog.cgi authenticateUser authenticateUser.cgi utilitiesFetchSessionLog utilitiesFetchSessionLog.cgi file_stats checkAuthentication checkAuthentication.cgi utilitiesFetchOptionsJSON utilitiesFetchOptionsJSON.cgi
 
 authenticateUer: authenticateUser.c
 	$(CC) $(CFLAGS) $@ $^ $(SQL2FLAGS)

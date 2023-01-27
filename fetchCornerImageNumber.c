@@ -6,6 +6,7 @@
  *      25-Jun-2022 copied from utilitiesFetchOptions.c
  *      15-Sep-2022 add Access-Control-Allow-Origin: * CORS http header
  *      05-Nov-2022 use asprintf() instead of sprintf to define strSQL
+ *      22-Jan-2023 set freed pointer to NULL
  *  Enhancements:
 */
 
@@ -94,6 +95,7 @@ int main(void) {
     mysql_library_end();
 
     free(strSQL);
+    strSQL = NULL;
     return 0;
 }
 
