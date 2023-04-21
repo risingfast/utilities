@@ -12,7 +12,7 @@
  *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
  *      07-Nov-2022 change sprintf() to asprintf()
  *      16-Nov-2022 change strcpy() to strncpy()
- *      22-Jan-2023 set freed pointers to NULL
+ *      16-Apr-2023 change sgServer from 192.168.0.13 to 192.168.1.64
  *  Enhancements:
 */
 
@@ -29,7 +29,7 @@
 
 // global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                                //mysqlServer IP address
+char *sgServer = "192.168.1.64";                                                                //mysqlServer IP address
 char *sgUsername = "gjarman";                                                              // mysqlServer logon username
 char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
@@ -78,21 +78,19 @@ int main(void) {
     sTemp = fUrlDecode(caStringBuf);
     strncpy(caBehaviour, sTemp, MAXLEN);
     free(sTemp);
-    sTemp = NULL;
 
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "background=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
     strncpy(caBackground, sTemp, MAXLEN);
     free(sTemp);
-    sTemp = NULL;
+
 
     sTemp = strtok(NULL, caDelimiter);
     sscanf(sTemp, "showuser=%[^\n]s", caStringBuf);
     sTemp = fUrlDecode(caStringBuf);
     strncpy(caShowUser, sTemp, MAXLEN);
     free(sTemp);
-    sTemp = NULL;
 
 
     sTemp = strtok(NULL, caDelimiter);
@@ -100,7 +98,6 @@ int main(void) {
     sTemp = fUrlDecode(caStringBuf);
     strncpy(caShowLog, sTemp, MAXLEN);
     free(sTemp);
-    sTemp = NULL;
 
 
     sTemp = strtok(NULL, caDelimiter);
@@ -108,7 +105,6 @@ int main(void) {
     sTemp = fUrlDecode(caStringBuf);
     strncpy(caLeftLinks, sTemp, MAXLEN);
     free(sTemp);
-    sTemp = NULL;
 
 
     printf("Behavior=%s, Background=%s, ShowUser=%s, ShowLog=%s\n\n", caBehaviour, caBackground, caShowUser, caShowLog);  // uncomment for testing only
@@ -222,7 +218,6 @@ int main(void) {
 
     mysql_library_end();
     free(strSQL);
-    strSQL = NULL;
 
     return EXIT_SUCCESS;
 }

@@ -30,6 +30,7 @@
 //      08-Oct-2022 use EXIT_FAILURE and EXIT_SUCCESS on return lines
 //      07-Nov-2022 change sprintf() to asprintf()
 //      15-Nov-2022 replace strcpy() with strncpy()
+//      16-Apr-2023 change sgServer from 192.164.0.13 to 192.164.1.64
 //  Enhancements (0):
 //
 
@@ -52,7 +53,7 @@
 
 // global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                            //mysqlServer LCL IP address
+char *sgServer = "192.168.1.64";                                                            //mysqlServer LCL IP address
 char *sgUsername = "gjarman";                                                           // mysqlSerer LCL logon username
 char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
@@ -258,9 +259,7 @@ int main(void) {
 // free the allocated space for the SQL strings ------------------------------------------------------------------------
 
     free(strSQL1);
-    strSQL1 = NULL;
     free(strSQL2);
-    strSQL2 = NULL;
 
     return EXIT_SUCCESS;
 }

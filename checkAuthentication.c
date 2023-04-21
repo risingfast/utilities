@@ -9,6 +9,8 @@
 //      20-Oct-2022 extend MySQL initialization and shutdown operations
 //      07-Nov-2022 change sprintf() to asprintf()
 //      16-Nov-2022 change strcpy() to strncpy()
+//      16-Apr-2023 change sgServer from 192.164.0.13 to 192.164.1.64
+//      20-Apr-2023 change sgServer from 192.164.1.64 to 35.212.209.127
 //  Enhancements(0)
 
 #define _GNU_SOURCE
@@ -28,7 +30,7 @@
 #include <ctype.h>
 #include "../shared/rf50.h"
 
-char *sgServer = "192.168.0.13";                                        //mysqlServer LCL IP address
+char *sgServer = "35.212.209.127";                                      //mysqlServer LCL IP address
 char *sgUsername = "gjarman";                                       // mysqlSerer LCL logon username
 char *sgPassword = "Mpa4egu$";                                 // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                             // default database name on mysqlserver

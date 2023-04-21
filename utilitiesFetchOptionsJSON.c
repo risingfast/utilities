@@ -7,7 +7,7 @@
  *      20-Nov-2022 copied from utiltiesFetchOptions.c
  *      20-Nov-2022 remove the function fPrintResult() and inline with main()
  *      20-Nov-2022 add the json-c library calls and test the output
- *      22-Jan-2033 set freed pointers to NULL
+ *      16-Apr-2023 change sgServer from 192.168.0.13 to 192.168.1.64
  *  Enhancements:
 */
 
@@ -18,15 +18,14 @@
 #include <stdbool.h>
 #include <string.h>
 #include <ctype.h>
-#include "json-c/json.h"
-#include "../shared/rf50.h"
+#include <json-c/json.h>
 
 #define HDG_LEN 1000
 #define MAXLEN 1024
 
 // global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                           // mysqlServer LCL IP address
+char *sgServer = "192.168.1.64";                                                           // mysqlServer LCL IP address
 char *sgUsername = "gjarman";                                                          // mysqlServer LCL logon username
 char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
@@ -123,14 +122,14 @@ int main(void) {
             else if (i == intColCnt - 1)
             {
                 if (row[i] != NULL) {
-                    jsonOptionName = json_object_new_string(row[i]);
+                    jsonOptionValue = json_object_new_string(row[i]);
                 } else {
                     ;
                 }
             }
             else {
                 if (row[i] != NULL) {
-                    jsonOptionValue = json_object_new_string(row[i]);
+                    jsonOptionName = json_object_new_string(row[i]);
                 }
             }
         }
@@ -150,12 +149,10 @@ int main(void) {
 // free resources used by the JSON datastructure -----------------------------------------------------------------------
 
     free(jsonOptions);
-    jsonOptions = NULL;
 
 // free resources used by strSQL ---------------------------------------------------------------------------------------
 
     free(strSQL);
-    strSQL = NULL;
 
 // * free resources used by the 'res' array ----------------------------------------------------------------------------
 

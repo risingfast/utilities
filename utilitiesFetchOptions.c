@@ -10,6 +10,8 @@
  *      07-Nov-2022 clean up comments and return arguments
  *      07-Nov-2022 remove unused variable declarations
  *      20-Nov-2022 free resources used by mySQL library
+ *      16-Apr-2023 change sgServer from 192.168.0.13 to 192.168.1.64
+ *      20-Apr-2023 change sgServer from 192.168.1.64 to 35.212.209.127
  *  Enhancements:
 */
 
@@ -27,7 +29,7 @@
 
 // global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                           // mysqlServer LCL IP address
+char *sgServer = "35.212.209.127";                                                         // mysqlServer LCL IP address
 char *sgUsername = "gjarman";                                                          // mysqlServer LCL logon username
 char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver

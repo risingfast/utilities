@@ -8,8 +8,8 @@
  *      15-Sep-2022 add Access-Control-Allow-Origin CORS header
  *      26-Oct-2022 clean up comments
  *      26-Oct-2022 extend MySQL initialization and shutdown operations to fix memory leaks
- *      07-Nov-2022 replace sprinrtf() with asprintf()
- *      22-Jan-2023 set freed pointers to NULL
+ *      07-Nov-2022 replace sprintf() with asprintf()
+ *      16-Apr-2023 change sgServer from 192.168.0.13 to 192.168.1.64
  *  Enhancements:
 */
 
@@ -26,7 +26,7 @@
 
 // global declarations -------------------------------------------------------------------------------------------------
 
-char *sgServer = "192.168.0.13";                                                                //mysqlServer IP address
+char *sgServer = "192.168.1.64";                                                                //mysqlServer IP address
 char *sgUsername = "gjarman";                                                               // mysqlSerer logon username
 char *sgPassword = "Mpa4egu$";                                                     // password to connect to mysqlserver
 char *sgDatabase = "risingfast";                                                 // default database name on mysqlserver
@@ -79,7 +79,6 @@ int main(void) {
 
     fPrintResult(strSQL);
     free(strSQL);
-    strSQL = NULL;
 
     return EXIT_SUCCESS;
 }
