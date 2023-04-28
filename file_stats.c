@@ -24,6 +24,9 @@ int iOldFileCnt = 0;
 
 int main()
 {
+
+// create variables for source files -----------------------------------------------------------------------------------
+
     char *s01 = "/mnt/c/Users/gjarm/OneDrive/Computing/Arduino/Notes/cheatSheet.Arduino.txt";
     char *s02 = "/mnt/c/Users/gjarm/OneDrive/Computing/GCP/Notes/cheatSheet.GCP.txt";
     char *s03 = "/mnt/c/Users/gjarm/OneDrive/Computing/Git and GitHub/Notes/cheatSheet.Git.txt";
@@ -44,6 +47,9 @@ int main()
     char *s18 = "/mnt/c/Users/gjarm/OneDrive/Computing/Oracle/mySQL/Notes/cheatSheet.MySQL.txt";
     char *s19 = "/mnt/c/Users/gjarm/OneDrive/Computing/Linux/Vi/Notes/cheatSheet.Vi.txt";
     char *s20 = "/mnt/c/Users/gjarm/OneDrive/Computing/Apache2/Notes/cheatSheet.Apache2.txt";
+    char *s61 = "/mnt/c/Users/gjarm/OneDrive/Hobbies/Electronics/Notes/cheatSheet.Electronics.txt";
+
+// create variables for corresponding project files --------------------------------------------------------------------
 
     char *s21 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Arduino.txt";
     char *s22 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.GCP.txt";
@@ -65,6 +71,7 @@ int main()
     char *s38 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.MySQL.txt";
     char *s39 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Vi.txt";
     char *s40 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Apache2.txt";
+    char *s81 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Electronics.txt";
 
     system("clear");
     printf("file_stats.c - file statistics on cheatsheets to identify old versions in web project folder");
@@ -91,6 +98,7 @@ int main()
     compareFiles(s18, s38);
     compareFiles(s19, s39);
     compareFiles(s20, s40);
+    compareFiles(s61, s81);
 
     printf("\n");
     printf("Count of NEWER working files: %d", iOldFileCnt);
