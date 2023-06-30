@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<!-- <HEAD> region for meta tags ................................................................................... -->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="DOM Drills and DOM Manipulation">
+    <meta name="keywords" content="html, css, cgi">
+    <meta name="generator" content="vim">
+    <meta name="author" content="gjarman2020">
+    <link rel="stylesheet" type="text/css" href="DOM_Drills.css">
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <title>DOM Drills</title>
+    <link rel="shortcut icon" href="letterRF.png" type="image/png">
+</head>
+
+<!-- Comments region ............................................................................................... -->
+<!--                                                                                                                 -->
+<!-- DOM_Drills.html -  exercises with DOM manipulation                                                              -->
+<!-- References:                                                                                                     -->
+<!--      https://www.youtube.com/watch?v=wKBu_dEaF9E - Web Ninja DOM Manipulation introduction                      -->
+<!--      https://www.youtube.com/watch?v=y17RuWkWdn8 - Web Dev Simplified DOM Manipulation                          -->
+<!-- Templates:                                                                                                      -->
+<!--      d_Template.html                                                                                            -->
+<!-- Log:                                                                                                            -->
+<!--    16-Sep-2021 - start                                                                                          -->
+<!--    11-Aug-2022 - add to sandbox list on gjarman2020                                                             -->
+<!--    13-Aug-2022 - disable button to change list values if list not displayed                                     -->
+<!--    15-Aug-2022 - add long links                                                                                 -->
+<!--    16-Sep-2022 - change www.risingfast.com to gjarman2020.com                                                   -->
+<!--    14-Jun-2023 - add bttn5 to fetch people                                                                      -->
+<!--    15-Jun-2023 - add filter-div
+<!--                                                                                                                 -->
+<!-- <BODY> region for all content including header and footer ..................................................... -->
+
+<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication()">
+    <div id="WRAPPER1">
+        <div id="WRAPPER2">
+            <header id="HEADER1">
+                <br>
+                <div id="HEADER1DIV">
+                     <h2>gjarman2020.com</h2>
+                </div>
+            </header>
+            <nav id="NAV1">
+                    <h3 id="NAV1H3">Links</h3>
+                <ul ID="NAV1UL">
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                </ul>
+                <ul id="NAV1UL2" hidden>
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/guessAnIdiom.html">Guess an Idiom</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/battleShips.html">Battleships</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_regexWords.html">Crossword Helper</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/environment.html">Environment</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/serverProfile.html">Server Profile</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/about.html">About</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/simplest.html">Text Fetcher</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/helloWorld.html">Hello World!</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/tcount.html">Counter</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/multiply.html">Multiplier</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/collectText.html">Collect Text</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxFetch.html">Ajax Fetch</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxPost.html">Post Text to Server</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_template.html">Template</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/dogAPI.html">Dog API</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/email.html">Email</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/perlTest.html">Cookies</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/DOM_Drills.html">DOM Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/json4Ajax.html">JSON for Ajax</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                </ul>
+            </nav>
+
+<!-- <SESSION1> region for session information .................................................................... -->
+
+            <aside id="SESSION1">
+                    <h3 id=SESSION1H3>Current Session</h3>
+                    <p id="SESSION1PARA">
+                    </p>
+            </aside>
+
+<!-- <MAIN> region for main content and background image ........................................................... -->
+
+            <main id="MAIN1">
+
+                <div id="heading-div" style="width:80%; margin: auto; max-width:800px; text-align:center;">
+                    <h3>DOM Drills</h3>
+                    <h4>Drills using JS to Manipulate the Document Object Model (DOM)</h4>
+                </div>
+
+                <div id="unsecured-div">
+                    <p><a href="http://gjarman2020.com/authenticateUser.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
+                </div>
+
+                <div id="secured-div">
+                    <div id="buttons-div" style="width:80%; margin: auto; max-width:800px;">
+                        <button id="bttn1" onclick="fChangeOrRevertText()">Chnge Text</button>
+                        <button id="bttn2" onclick="fChangeOrRevertColor()">Chnge Color</button>
+                        <button id="bttn3" onclick="fShowOrHideList()">Show List</button>
+                        <button id="bttn4" onclick="fRefreshList()" disabled>Refresh List</button>
+                        <button id="bttn5" onclick="fMoveDownList()" disabled>Down</button>
+                        <button id="bttn6" onclick="fMoveUpList()" disabled >Up</button>
+                        <button id="bttn7" onclick="fMoveToListTop()" disabled>Top</button>
+                        <button id="bttn8" onclick="fMoveToListBottom()"disabled >Bottom</button>
+                    </div>
+
+<!-- filter input .................................................................................................. -->
+
+                    <div  ID="filter-div">
+                        <label FOR="filter-input" id="filter-label">Filter:</label>
+                        <input type="text" id="filter-input" name="filter-input"  autofocus>
+                    </div>
+
+<!-- variable list div ............................................................................................. -->
+
+                    <div id="paragraph-div" style="width:80%; margin: auto; max-width:800px;">
+                        <p id="para1" style="color:red">Click a button</p>
+                    </div>
+
+                    <div id="list-div" style="width:80%; margin: auto; max-width:800px;">
+                    </div>
+                </div>
+
+<!-- buttons to show and hide help ................................................................................. -->
+
+                <div id="MOREBTTNS">
+                    <button onclick="fcShowHelp()">Help</button>
+                    <button onclick="fClearTemplateFields()">Clear</button>
+                    <br>
+                </div>
+
+<!-- help text controlled by button ................................................................................ -->
+
+                <div id="HELPDIV">
+                    <p>
+                    There is no help available for this page 'd_template.html'<br>
+                    </p>
+                </div>
+
+<!-- internals text ................................................................................................ -->
+
+               <div id="INTERNALS">
+                    <details id="internals-details">
+                        <summary>
+                            Internals
+                        </summary>
+                        <p>
+                            html file: /mnt/c/Users/gjarm/OneDrive/Computing/Languages/Web/codeSandbox/DOM_Drills.html<br>
+                            css file:  /var/www/html/css/common.css<br>
+                            css file:  /var/www/html/css/DOM_Drills.css<br>
+                            js file:   /var/www/html/css/common.js<br>
+                            js file:   /var/www/html/css/DOM_Drills.js<br>
+                        </p>
+                    </details>
+               </div>
+
+                <script src="common.js"></script>
+                <script src="DOM_Drills.js"></script>
+
+            </main>
+
+<!-- <ASIDE1> region for change log ................................................................................ -->
+
+            <aside id="ASIDE1">
+                    <h3 id=ASIDE1H3>Changes 2022-23</h3>
+                <ul ID="ASIDE1UL">
+                    <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
+                    <li class="ASIDE1LI">15-Aug: add long links</li>
+                    <li class="ASIDE1LI">13-Aug: disable 'change list'</li>
+                    <li class="ASIDE1LI">11-Aug: add long list</li>
+                    <li class="ASIDE1LI">11-Aug: add text color</li>
+                    <li class="ASIDE1LI">11-Aug: add to sandbox</li>
+                    <li class="ASIDE1LI">04-Aug: start</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2022</li>
+                </ul>
+            </aside>
+
+<!-- <ASIDE2> region for corner image .............................................................................. -->
+
+            <aside id="ASIDE2">
+                <div id="ASIDE2DIV">
+                     <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
+                </div>
+            </aside>
+
+<!-- <ASIDE3> region for corner image caption ...................................................................... -->
+
+            <aside id="ASIDE3">
+                <div id="ASIDE3DIV">
+                    <p id="ASIDE3-PARA">
+                    Matilda Cook in Magpies uniform before her next netball game 2022
+                    </p>
+                </div>
+            </aside>
+
+<!-- <FOOTER> region for page footer ............................................................................... -->
+
+            <footer id="FOOTER1">
+                <div id="FOOTER1OPTIONS-DIV">
+                    Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
+                    Background Image: <label id="footeroptionsbackgroundimage"></label>;
+                    Show Webserver Log: <label id="footeroptionsshowserverlog"></label>;
+                    Show Session Log: <label id="footeroptionsshowsession"></label>;
+                    Left Links: <label id="footeroptionsleftlinks"></label>
+                </div>
+                <div id="FOOTER1DIV">
+                    <p>&copy; 2020 gjarman2020.com ... /var/www/html/index.html</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
+

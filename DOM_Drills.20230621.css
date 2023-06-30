@@ -1,0 +1,65 @@
+/* DOM_Drills.css - a css template                                                                                   */
+/* started - 04-Aug-2022                                                                                             */
+/* References:                                                                                                       */
+/*         HTML & CSS for Beginners Part 22: How to create a basic layout - the CSS                                  */
+/* Log                                                                                                               */
+/*     04-Aug-2022 - started                                                                                         */
+
+#heading-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: center;
+}
+
+#buttons-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: left;
+}
+
+#filter-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: left;
+}
+
+#paragraph-div {
+    width: 80%;
+    margin: auto; 
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: left;
+}
+
+#list-div {
+    width: 80%;
+    margin: auto; 
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: left;
+}
+
+#filter-input {
+    margin: auto;
+    width:80%;
+    border-color: #E5E4E2;
+    border-width: 1px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+input {
+    margin: 3px;
+}
+
