@@ -10,6 +10,7 @@
  *     15-Oct-2022 add a count of newer working files to the report
  *     19-May-2023 add S62 and S82 for Docker cheatSheet
  *     27-Jun-2023 add S63 and S83 for tmux cheatSheet
+ *     20-Aug-2023 add S64 and S84 for Apple cheatSheet
  */
 
 #include <stdio.h>
@@ -52,6 +53,7 @@ int main()
     char *s61 = "/mnt/c/Users/gjarm/OneDrive/Hobbies/Electronics/Notes/cheatSheet.Electronics.txt";
     char *s62 = "/mnt/c/Users/gjarm/OneDrive/Computing/Docker/Notes/cheatSheet.Docker.txt";
     char *s63 = "/mnt/c/Users/gjarm/OneDrive/Computing/Linux/tmux/cheatSheet.tmux.txt";
+    char *s64 = "/mnt/c/Users/gjarm/OneDrive/Computing/Apple/Notes/cheatSheet.Apple.txt";
 
 // create variables for corresponding project files --------------------------------------------------------------------
 
@@ -78,6 +80,7 @@ int main()
     char *s81 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Electronics.txt";
     char *s82 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Docker.txt";
     char *s83 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.tmux.txt";
+    char *s84 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Apple.txt";
 
     system("clear");
     printf("file_stats.c - file statistics on cheatsheets to identify old versions in web project folder");
@@ -107,6 +110,7 @@ int main()
     compareFiles(s61, s81);
     compareFiles(s62, s82);
     compareFiles(s63, s83);
+    compareFiles(s64, s84);
 
     printf("\n");
     printf("Count of NEWER working files: %d", iOldFileCnt);
