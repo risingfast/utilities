@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<!-- <HEAD> region for meta tags ................................................................................... -->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Main index to gjarman2020 website">
+    <meta name="keywords" content="html, css, cgi">
+    <meta name="generator" content="vim">
+    <meta name="author" content="gjarman2020">
+    <link rel="stylesheet" type="text/css" href="here.css">
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>Here</title>
+    <link rel="shortcut icon" href="letterRF.png" type="image/png">
+</head>
+
+<!-- Comments region ............................................................................................... -->
+<!--                                                                                                                 -->
+<!-- here.html -  webpage with local information based on local public IP or address                                 -->
+<!-- References:                                                                                                     -->
+<!--    https://ipapi.co/api/#introduction -- ip location API                                                        -->
+<!--    https://www.c-sharpcorner.com/blogs/getting-client-ip-address-or-local-ip-address-in-javascript              -->
+<!--    https://sunrise-sunset.org/api                                                                               -->
+<!-- Templates:                                                                                                      -->
+<!--      none                                                                                                       -->
+<!-- Log:                                                                                                            -->
+<!--    23-Sep-2023 - start by copying d_template.html                                                               -->
+<!--                                                                                                                 -->
+<!-- <BODY> region for all content including header and footer ..................................................... -->
+
+<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication(), fcFetchForexRate(), fGetIPLocationData()">
+    <div id="WRAPPER1">
+        <div id="WRAPPER2">
+            <header id="HEADER1">
+                <br>
+                <div id="HEADER1DIV">
+                     <h2>gjarman2020.com</h2>
+                </div>
+            </header>
+            <nav id="NAV1">
+                    <h3 id="NAV1H3">Links</h3>
+                <ul ID="NAV1UL">
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                </ul>
+                <ul id="NAV1UL2" hidden>
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li> 
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/here.html">Here</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/guessAnIdiom.html">Guess an Idiom</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/battleShips.html">Battleships</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_regexWords.html">Crossword Helper</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/environment.html">Environment</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/serverProfile.html">Server Profile</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/about.html">About</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/simplest.html">Text Fetcher</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/helloWorld.html">Hello World!</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/tcount.html">Counter</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/multiply.html">Multiplier</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/collectText.html">Collect Text</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxFetch.html">Ajax Fetch</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxPost.html">Post Text to Server</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_template.html">Template</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/dogAPI.html">Dog API</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/APIDrills.html">API Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/email.html">Email</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/perlTest.html">Cookies</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/DOM_Drills.html">DOM Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/json4Ajax.html">JSON for Ajax</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/JSONOptions.html">JSON Options</a></li>
+                </ul>
+            </nav>
+
+<!-- <SESSION1> region for session information .................................................................... -->
+
+            <aside id="SESSION1">
+                    <h3 id=SESSION1H3>Current Session</h3>
+                    <p id="SESSION1PARA">
+                    </p>
+            </aside>
+
+<!-- <FOREX1> region for USD AUD exchange rate ..................................................................... -->
+
+            <aside id="FOREX1">
+                    <h3 id=FOREX1H3>Exchange Rate</h3>
+                    <p id="FOREX1PARA">
+                    </p>
+            </aside>
+
+<!-- <MAIN> region for main content and background image ........................................................... -->
+
+            <main id="MAIN1">
+
+                <div style="width:80%; margin: auto; max-width:800px; text-align:center;">
+                    <h3>Here</h3>
+                    <p>An HTML page with information around your location</p>
+                </div>
+
+                <div id="unsecured-div">
+                    <p><a href="http://gjarman2020.com/authenticateUser.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
+                </div>
+
+                <div id="secured-div">
+                    <div id=IPLocation-div" style="width:80%; margin: auto; max-width:800px; text-align: left">
+                        <h3>IP-based Address (using the client public IP)</H3>
+                        <span id="ipaddress-span">IP address: </span>
+                        <br>
+                        <span id="ipcity-span">IP City: </span>
+                        <br>
+                        <span id="ipregion-span">IP Region: </span>
+                        <br>
+                        <span id="ippostal-span">IP Postal Code: </span>
+                        <br>
+                        <span id="iptimezone-span">IP Time Zone: </span>
+                        <br>
+                        <span id="iputcoffset-span">IP UTC Offset: </span>
+                        <br>
+                        <span id="ipcountry-span">IP Country: </span>
+                        <br>
+                        <span id="ipcurrency-span">IP Currency: </span>
+                        <br>
+                        <span id="ipprovider-span">IP Provider: </span>
+                        <br>
+                        <span id="iplatitude-span">IP Latitude: </span>
+                        <br>
+                        <span id="iplongitude-span">IP Longitude: </span>
+                        <br>
+                    </div>
+                    <div id=IPDaylight-div" style="width:80%; margin: auto; max-width:800px; text-align: left">
+                        <h3>IP-based Daylight (using the client public IP)</H3>
+                        <span id="ipsunrise-span">IP Sunrise: </span>
+                        <br>
+                        <span id="ipsunset-span">IP Sunset: </span>
+                        <br>
+                        <span id="ipdaylength-span">IP Day Length: </span>
+                        <br>
+                        <span id="ipsolarnoon-span">IP Solar Noon: </span>
+                        <br>
+                        <span id="iptwilight-span">IP Twilight : </span>
+                        <br>
+                    </div>
+                    <div id=IPWeather-div" style="width:80%; margin: auto; max-width:800px; text-align: left">
+                        <h3>IP-based Weather (using the client public IP)</H3>
+                        <span id="iptemperature-span">IP Temperature: </span>
+                        <br>
+                        <span id="ipwinddirection-span">IP Wind Direction: </span>
+                        <br>
+                        <span id="ipwindspeed-span">IP Wind Speed: </span>
+                        <br>
+                        <span id="ipelevation-span">IP Elevation: </span>
+                        <br>
+                    </div>
+                </div>
+
+
+<!-- buttons to show and hide help ................................................................................. -->
+
+                <div id="MOREBTTNS">
+                    <button onclick="fcShowHelp()">Help</button>
+                    <button onclick="fcClearExtras()">Clear</button>
+                    <br>
+                </div>
+
+<!-- help text controlled by button ................................................................................ -->
+
+                <div id="HELPDIV">
+                    <p>
+                    The IP-based information uses the latitude and longitude associated with your local public IP address'<br>
+                    </p>
+                </div>
+
+<!-- internals text ................................................................................................ -->
+
+               <div id="INTERNALS">
+                    <details id="internals-details">
+                        <summary>
+                            Internals
+                        </summary>
+                        <p>
+                            html file: /var/www.html/here.html<br>
+                            css file: /var/www/html/css/index.css<br>
+                            css file: /var/www/html/css/here.css<br>
+                            js file: /var/www/html/css/here.js<br>
+                            js file: /var/www/html/css/common.js<br>
+                            cgi directory: /usr/lib/cgi-bin/<br>
+                            corner image: /var/www/html/cornerImage.png<br>
+                            background image: /var/www/html/background.jpg<br>
+                            CGI source code: c<br>
+                        </p>
+                    </details>
+               </div>
+
+                <script src="common.js"></script>
+                <script src="here.js"></script>
+                <script type="application/javascript" src="https://api.ipify.org?format=jsonp&callback=getIP"></script>
+
+            </main>
+
+<!-- <ASIDE1> region for change log ................................................................................ -->
+
+            <aside id="ASIDE1">
+                    <h3 id=ASIDE1H3>Changes 2023</h3>
+                <ul ID="ASIDE1UL">
+                    <li class="ASIDE1LI">16-Sep: create this page</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
+                </ul>
+            </aside>
+
+<!-- <ASIDE2> region for corner image .............................................................................. -->
+
+            <aside id="ASIDE2">
+                <div id="ASIDE2DIV">
+                     <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
+                </div>
+            </aside>
+
+<!-- <ASIDE3> region for corner image caption ...................................................................... -->
+
+            <aside id="ASIDE3">
+                <div id="ASIDE3DIV">
+                    <p id="ASIDE3-PARA">
+                    Matilda Cook in Magpies uniform before her next netball game 2022
+                    </p>
+                </div>
+            </aside>
+
+<!-- <FOOTER> region for page footer ............................................................................... -->
+
+            <footer id="FOOTER1">
+                <div id="FOOTER1OPTIONS-DIV">
+                    Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
+                    Background Image: <label id="footeroptionsbackgroundimage"></label>;
+                    Show Webserver Log: <label id="footeroptionsshowserverlog"></label>;
+                    Show Session Log: <label id="footeroptionsshowsession"></label>;
+                    Left Links: <label id="footeroptionsleftlinks"></label>
+                </div>
+                <div id="FOOTER1DIV">
+                    <p>&copy; 2020 gjarman2020.com ... /var/www/html/index.html</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
+
