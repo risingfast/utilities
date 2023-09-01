@@ -1,9 +1,12 @@
 /* here.css - css for here.html                                                                                      */
+/* author - Geoffrey Jarman
 /* started - 23-Aug-2023                                                                                             */
 /* References:                                                                                                       */
 /*                                                                                                                   */
 /* Log                                                                                                               */
 /*     23-Aug-2023 - copied from d_template.css                                                                      */
+/*     27-Aug-2023 - added choices-div styling                                                                       */
+/*     27-Aug-2023 - move styles from html to css                                                                    */
 
 #heading-div {
     width: 80%;
@@ -40,3 +43,56 @@
     text-align: left;
 }
 
+#googlemap-div {
+    width: 80%;
+    height: 400px;
+    margin-left: 70px;
+    margin-top: 20px;
+    background-color: grey;
+}
+
+#address-input {
+    width: 70%;
+    margin-left: 20px;
+}
+
+#choices-div {
+    width: 60%;
+    text-align: center;
+    margin-left: 120px;
+}
+
+#address-div {
+    width: 80%;
+    margin: auto;
+    max-width: 800px;
+    text-align: left;
+}
+
+#ipaddress-div {
+    width: 80%;
+    margin: auto;
+    max-width: 800px;
+    text-align: left;
+}
+#location-div {
+    width: 80%;
+    margin: auto;
+    max-width: 800px;
+    text-align: left;
+}
+
+
+#daylight-div {
+    width: 80%;
+    margin: auto;
+    max-width: 800px;
+    text-align: left;
+}
+
+#weather-div {
+    width: 80%;
+    margin: auto;
+    max-width: 800px;
+    text-align: left;
+}

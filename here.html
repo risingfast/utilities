@@ -21,7 +21,9 @@
 
 <!-- Comments region ............................................................................................... -->
 <!--                                                                                                                 -->
-<!-- here.html -  webpage with local information based on local public IP or address                                 -->
+<!-- here.html - webpage with local information based on local public IP or address                                  -->
+<!-- Author: Geoffrey Jarman                                                                                         -->
+<!-- Started: 23-Sep-2023                                                                                            -->
 <!-- References:                                                                                                     -->
 <!--    https://ipapi.co/api/#introduction -- ip location API                                                        -->
 <!--    https://www.c-sharpcorner.com/blogs/getting-client-ip-address-or-local-ip-address-in-javascript              -->
@@ -30,10 +32,14 @@
 <!--      none                                                                                                       -->
 <!-- Log:                                                                                                            -->
 <!--    23-Sep-2023 - start by copying d_template.html                                                               -->
+<!--    24-Sep-2023 - add weather                                                                                    -->
+<!--    26-Sep-2023 - add Google map                                                                                 -->
+<!--    27-Sep-2023 - add Choice select box and modify code to accomodate                                            -->
+<!--    30-Sep-2023 - lower-case the div id's                                                                        -->
 <!--                                                                                                                 -->
 <!-- <BODY> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication(), fcFetchForexRate(), fGetIPLocationData()">
+<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication(), fcFetchForexRate(), fChangeLocation()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
@@ -44,6 +50,9 @@
             </header>
             <nav id="NAV1">
                     <h3 id="NAV1H3">Links</h3>
+
+<!-- left side nav var (short version) ............................................................................. -->
+
                 <ul ID="NAV1UL">
                     <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
@@ -52,6 +61,9 @@
                     <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
                 </ul>
+
+<!-- left side nav var (long version) .............................................................................. -->
+
                 <ul id="NAV1UL2" hidden>
                     <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
                     <br>
@@ -70,6 +82,7 @@
                     <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/here.html">Here</a></li>
                     <br>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/simplest.html">Text Fetcher</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/helloWorld.html">Hello World!</a></li>
@@ -110,7 +123,7 @@
 
             <main id="MAIN1">
 
-                <div style="width:80%; margin: auto; max-width:800px; text-align:center;">
+                <div id="heading-div">
                     <h3>Here</h3>
                     <p>An HTML page with information around your location</p>
                 </div>
@@ -118,48 +131,72 @@
                 <div id="unsecured-div">
                     <p><a href="http://gjarman2020.com/authenticateUser.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
                 </div>
-
                 <div id="secured-div">
-                    <div id=IPLocation-div" style="width:80%; margin: auto; max-width:800px; text-align: left">
-                        <h3>IP-based Address (using the client public IP)</H3>
-                        <span id="ipaddress-span">IP address: </span>
+
+<!-- choice selection region ....................................................................................... -->
+
+                    <div id="choices-div">
+                        <label id="choices-label" for="choices-select">Choice:</label>
+                            <select id="choices-select" onchange="fChangeLocation()">
+                                <option value="ipdefault" selected>IP Address - default</option>
+                                <option value="susancook">Susan Cook - Hawthorn East</option>
+                                <option value="emmajarman">Emma Jarman - Stillwater</option>
+                                <option value="evanjarman">Evan Jarman - Blackburn</option>
+                                <option value="geoffreyjarman">Geoffrey Jarman - Dallas</option>
+                                <option value="maxjarman">Max Jarman - Avon</option>
+                                <option value="rossjarman">Ross Jarman - Dillon</option>
+                            </select>
+                    </div>
+
+<!-- address text area ............................................................................................. -->
+
+                    <div id="address-div">
+                        <h3>IP-based Street Address (using the client public IP)</H3>
+                        <label FOR="address-input" id="address-label">Address:</label>
+                        <input type="text" id="address-input" name="address-input" readonly>
                         <br>
-                        <span id="ipcity-span">IP City: </span>
-                        <br>
-                        <span id="ipregion-span">IP Region: </span>
-                        <br>
-                        <span id="ippostal-span">IP Postal Code: </span>
-                        <br>
-                        <span id="iptimezone-span">IP Time Zone: </span>
-                        <br>
-                        <span id="iputcoffset-span">IP UTC Offset: </span>
-                        <br>
-                        <span id="ipcountry-span">IP Country: </span>
-                        <br>
-                        <span id="ipcurrency-span">IP Currency: </span>
+                    </div>
+
+<!-- IP address region ............................................................................................ -->
+
+                    <div id="ipaddress-div">
+                        <h3>IP Address</H3>
+                        <span id="address-span">IP Address: </span>
                         <br>
                         <span id="ipprovider-span">IP Provider: </span>
                         <br>
-                        <span id="iplatitude-span">IP Latitude: </span>
+                    </div>
+
+<!-- location region ............................................................................................... -->
+
+                    <div id="location-div">
+                        <h3>Latitude and Longitude</H3>
+                        <span id="iplatitude-span">Latitude: </span>
                         <br>
-                        <span id="iplongitude-span">IP Longitude: </span>
+                        <span id="iplongitude-span">Longitude: </span>
                         <br>
                     </div>
-                    <div id=IPDaylight-div" style="width:80%; margin: auto; max-width:800px; text-align: left">
-                        <h3>IP-based Daylight (using the client public IP)</H3>
-                        <span id="ipsunrise-span">IP Sunrise: </span>
+
+<!-- daylight region ............................................................................................... -->
+
+                    <div id="daylight-div">
+                        <h3>Daylight</H3>
+                        <span id="ipsunrise-span">Sunrise: </span>
                         <br>
-                        <span id="ipsunset-span">IP Sunset: </span>
+                        <span id="ipsunset-span">Sunset: </span>
                         <br>
-                        <span id="ipdaylength-span">IP Day Length: </span>
+                        <span id="ipdaylength-span">Day Length: </span>
                         <br>
-                        <span id="ipsolarnoon-span">IP Solar Noon: </span>
+                        <span id="ipsolarnoon-span">Solar Noon: </span>
                         <br>
-                        <span id="iptwilight-span">IP Twilight : </span>
+                        <span id="iptwilight-span">Twilight AM & PM: </span>
                         <br>
                     </div>
-                    <div id=IPWeather-div" style="width:80%; margin: auto; max-width:800px; text-align: left">
-                        <h3>IP-based Weather (using the client public IP)</H3>
+
+<!-- weather region ................................................................................................ -->
+
+                    <div id="weather-div">
+                        <h3>Weather</H3>
                         <span id="iptemperature-span">IP Temperature: </span>
                         <br>
                         <span id="ipwinddirection-span">IP Wind Direction: </span>
@@ -169,8 +206,16 @@
                         <span id="ipelevation-span">IP Elevation: </span>
                         <br>
                     </div>
-                </div>
 
+<!-- google map region ............................................................................................ -->
+
+                    <div id="googlemap-div">
+                    </div>
+
+                    <script>(g=>{var h,a,k,p="The Google Maps JavaScript API",c="google",l="importLibrary",q="__ib__",m=document,b=window;b=b[c]||(b[c]={});var d=b.maps||(b.maps={}),r=new Set,e=new URLSearchParams,u=()=>h||(h=new Promise(async(f,n)=>{await (a=m.createElement("script"));e.set("libraries",[...r]+"");for(k in g)e.set(k.replace(/[A-Z]/g,t=>"_"+t[0].toLowerCase()),g[k]);e.set("callback",c+".maps."+q);a.src=`https://maps.${c}apis.com/maps/api/js?`+e;d[q]=f;a.onerror=()=>h=n(Error(p+" could not load."));a.nonce=m.querySelector("script[nonce]")?.nonce||"";m.head.append(a)}));d[l]?console.warn(p+" only loads once. Ignoring:",g):d[l]=(f,...n)=>r.add(f)&&u().then(()=>d[l](f,...n))})
+                    ({key: "AIzaSyC-T2eJcuVVXM4x2cKg_CdbPRU0IAYFhQQ", v: "beta"});</script>
+
+                </div>
 
 <!-- buttons to show and hide help ................................................................................. -->
 
@@ -220,7 +265,12 @@
             <aside id="ASIDE1">
                     <h3 id=ASIDE1H3>Changes 2023</h3>
                 <ul ID="ASIDE1UL">
-                    <li class="ASIDE1LI">16-Sep: create this page</li>
+                    <li class="ASIDE1LI">30-Aug: lowercase div id's</li>
+                    <li class="ASIDE1LI">25-Aug: added Choice</li>
+                    <li class="ASIDE1LI">25-Aug: added Google map</li>
+                    <li class="ASIDE1LI">24-Aug: added weather info</li>
+                    <li class="ASIDE1LI">23-Aug: added Daylight info</li>
+                    <li class="ASIDE1LI">16-Aug: create this page</li>
                     <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
                 </ul>
             </aside>
