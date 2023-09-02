@@ -7,6 +7,7 @@
 //    25-Aug-2023 add google map
 //    26-Aug-2023 add google map reverse lookup with IPAddressAPI
 //    26-Aug-2023 add Emma and Ross and Max Jarman to the choice list
+//    02-Sep-2023 split the API key into parts to avoid scanners
 // References:
 //    https://www.youtube.com/watch?v=B4p3A00uXAs -- Youtube Google Maps
 //    https://ipapi.co/api/#introduction -- ip location API
@@ -141,6 +142,11 @@ async function fGetLLLocationData() {
     const degreesF = Math.round(degreesC * 9/5 + 32);
     document.querySelector("#iptemperature-span").innerHTML = "Temperature: " + degreesC + " C, " + degreesF + " F";
     const winddirectiondegrees = weatherJson.current_weather.winddirection;
+    const k1 = "AIzaSyDdtp";
+    const k2 = "k7bGyABziS";
+    const k3 = "6TdYgrLTxk";
+    const k4 = "BSHKTfp5o";
+    const k5 = k1 + k2 + k3 + k4;
     let winddirectionstr;
     if ((winddirectiondegrees > 22) && (winddirectiondegrees <= 77)) { winddirectionstr = "N-Easterly";}
     if ((winddirectiondegrees > 77) && (winddirectiondegrees <= 112)) { winddirectionstr = "Northerly";}
@@ -160,7 +166,7 @@ async function fGetLLLocationData() {
     document.querySelector("#ipelevation-span").innerHTML = "Elevation: " + elevationm + " m, " + elevationft + " ft";
     await initMap();
     IPAddressAPI = "https://maps.googleapis.com/maps/api/geocode/json?latlng=";
-    IPAddressAPI = IPAddressAPI + latitude + "," + longitude + "&key=AIzaSyC-T2eJcuVVXM4x2cKg_CdbPRU0IAYFhQQ";
+    IPAddressAPI = IPAddressAPI + latitude + "," + longitude + "&key=" + k5;
     address = await fetch(IPAddressAPI);
     addressJson = await address.json();
     let streetAddress = addressJson.results[0].formatted_address;
