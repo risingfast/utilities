@@ -53,7 +53,7 @@ int main()
     char *s20 = "/mnt/c/Users/gjarm/OneDrive/Computing/Apache2/Notes/cheatSheet.Apache2.txt";
     char *s61 = "/mnt/c/Users/gjarm/OneDrive/Hobbies/Electronics/Notes/cheatSheet.Electronics.txt";
     char *s62 = "/mnt/c/Users/gjarm/OneDrive/Computing/Docker/Notes/cheatSheet.Docker.txt";
-    char *s63 = "/mnt/c/Users/gjarm/OneDrive/Computing/Linux/tmux/cheatSheet.tmux.txt";
+    char *s63 = "/mnt/c/Users/gjarm/OneDrive/Computing/Linux/tmux/Notes/cheatSheet.tmux.txt";
     char *s64 = "/mnt/c/Users/gjarm/OneDrive/Computing/Apple/Notes/cheatSheet.Apple.txt";
     char *s65 = "/mnt/c/Users/gjarm/OneDrive/Computing/Google/Chrome/Notes/cheatSheet.Chrome.txt";
 
