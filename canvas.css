@@ -1,0 +1,106 @@
+/* canvas.css - a css for canvas.html                                                                                */
+/* started - 02-Nov-2023                                                                                             */
+/* References:                                                                                                       */
+/*         HTML & CSS for Beginners Part 22: How to create a basic layout - the CSS                                  */
+/* Log                                                                                                               */
+/*     02-Nov-2022 - started                                                                                         */
+/*     09-Nov-2022 - add styling for control elements                                                                */
+/*     12-Nov-2022 - move canvas size to html page                                                                   */
+
+#heading-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: center;
+}
+
+#canvas-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: center;
+}
+
+canvas {
+    border: 1px solid black;
+    background-color: grey;
+}
+
+#controls-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: center;
+}
+
+#count-label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+#count-input {
+    display: inline-block;
+    width: 40px;
+}
+
+#size-label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+#size-input {
+    display: inline-block;
+    width: 40px;
+}
+
+#speed-label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+#speed-input {
+    display: inline-block;
+    width: 54px;
+}
+
+#submit-span {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+}
+
+#submit-button {
+    display: inline-block;
+    width: 70;
+}
+
+#message-div {
+    width: 80%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    max-width: 800px;
+    text-align: left;
+}
+
+#message-label {
+    display: inline-block;
+    width: 80px;
+}
+
+#message-input {
+    background-color: gainsboro;
+    border-width: 1px;
+    width: 80%;
+}
+
+

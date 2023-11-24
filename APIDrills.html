@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+
+<!-- <HEAD> region for meta tags ................................................................................... -->
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Coding drills with  API calls">
+    <meta name="keywords" content="html, css, cgi">
+    <meta name="generator" content="vim">
+    <meta name="author" content="API Drills">
+    <link rel="stylesheet" type="text/css" href="d_template.css">
+    <link rel="stylesheet" type="text/css" href="common.css">
+    <link rel="stylesheet" type="text/css" href="APIDrills.css">
+    <title>API Drills</title>
+    <link rel="shortcut icon" href="GeoffreyJarman6.png" type="image/png">
+</head>
+
+<!-- Comments region ............................................................................................... -->
+<!--                                                                                                                 -->
+<!-- APIDrills.html -  API Drills with different API endpoints                                                       -->
+<!-- References:                                                                                                     -->
+<!--    https://www.youtube.com/watch?v=QO4NXhWo_NM - 16.11: Promises Part 1 - Topics of JavaScript/ES6              -->
+<!-- Templates:                                                                                                      -->
+<!--      none                                                                                                       -->
+<!-- Log:                                                                                                            -->
+<!--    08-Aug-2023 - start by copying dogAPI.html                                                                   -->
+<!--    16-Aug-2023 - add games elements                                                                             -->
+<!--    18-Aug-2023 - add API APIs                                                                                   -->
+<!--    29-Aug-2023 - move style tags to APIDrills.css                                                               -->
+<!--    05-Sep-2023 - add API for public holidays                                                                    -->
+<!--    08-Sep-2023 - add mutual funds prices                                                                        -->
+<!--    09-Sep-2023 - add mutual funds prices date range                                                             -->
+<!--    23-Aug-2023 - add a link to here                                                                             -->
+<!--    11-Sep-2023 - add video link                                                                                 -->
+<!--    16-Sep-2023 - add logo and icon                                                                              -->
+<!--    20-Sep-2023 - add link to rps.html page                                                                      -->
+<!--    29-Sep-2023 - add Animations link                                                                            -->
+<!--    02-Oct-2023 - make text fields readonly                                                                      -->
+<!--    17-Oct-2023 - add link to snake.html page                                                                    -->
+<!--    21-Oct-2023 - add titles to buttons                                                                          -->
+<!--    28-Oct-2023 - add upload link                                                                                -->
+<!--    28-Oct-2023 - change template link                                                                           -->
+<!--    29-Oct-2023 - add queystring parameter to href on unsecured div                                              -->
+<!--    09-Nov-2023 - add canvas link                                                                                -->
+<!--                                                                                                                 -->
+<!-- <BODY> region for all content including header and footer ..................................................... -->
+
+<body onload="fcSetFooterOptions(), fcCheckAuthentication(), fcFetchForexRate(), fcSetCornerImage()">
+    <div id="WRAPPER1">
+        <div id="WRAPPER2">
+            <header id="HEADER1">
+                <div id="HEADER1DIV" style="display: grid; align-items: center; grid-template-columns: 2fr 10fr 2fr ; column-gap: 5px;">
+                    <img src="GeoffreyJarman3.png" alt="No GeoffreyJarman3.png available" style="margin-left: 60px"; width=75px; height=75px>
+                     <H2>gjarman2020.com</H2>
+                    <img src="GeoffreyJarman4.png" alt="No GeoffreyJarman4.png available" style="margin-left: 40px; margin-top: 10px"; width=80px; height=80;px>
+                </div>
+            </header>
+            <nav id="NAV1">
+                    <h3 id="NAV1H3">Links</h3>
+                <ul ID="NAV1UL">
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                </ul>
+                <ul id="NAV1UL2" hidden>
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/guessAnIdiom.html">Guess an Idiom</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/battleShips.html">Battleships</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_regexWords.html">Crossword Helper</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rps.html">Rock Paper Scissors</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/snake.html">Snake</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/environment.html">Environment</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/serverProfile.html">Server Profile</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/here.html">Here</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/logo.html">Logo</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/simplest.html">Text Fetcher</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/helloWorld.html">Hello World!</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/tcount.html">Counter</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/multiply.html">Multiplier</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/collectText.html">Collect Text</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxFetch.html">Ajax Fetch</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxPost.html">Post Text to Server</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/template.html">Template</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/dogAPI.html">Dog API</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/APIDrills.html">API Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/email.html">Email</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/perlTest.html">Cookies</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/DOM_Drills.html">DOM Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/json4Ajax.html">JSON for Ajax</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/JSONOptions.html">JSON Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/videoDrill.html">Video Drill</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/animations.html">Animations</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/upload.html">Upload</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/canvas.html">Canvas</a></li>
+                </ul>
+            </nav>
+
+<!-- <SESSION1> region for session information ..................................................................... -->
+
+            <aside id="SESSION1">
+                    <h3 id=SESSION1H3>Current Session</h3>
+                    <p id="SESSION1PARA">
+                    </p>
+            </aside>
+
+<!-- <FOREX1> region for USD AUD exchange rate ..................................................................... -->
+
+            <aside id="FOREX1">
+                    <h3 id=FOREX1H3>Exchange Rate</h3>
+                    <p id="FOREX1PARA">
+                    </p>
+            </aside>
+
+<!-- <MAIN> region for main content and background image ........................................................... -->
+
+            <main id="MAIN1">
+
+                <div id="heading-div">
+                    <h2>API Drills</h2>
+                    <p>Coding Drills with API Endpoints</p>
+                </div>
+
+                <div id="unsecured-div">
+                    <p><a href="http://gjarman2020.com/authenticateUser.html?caller=http://gjarman2020.com/APIDrills.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
+                </div>
+                <div id="secured-div">
+
+<!-- API selector .................................................................................................. -->
+
+                    <div id="APIList-div">
+                        <select id="APIList-select" onchange="fSetAPIChoice()">
+                            <option>Choose</option>
+                            <option>Hamburgers</option>
+                            <option>City Bikes</option>
+                            <option>Computer Games</option>
+                            <option>Beers</option>
+                            <option>Holidays</option>
+                            <option>Mutual Funds</option>
+                            <option>APIs</option>
+                        </select>
+                    </div>
+
+<!-- Hamburger elements ............................................................................................ -->
+
+                    <div id="hamburgerFilters-div">
+                        <div id="hamburgerNameFilter-div">
+                            <span id="hamburgerNameFilter-span">Hamburger Name</span>
+                            <select id="hamburgerNameFilter-select" onchange="fClearResultsAndMessage()" type="text">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="restaurantFilter-div">
+                            <span id="restaurantFilter-span">Restaurant</span>
+                            <select id="restaurantFilter-select" onchange="fClearResultsAndMessage()" type="text">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="hamburgerResults-div">
+                        <span id="hamburgerResults-span">Results</span>
+                        <textarea id=hamburgerResults-textarea readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- City bikes elements ........................................................................................... -->
+
+                    <div id="cityBikesFilters-div">
+                        <div id="cityBikesNameFilter-div">
+                            <span id="cityBikesNameFilter-span">Bike Service Name</span>
+                            <select id="cityBikesNameFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="cityBikesCityFilter-div">
+                            <span id="cityBikesCityFilter-span">City</span>
+                            <select id="cityBikesCityFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="cityBikesCompanyFilter-div">
+                            <span id="cityBikesCompanyFilter-span">Bike Company</span>
+                            <select id="cityBikesCompanyFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="cityBikesResults-div">
+                        <span id="cityBikesResults-span">Results</span>
+                        <textarea id="cityBikesResults-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- Beers elements ................................................................................................ -->
+
+                    <div id="beersFilters-div">
+                        <div id="beersNameFilter-div">
+                            <span id="beersNameFilter-span">Beer Name</span>
+                            <select id="beersNameFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="beersResults-div">
+                        <span id="beersResults-span">Results</span>
+                        <textarea id="beersResults-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- Games elements ................................................................................................ -->
+
+                    <div id="gamesFilters-div">
+                        <div id="gamesTitleFilter-div">
+                            <span id="gamesTitleFilter-span">Title</span>
+                            <select id="gamesTitleFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="gamesGenreFilter-div">
+                            <span id="gamesGenreFilter-span">Genre</span>
+                            <select id="gamesGenreFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="gamesPlatformFilter-div">
+                            <span id="gamesPlatformFilter-span">Platform</span>
+                            <select id="gamesPlatformFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="gamesResults-div">
+                        <span id="gamesResults-span">Results</span>
+                        <textarea id="gamesResults-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- Holidays elements ............................................................................................. -->
+
+                    <div id="holidaysFilters-div">
+                        <div id="holidaysCountryFilter-div">
+                            <span id="holidaysCountryFilter-span">Country</span>
+                            <select id="holidaysCountryFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="holidaysYearFilter-div">
+                            <span id="holidaysYearFilter-span">Year</span>
+                            <select id="holidaysYearFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="holidaysResults-div">
+                        <span id="holidaysResults-span">Results</span>
+                        <textarea id="holidaysResults-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- Mutual funds prices elements .................................................................................. -->
+
+                    <div id="fundsPriceFilters-div">
+                        <div id="fundsPriceFrDateFilter-div">
+                            <label id="fundsPriceFrDateFilter-label" for="fundsPriceFrDateFilter-input">From Date</label>
+                            <input id="fundsPriceFrDateFilter-input" onchange="fClearResultsAndMessage()">
+                        </div>
+                        <div id="fundsPriceToDateFilter-div">
+                            <label id="fundsPriceToDateFilter-label" for="fundsPriceToDateFilter-input">To Date</label>
+                            <input id="fundsPriceToDateFilter-input" onchange="fClearResultsAndMessage()">
+                        </div>
+                    </div>
+                    <div id="fundsPriceResults-div">
+                        <span id="fundsPriceResults-span">Results</span>
+                        <textarea id="fundsPriceResults-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- API elements ................................................................................................. -->
+
+                    <div id="APIsFilters-div">
+                        <div id="APIsNameFilter-div">
+                            <span id="APIsNameFilter-span">Name</span>
+                            <select id="APIsNameFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="APIsAuthorizationFilter-div">
+                            <span id="APIsAuthorizationFilter-span">Authorization</span>
+                            <select id="APIsAuthorizationFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="APIsHTTPSFilter-div">
+                            <span id="APIsHTTPSFilter-span">HTTPS Enabled</span>
+                            <select id="APIsHTTPSFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="APIsCORSFilter-div">
+                            <span id="APIsCORSFilter-span">CORS Enabled</span>
+                            <select id="APIsCORSFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                        <div id="APIsCategoryFilter-div">
+                            <span id="APIsCategoryFilter-span">Category</span>
+                            <select id="APIsCategoryFilter-select" onchange="fClearResultsAndMessage()">
+                                <option value="filter" selected>Filter (Optional)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="APIsResults-div">
+                        <span id="APIsResults-span">Results</span>
+                        <textarea id="APIsResults-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+
+<!-- Messages and submit elements .................................................................................. -->
+
+                    <div id="message-div">
+                        <span id="message-span">Message</span>
+                        <textarea id="message-textarea" readonly onclick="fShowMessageReadOnly()">
+                        </textarea>
+                    </div>
+                    <div id="submitButton-div">
+                        <button id="submit-button" onclick="fChooseAPI()">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+
+<!-- buttons to show and hide help ................................................................................. -->
+
+                <div id="MOREBTTNS">
+                    <button title="Show or hide help" onclick="fcShowHelp()">Help</button>
+                    <button title="Clear help and internals text" onclick="fClearHTML()">Clear</button>
+                    <br>
+                </div>
+
+<!-- help text controlled by button ................................................................................ -->
+
+                <div id="HELPDIV">
+                    <p>
+                    There is no help available for this page 'APIDrills.html'<br>
+                    </p>
+                </div>
+
+<!-- internals text ................................................................................................ -->
+
+               <div id="INTERNALS">
+                    <details id="internals-details">
+                        <summary>
+                            Internals
+                        </summary>
+                        <p>
+                            html file: /var/www.html/APIDrills.html<br>
+                            css file: /var/www/html/css/APIDrills.css<br>
+                            js file: /var/www/html/css/APIDrills.js<br>
+                            js file: /var/www/html/css/common.js<br>
+                            cgi directory: /usr/lib/cgi-bin/<br>
+                            corner image: /var/www/html/cornerImage.png<br>
+                            background image: /var/www/html/background.jpg<br>
+                            CGI source code: c<br>
+                        </p>
+                    </details>
+               </div>
+
+                <script type="text/javascript" src="common.js"></script>
+                <script type="text/javascript" src="APIDrills.js"></script>
+
+            </main>
+
+<!-- <ASIDE1> region for change log ................................................................................ -->
+
+            <aside id="ASIDE1">
+                    <h3 id=ASIDE1H3>Changes 2023-24</h3>
+                <ul ID="ASIDE1UL">
+                    <li class="ASIDE1LI">01-Jan: happy new year 2024</li>
+                    <li class="ASIDE1LI">09-Nov: add canvas link</li>
+                    <li class="ASIDE1LI">29-Oct: authenticate and return</li>
+                    <li class="ASIDE1LI">28-Oct: change template link</li>
+                    <li class="ASIDE1LI">28-Oct: add upload link</li>
+                    <li class="ASIDE1LI">21-Oct: add titles to buttons</li>
+                    <li class="ASIDE1LI">17-Oct: add link to snake</li>
+                    <li class="ASIDE1LI">08-Oct: add try-catch clauses</li>
+                    <li class="ASIDE1LI">02-Oct: make text fields read only</li>
+                    <li class="ASIDE1LI">29-Sep: add Animations link</li>
+                    <li class="ASIDE1LI">20-Sep: add rps link</li>
+                    <li class="ASIDE1LI">19-Sep: implement CGI for funds</li>
+                    <li class="ASIDE1LI">16-Sep: add logo and icon</li>
+                    <li class="ASIDE1LI">11-Sep: add link to video</li>
+                    <li class="ASIDE1LI">10-Sep: add fund costs</li>
+                    <li class="ASIDE1LI">09-Sep: price mutual funds</li>
+                    <li class="ASIDE1LI">05-Sep: add mutual funds</li>
+                    <li class="ASIDE1LI">05-Sep: add holidays</li>
+                    <li class="ASIDE1LI">29-Aug: remove style tags</li>
+                    <li class="ASIDE1LI">28-Aug: add filter reset</li>
+                    <li class="ASIDE1LI">21-Aug: add Forex</li>
+                    <li class="ASIDE1LI">20-Aug: add API list</li>
+                    <li class="ASIDE1LI">18-Aug: combine filters</li>
+                    <li class="ASIDE1LI">18-Aug: add API's</li>
+                    <li class="ASIDE1LI">16-Aug: add games</li>
+                    <li class="ASIDE1LI">15-Aug: add beers</li>
+                    <li class="ASIDE1LI">14-Aug: add city bikes</li>
+                    <li class="ASIDE1LI">13-Aug: add hamburgers</li>
+                    <li class="ASIDE1LI">08-Aug: start</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
+                </ul>
+            </aside>
+
+<!-- <ASIDE2> region for corner image .............................................................................. -->
+
+            <aside id="ASIDE2">
+                <div id="ASIDE2DIV">
+                    <h3 style="display:none">Corner Image</h3>                 <!-- screen reader sectioning element -->
+                     <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
+                </div>
+            </aside>
+
+<!-- <ASIDE3> region for corner image caption ...................................................................... -->
+
+            <aside id="ASIDE3">
+                <div id="ASIDE3DIV">
+                    <h3 style="display:none">Corner Image Caption</h3>         <!-- screen reader sectioning element -->
+                    <p id="ASIDE3-PARA">
+                    Matilda Cook in Magpies uniform before her next netball game 2022
+                    </p>
+                </div>
+            </aside>
+
+<!-- <FOOTER> region for page footer ............................................................................... -->
+
+            <footer id="FOOTER1">
+                <div id="FOOTER1OPTIONS-DIV">
+                    Corner Image Behaviour: <span id="footeroptionscichoice"></span>;
+                    Background Image: <span id="footeroptionsbackgroundimage"></span>;
+                    Show Webserver Log: <span id="footeroptionsshowserverlog"></span>;
+                    Show Session Log: <span id="footeroptionsshowsession"></span>;
+                    Left Links: <span id="footeroptionsleftlinks"></span>
+                </div>
+                <div id="FOOTER1DIV">
+                    <p>&copy; 2020 gjarman2020.com ... /var/www/html/index.html</p>
+                </div>
+            </footer>
+        </div>
+    </div>
+</body>
+
+</html>
+

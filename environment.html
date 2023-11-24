@@ -8,89 +8,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="Server Environment">
+    <meta name="description" content="Server Environment page on the gjarman2020.com website">
     <meta name="keywords" content="html, css, cgi">
     <meta name="generator" content="vim">
-    <meta name="author" content="risingfast">
+    <meta name="author" content="gjarman2020">
     <title>Environment</title>
     <link rel="stylesheet" type="text/css" href="common.css">
     <link rel="stylesheet" type="text/css" href="environment.css">
-    <link rel="shortcut icon" href="letterRF.png" type="image/png">
+    <link rel="shortcut icon" href="GeoffreyJarman6.png" type="image/png">
 </head>
 
-<!-- Comments region .............................................................................................. -->
-<!--                                                                                                                -->
-<!-- environment.html -  grid layout of server environment                                                          -->
-<!-- References:                                                                                                    -->
-<!--      https://www.youtube.com/watch?v=qTGbWfEEnKI                                                               -->
-<!--          Easily Structure your Layout with CSS Grid's 'grid-template-areas'                                    -->
-<!-- Templates:                                                                                                     -->
-<!--      d_template.html                                                                                           -->
-<!-- Log:                                                                                                           -->
-<!--    22-Sep-2021 - start                                                                                         -->
-<!--    22-Sep-2021 - remove extra text options                                                                     -->
-<!--    22-Sep-2021 - increase text area height to 25 rows                                                          -->
-<!--    30-Sep-2021 - update the footer text to match the filename                                                  -->
-<!--    09-Oct-2021 - prefix function names with 'f'                                                                -->
-<!--    16-Oct-2021 - add 'choose' option and disable Submit unless choice is valid                                 -->
-<!--    17-Oct-2021 - fix the title                                                                                 -->
-<!--    11-May-2022 - add <ASIDE3> corner image caption grid area                                                   -->
-<!--    15-May-2022 - add common.js                                                                                 -->
-<!--    17-May-2022 - expand clear function                                                                         -->
-<!--    17-May-2022 - remove inline styles                                                                          -->
-<!--    22-May-2022 - lowercase html tags                                                                           -->
-<!--    01-Jun-2022 - add cornerimage rotation                                                                      -->
-<!--    26-Jun-2022 - add footer options                                                                            -->
-<!--    22-Jul-2022 - add session div, secured div and authentication link                                          -->
-<!--    25-Jul-2022 - add authentication anchor                                                                     -->
+<!-- Comments region ............................................................................................... -->
+<!--                                                                                                                 -->
+<!-- environment.html -  grid layout of server environment                                                           -->
+<!-- References:                                                                                                     -->
+<!--      https://www.youtube.com/watch?v=qTGbWfEEnKI                                                                -->
+<!--          Easily Structure your Layout with CSS Grid's 'grid-template-areas'                                     -->
+<!-- Templates:                                                                                                      -->
+<!--      d_template.html                                                                                            -->
+<!-- Log:                                                                                                            -->
+<!--    22-Sep-2021 - start                                                                                          -->
+<!--    22-Sep-2021 - remove extra text options                                                                      -->
+<!--    22-Sep-2021 - increase text area height to 25 rows                                                           -->
+<!--    30-Sep-2021 - update the footer text to match the filename                                                   -->
+<!--    09-Oct-2021 - prefix function names with 'f'                                                                 -->
+<!--    16-Oct-2021 - add 'choose' option and disable Submit unless choice is valid                                  -->
+<!--    17-Oct-2021 - fix the title                                                                                  -->
+<!--    11-May-2022 - add <ASIDE3> corner image caption grid area                                                    -->
+<!--    15-May-2022 - add common.js                                                                                  -->
+<!--    17-May-2022 - expand clear function                                                                          -->
+<!--    17-May-2022 - remove inline styles                                                                           -->
+<!--    22-May-2022 - lowercase html tags                                                                            -->
+<!--    01-Jun-2022 - add cornerimage rotation                                                                       -->
+<!--    26-Jun-2022 - add footer options                                                                             -->
+<!--    22-Jul-2022 - add session div, secured div and authentication link                                           -->
+<!--    25-Jul-2022 - add authentication anchor                                                                      -->
 <!--    15-Aug-2022 - add long links                                                                                 -->
-<!--                                                                                                                -->
-<!-- <body> region for all content including header and footer .................................................... -->
+<!--    16-Sep-2022 - change www.risingfast.com to gjarman2020.com                                                   -->
+<!--    25-Jul-2023 - add JSON options link                                                                          -->
+<!--    21-Aug-2023 - add forex                                                                                      -->
+<!--    11-Sep-2023 - add video link                                                                                 -->
+<!--    16-Sep-2023 - add logo and icon                                                                              -->
+<!--    20-Sep-2023 - add link to rps.html page                                                                      -->
+<!--    29-Sep-2023 - add Animations link                                                                            -->
+<!--    02-Oct-2023 - add message-div                                                                                -->
+<!--    17-Oct-2023 - add link to snake.html page                                                                    -->
+<!--    20-Oct-2023 - add titles to buttons                                                                          -->
+<!--    27-Oct-2023 - add upload link                                                                                -->
+<!--    27-Oct-2023 - change template link                                                                           -->
+<!--    29-Oct-2023 - add queystring parameter to href on unsecured div                                              -->
+<!--    09-Nov-2023 - add canvas link                                                                                -->
+<!--                                                                                                                 -->
+<!-- <body> region for all content including header and footer ..................................................... -->
 
-<body onload="fcSetCornerImage(), fcSetFooterOptions(), fcCheckAuthentication()">
+<body onload="fcSetFooterOptions(), fcCheckAuthentication(), fcFetchForexRate(), fcSetCornerImage()">
     <div id="WRAPPER1">
         <div id="WRAPPER2">
             <header id="HEADER1">
-                <br>
-                <div id="HEADER1DIV">
-                     <h2>www.Risingfast.com</h2>
+                <div id="HEADER1DIV" style="display: grid; align-items: center; grid-template-columns: 2fr 10fr 2fr ; column-gap: 5px;">
+                    <img src="GeoffreyJarman3.png" alt="No GeoffreyJarman3.png available" style="margin-left: 60px"; width=75px; height=75px>
+                     <H2>gjarman2020.com</H2>
+                    <img src="GeoffreyJarman4.png" alt="No GeoffreyJarman4.png available" style="margin-left: 40px; margin-top: 10px"; width=80px; height=80;px>
                 </div>
             </header>
             <nav id="NAV1">
                     <h3 id="NAV1H3">Links</h3>
                 <ul id="NAV1UL">
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
-                    <li class="NAV1LI"><a class="active" href="http://www.risingfast.com">Home</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/mcaListPeople.html">Ancestry</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/bookInquiry.html">Library</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/cheatsheets.html">Cheatsheets</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
                 </ul>
                 <ul id="NAV1UL2" hidden>
-                    <li class="NAV1LI"><a class="active" href="http://www.risingfast.com">Home</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/mcaListPeople.html">Ancestry</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/bookInquiry.html">Library</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/cheatsheets.html">Cheatsheets</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/guessAnIdiom.html">Guess an Idiom</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/battleShips.html">Battleships</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_regexWords.html">Crossword Helper</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/environment.html">Environment</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/serverProfile.html">Server Profile</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/authenticateUser.html">Authenticate</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/options.html">Options</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/about.html">About</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/simplest.html">Text Fetcher</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/helloWorld.html">Hello World!</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/tcount.html">Counter</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/multiply.html">Multiplier</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/collectText.html">Collect Text</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_ajaxFetch.html">Ajax Fetch</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_ajaxPost.html">Post Text to Server</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/d_template.html">Template</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/dogAPI.html">Dog API</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/email.html">Email</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/perlTest.html">Cookies</a></li>
-                    <li class="NAV1LI"><a href="http://www.risingfast.com/DOM_Drills.html">DOM Drills</a></li>
+                    <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/guessAnIdiom.html">Guess an Idiom</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/battleShips.html">Battleships</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_regexWords.html">Crossword Helper</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rRoulette.html">Russian Roulette</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/rps.html">Rock Paper Scissors</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/snake.html">Snake</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/environment.html">Environment</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/serverProfile.html">Server Profile</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/authenticateUser.html">Authenticate</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/options.html">Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/about.html">About</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/here.html">Here</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/logo.html">Logo</a></li>
+                    <br>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/simplest.html">Text Fetcher</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/helloWorld.html">Hello World!</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/tcount.html">Counter</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/multiply.html">Multiplier</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/collectText.html">Collect Text</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxFetch.html">Ajax Fetch</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/d_ajaxPost.html">Post Text to Server</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/template.html">Template</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/dogAPI.html">Dog API</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/APIDrills.html">API Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/email.html">Email</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/perlTest.html">Cookies</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/DOM_Drills.html">DOM Drills</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/json4Ajax.html">JSON for Ajax</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/JSONOptions.html">JSON Options</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/videoDrill.html">Video Drill</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/animations.html">Animations</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/upload.html">Upload</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/canvas.html">Canvas</a></li>
             </nav>
 
 <!-- <SESSION1> region for session information .................................................................... -->
@@ -101,18 +132,26 @@
                     </p>
             </aside>
 
-<!-- <main> region for main content and background image ........................................................... -->
+<!-- <FOREX1> region for USD AUD exchange rate ..................................................................... -->
+
+            <aside id="FOREX1">
+                    <h3 id=FOREX1H3>Exchange Rate</h3>
+                    <p id="FOREX1PARA">
+                    </p>
+            </aside>
+
+<!-- <MAIN> region for main content and background image ........................................................... -->
 
             <main id="MAIN1">
 
                 <div id="heading-div">
-                    <h3>Environment Variables</H3>
+                    <h2>Environment</h2>
                 </div>
 
 <!-- entry fields and options....................................................................................... -->
 
                 <div id="unsecured-div">
-                    <p><a href="http://www.risingfast.com/authenticateUser.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
+                    <p><a href="http://gjarman2020.com/authenticateUser.html?caller=http://gjarman2020.com/environment.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
                 </div>
 
                 <div id="secured-div">
@@ -131,20 +170,28 @@
                             <button id="submitButton" onclick="fGetResults()" disabled>Submit</button>
                         </div>
                     </div>
-                </div>
 
 <!-- results area................................................................................................... -->
 
-            <div id="results-div">
-                <textarea id="results-area" rows="25">
-                </textarea>
+                    <div id="results-div">
+                        <textarea id="results-area" rows="25" onclick="fShowMessageReadOnly()" readonly>
+                        </textarea>
+                    </div>
+
+                </div>
+
+<!-- messages area .................................................................................................. -->
+
+            <div id="message-div">
+                <label id="message-label" for="message-input">Message</label>
+                <input id="message-input" onclick="fShowMessageReadOnly()" readonly>
             </div>
 
 <!-- buttons to show and hide help & internals  .................................................................... -->
 
             <div id="MOREBTTNS">
-                <button onclick="fcShowHelp()">Help</button>
-                <button onclick="fClearEnvironmentPage()">Clear</button>
+                <button title="Show or hide help text" onclick="fcShowHelp()">Help</button>
+                <button title="Clear help and internals text" onclick="fClearEnvironmentPage()">Clear</button>
             </div>
 
 <!-- help text controlled by button ................................................................................ -->
@@ -189,14 +236,29 @@
 <!-- <ASIDE1> region for change log ................................................................................. -->
 
             <aside id="ASIDE1">
-                    <h3 id=ASIDE1H3>Changes 2021-22</h3>
+                    <h3 id=ASIDE1H3>Changes 2021-24</h3>
                 <ul id="ASIDE1UL">
+                    <li class="ASIDE1LI">01-Jan: happy new year 2024</li>
+                    <li class="ASIDE1LI">09-Nov: add canvas link</li>
+                    <li class="ASIDE1LI">29-Oct: authenticate and return</li>
+                    <li class="ASIDE1LI">27-Oct: change template link</li>
+                    <li class="ASIDE1LI">27-Oct: add upload link</li>
+                    <li class="ASIDE1LI">20-Oct: add titles to buttons</li>
+                    <li class="ASIDE1LI">17-Oct: add link to snake</li>
+                    <li class="ASIDE1LI">02-Oct: add message region</li>
+                    <li class="ASIDE1LI">29-Sep: add Animations link</li>
+                    <li class="ASIDE1LI">20-Sep: add rps link</li>
+                    <li class="ASIDE1LI">16-Sep: add logo and icon</li>
+                    <li class="ASIDE1LI">21-Aug: Add forex</li>
+                    <li class="ASIDE1LI">25-Jul: Add JSON options</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
                     <li class="ASIDE1LI">15-Aug: add long links</li>
                     <li class="ASIDE1LI">25-Jul: add authentication anchor</li>
                     <li class="ASIDE1LI">22-Jul: add authenticate link</li>
                     <li class="ASIDE1LI">22-Jul: show session block</li>
                     <li class="ASIDE1LI">01-Jun: add cornerimage rotation</li>
                     <li class="ASIDE1LI">22-May: lowercase html tags</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2022</li>
                     <li class="ASIDE1LI">17-Oct: remove inline styles</li>
                     <li class="ASIDE1LI">17-Oct: expand clear function</li>
                     <li class="ASIDE1LI">17-Oct: fix the title</li>
@@ -204,6 +266,7 @@
                     <li class="ASIDE1LI">20-Sep: non-CGI results</li>
                     <li class="ASIDE1LI">19-Sep: add Internals</li>
                     <li class="ASIDE1LI">16-Sep: moved to grid layout</li>
+                    <li class="ASIDE1LI">01-Jan: happy new year 2021</li>
                 </ul>
             </aside>
 
@@ -211,6 +274,7 @@
 
             <aside id="ASIDE2">
                 <div id="ASIDE2DIV">
+                    <h3 style="display:none">Corner Image</h3>                 <!-- screen reader sectioning element -->
                      <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
                 </div>
             </aside>
@@ -219,6 +283,7 @@
 
             <aside id="ASIDE3">
                 <div id="ASIDE3DIV">
+                    <h3 style="display:none">Corner Image Caption</h3>         <!-- screen reader sectioning element -->
                     <p id="ASIDE3-PARA">
                      Matilda Cook in Magpies uniform before her next netball game 2022
                     </p>
@@ -229,14 +294,14 @@
 
             <footer id="FOOTER1">
                 <div id="FOOTER1OPTIONS-DIV">
-                    Corner Image Behaviour: <label id="footeroptionscichoice"></label>;
-                    Background Image: <label id="footeroptionsbackgroundimage"></label>;
-                    Show Current User: <label id="footeroptionsshowuser"></label>;
-                    Show Access Log: <label id="footeroptionsshowlog"></label>;
-                    Left Links: <label id="footeroptionsleftlinks"></label>
+                    Corner Image Behaviour: <span id="footeroptionscichoice"></span>;
+                    Background Image: <span id="footeroptionsbackgroundimage"></span>;
+                    Show Webserver Log: <span id="footeroptionsshowserverlog"></span>;
+                    Show Session Log: <span id="footeroptionsshowsession"></span>;
+                    Left Links: <span id="footeroptionsleftlinks"></span>
                 </div>
                 <div id="FOOTER1DIV">
-                    <p>&copy; 2020 www.risingfast.com ... /var/www/html/environment.html</p>
+                    <p>&copy; 2020 gjarman2020.com ... /var/www/html/environment.html</p>
                 </div>
             </footer>
         </div>

@@ -8,49 +8,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="DOM Drills and DOM Manipulation">
+    <meta name="description" content="A canvas HTML document">
     <meta name="keywords" content="html, css, cgi">
     <meta name="generator" content="vim">
     <meta name="author" content="gjarman2020">
-    <link rel="stylesheet" type="text/css" href="DOM_Drills.css">
+    <link rel="stylesheet" type="text/css" href="canvas.css">
     <link rel="stylesheet" type="text/css" href="common.css">
-    <title>DOM Drills</title>
-    <link rel="shortcut icon" href="letterRF.png" type="image/png">
+    <title>Canvas</title>
+    <link rel="stylesheet" type="text/css" href="index.css">
     <link rel="shortcut icon" href="GeoffreyJarman6.png" type="image/png">
 </head>
 
 <!-- Comments region ............................................................................................... -->
 <!--                                                                                                                 -->
-<!-- DOM_Drills.html -  exercises with DOM manipulation                                                              -->
+<!-- canvas.html -  canvas for gjarman2020 website pages                                                             -->
 <!-- References:                                                                                                     -->
-<!--      https://www.youtube.com/watch?v=wKBu_dEaF9E - Web Ninja DOM Manipulation introduction                      -->
-<!--      https://www.youtube.com/watch?v=y17RuWkWdn8 - Web Dev Simplified DOM Manipulation                          -->
+<!--          https://www.youtube.com/watch?v=EO6OkltgudE - HTML5 Canvas Tutorial for Complete Beginners             -->
 <!-- Templates:                                                                                                      -->
-<!--      d_Template.html                                                                                            -->
+<!--      none                                                                                                       -->
 <!-- Log:                                                                                                            -->
-<!--    16-Sep-2021 - start                                                                                          -->
-<!--    11-Aug-2022 - add to sandbox list on gjarman2020                                                             -->
-<!--    13-Aug-2022 - disable button to change list values if list not displayed                                     -->
-<!--    15-Aug-2022 - add long links                                                                                 -->
-<!--    16-Sep-2022 - change www.risingfast.com to gjarman2020.com                                                   -->
-<!--    14-Jun-2023 - add bttn5 to fetch people                                                                      -->
-<!--    15-Jun-2023 - add filter-div                                                                                 -->
-<!--    26-Jun-2023 - add JSON Options link                                                                          -->
-<!--    08-Aug-2023 - add a link to a new API Drills page                                                            -->
-<!--    22-Aug-2023 - add JSON Options link                                                                          -->
-<!--    23-Aug-2023 - add a link to here                                                                             -->
-<!--    30-Aug-2023 - move styles to css file                                                                        -->
-<!--    11-Sep-2023 - add video link                                                                                 -->
-<!--    16-Sep-2023 - add logo and icon                                                                              -->
-<!--    20-Sep-2023 - add link to rps.html page                                                                      -->
-<!--    29-Sep-2023 - add Animations link                                                                            -->
-<!--    30-Sep-2023 - add message-div                                                                                -->
-<!--    17-Oct-2023 - add link to snake.html page                                                                    -->
-<!--    22-Oct-2023 - add titles to buttons                                                                          -->
-<!--    28-Oct-2023 - add upload link                                                                                -->
-<!--    28-Oct-2023 - change template link                                                                           -->
-<!--    29-Oct-2023 - add queystring parameter to href on unsecured div                                              -->
-<!--    09-Nov-2023 - add canvas link                                                                                -->
+<!--    02-NOv-2023 - start by copying template.html                                                                 -->
+<!--    12-NOv-2023 - fix canvas size in html                                                                        -->
 <!--                                                                                                                 -->
 <!-- <BODY> region for all content including header and footer ..................................................... -->
 
@@ -77,7 +55,7 @@
                 <ul id="NAV1UL2" hidden>
                     <li class="NAV1LI"><a class="active" href="http://gjarman2020.com">Home</a></li>
                     <br>
-                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li>
+                    <li class="NAV1LI"><a href="http://gjarman2020.com/mcaListPeople.html">Ancestry</a></li> 
                     <li class="NAV1LI"><a href="http://gjarman2020.com/bookInquiry.html">Library</a></li>
                     <li class="NAV1LI"><a href="http://gjarman2020.com/cheatsheets.html">Cheatsheets</a></li>
                     <br>
@@ -126,7 +104,7 @@
                     </p>
             </aside>
 
-<!-- <FOREX1> region for USD AUD exchange rate ..................................................................... -->
+<!-- <FOREX1> region for USD AUD exchange rate ..........p.......................................................... -->
 
             <aside id="FOREX1">
                     <h3 id=FOREX1H3>Exchange Rate</h3>
@@ -139,46 +117,34 @@
             <main id="MAIN1">
 
                 <div id="heading-div">
-                    <h2>DOM Drills</h2>
-                    <h4>Drills using JS to Manipulate the Document Object Model (DOM)</h4>
+                    <h2>Canvas</h2>
+                    <p>An HTML canvas example</p>
                 </div>
 
                 <div id="unsecured-div">
-                    <p><a href="http://gjarman2020.com/authenticateUser.html?caller=http://gjarman2020.com/DOM_Drills.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
+                    <p><a href="http://gjarman2020.com/authenticateUser.html?caller=http://gjarman2020.com/canvas.html">Authentication</a> is required for this page (or via: Links >> Authenticate)</p>
                 </div>
 
                 <div id="secured-div">
-                    <div id="buttons-div">
-                        <button title="Change or revert the text content" id="bttn1" onclick="fChangeOrRevertText()">Chnge Text</button>
-                        <button title="Change or revert the text color" id="bttn2" onclick="fChangeOrRevertColor()">Chnge Color</button>
-                        <button title="Show or hide a list of items" id="bttn3" onclick="fShowOrHideList()">Show</button>
-                        <button title="Refresh the list to match the filter" id="bttn4" onclick="fRefreshList()" disabled>Refresh</button>
-                        <button title="Move down the list" id="bttn5" onclick="fMoveDownList()" disabled>Down</button>
-                        <button title="Move up the list" id="bttn6" onclick="fMoveUpList()" disabled >Up</button>
-                        <button title="Move to the top of the list" id="bttn7" onclick="fMoveToListTop()" disabled>Top</button>
-                        <button title="Move to the bottom of the list" id="bttn8" onclick="fMoveToListBottom()"disabled >Bottom</button>
+                    <div id="canvas-div" =>
+                        <canvas height="300" width="600"></canvas>
+                    </div>
+                    <div id="controls-div" =>
+                        <label id="count-label" for="count-input">Count (1-100):</label>
+                        <input id="count-input" type="number" min="1" max="100" onkeypress="fClickSubmitOnEnter()">
+                        <label id="size-label" for="size-input">Size (1-50):</label>
+                        <input id="size-input" type="number" min="1" max="50" onkeypress="fClickSubmitOnEnter()">
+                        <label id="speed-label" for="speed-input">Speed (1-100):</label>
+                        <input id="speed-input" type="number" min="1" max="100" onkeypress="fClickSubmitOnEnter()">
+                        <span id="submit-span">
+                            <button id="submit-button" title="Submit" onclick="fSubmit()">Submit</button>
+                        </span>
                     </div>
 
-<!-- filter input .................................................................................................. -->
-
-                    <div  ID="filter-div">
-                        <label FOR="filter-input" id="filter-label">Filter</label>
-                        <input type="text" id="filter-input" name="filter-input"  autofocus>
-                    </div>
-
-<!-- variable list div ............................................................................................. -->
-
-                    <div id="variablelist-div">
-                        <p id="para1">Click a button</p>
-                    </div>
-
-                    <div id="list-div">
-                    </div>
-
-<!-- messages area .................................................................................................. -->
+<!-- message area .................................................................................................. -->
 
                     <div id="message-div">
-                        <label id="message-label" for="message-input">Messages</label>
+                        <label id="message-label" for="message-input">Message</label>
                         <input id="message-input" onclick="fShowMessageReadOnly()" readonly>
                     </div>
 
@@ -187,8 +153,8 @@
 <!-- buttons to show and hide help ................................................................................. -->
 
                 <div id="MOREBTTNS">
-                    <button title="Show or hide help text" onclick="fcShowHelp()">Help</button>
-                    <button title="Clear help and internals text" onclick="fClearDOM_DrillsFields()">Clear</button>
+                    <button title="Show or hide help" onclick="fcShowHelp()">Help</button>
+                    <button title="Clear help and internals text" onclick="fClearCanvasFields()">Clear</button>
                     <br>
                 </div>
 
@@ -196,7 +162,12 @@
 
                 <div id="HELPDIV">
                     <p>
-                    There is no help available for this page 'DOM_Drills.html'<br>
+                    circles will grow if you click them with a mouse<br>
+                    count is the number of circles in the animation<br>
+                    speed is the maximum speed of each circle's movement in pixels per frame<br>
+                    the frame rate is typically 60 fps on monitors but varies by monitor speed<br>
+                    size is the maximum size of any circle in pixels<br>
+                    speeds and sizes are randomized but do not exceed the maximum values
                     </p>
                 </div>
 
@@ -208,49 +179,38 @@
                             Internals
                         </summary>
                         <p>
-                            html file: /var/www/html//DOM_Drills.html<br>
-                            css file:  /var/www/html/css/common.css<br>
-                            css file:  /var/www/html/css/DOM_Drills.css<br>
-                            js file:   /var/www/html/css/common.js<br>
-                            js file:   /var/www/html/css/DOM_Drills.js<br>
+                            html file: /var/www.html/canvas.html<br>
+                            css file: /var/www/html/css/canvas.css<br>
+                            css file: /var/www/html/css/common.css<br>
+                            js file: /var/www/html/css/canvas.js<br>
+                            js file: /var/www/html/css/common.js<br>
+                            cgi directory: /usr/lib/cgi-bin/<br>
+                            corner image: /var/www/html/cornerImage.png<br>
+                            background image: /var/www/html/background.jpg<br>
+                            CGI source code: c<br>
                         </p>
                     </details>
                </div>
 
                 <script src="common.js"></script>
-                <script src="DOM_Drills.js"></script>
+                <script src="canvas.js"></script>
 
             </main>
 
 <!-- <ASIDE1> region for change log ................................................................................ -->
 
             <aside id="ASIDE1">
-                    <h3 id=ASIDE1H3>Changes 2022-24</h3>
+                    <h3 id=ASIDE1H3>Changes 2023-24</h3>
                 <ul ID="ASIDE1UL">
                     <li class="ASIDE1LI">01-Jan: happy new year 2024</li>
-                    <li class="ASIDE1LI">09-Nov: add canvas link</li>
-                    <li class="ASIDE1LI">29-Oct: authenticate and return</li>
-                    <li class="ASIDE1LI">28-Oct: add upload link</li>
-                    <li class="ASIDE1LI">28-Oct: change template link</li>
-                    <li class="ASIDE1LI">22-Oct: add titles to buttons</li>
-                    <li class="ASIDE1LI">17-Oct: add link to snake</li>
-                    <li class="ASIDE1LI">04-Oct: add try-catch clauses</li>
-                    <li class="ASIDE1LI">30-Sep: add message region</li>
-                    <li class="ASIDE1LI">29-Sep: add Animations link</li>
-                    <li class="ASIDE1LI">20-Sep: add rps link</li>
-                    <li class="ASIDE1LI">16-Sep: add logo and icon</li>
-                    <li class="ASIDE1LI">11-Sep: add link to video</li>
-                    <li class="ASIDE1LI">30-Aug: move styles to css</li>
-                    <li class="ASIDE1LI">22-Aug: add forex</li>
-                    <li class="ASIDE1LI">26-Jul: add JSON options link</li>
+                    <li class="ASIDE1LI">13-Nov: limit mousemoves</li>
+                    <li class="ASIDE1LI">12-Nov: fix canvas size</li>
+                    <li class="ASIDE1LI">12-Nov: resize with mouse</li>
+                    <li class="ASIDE1LI">11-Nov: add controls</li>
+                    <li class="ASIDE1LI">09-Nov: add colors</li>
+                    <li class="ASIDE1LI">04-Nov: add message block</li>
+                    <li class="ASIDE1LI">02-Nov: started</li>
                     <li class="ASIDE1LI">01-Jan: happy new year 2023</li>
-                    <li class="ASIDE1LI">15-Aug: add long links</li>
-                    <li class="ASIDE1LI">13-Aug: disable 'change list'</li>
-                    <li class="ASIDE1LI">11-Aug: add long list</li>
-                    <li class="ASIDE1LI">11-Aug: add text color</li>
-                    <li class="ASIDE1LI">11-Aug: add to sandbox</li>
-                    <li class="ASIDE1LI">04-Aug: start</li>
-                    <li class="ASIDE1LI">01-Jan: happy new year 2022</li>
                 </ul>
             </aside>
 
@@ -259,7 +219,7 @@
             <aside id="ASIDE2">
                 <div id="ASIDE2DIV">
                     <h3 style="display:none">Corner Image</h3>                 <!-- screen reader sectioning element -->
-                     <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
+                    <img id="ASIDE2IMG" src="cornerImage.png" alt="Cannot Load cornerImage.png">
                 </div>
             </aside>
 
@@ -267,7 +227,7 @@
 
             <aside id="ASIDE3">
                 <div id="ASIDE3DIV">
-                    <h3 style="display:none">Corner Image Caption</h3>         <!-- screen reader sectioning element -->
+                    <h3 style="display:none">Corner Image Caption</h3>        <!--  screen reader sectioning element -->
                     <p id="ASIDE3-PARA">
                     Matilda Cook in Magpies uniform before her next netball game 2022
                     </p>
