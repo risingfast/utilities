@@ -13,6 +13,9 @@
  *     20-Aug-2023 add S64 and S84 for Apple cheatSheet
  *     10-Sep-2023 add S65 and S85 for Chrome cheatSheet
  *     26-Jan-2024 add S66 and S86 for Blender cheatSheet
+ *     13-Feb-2024 add S66 and S87 for Fortran cheatSheet
+ *     13-Feb-2024 add S66 and S88 for Pascal cheatSheet
+ *     13-Feb-2024 add S66 and S88 for Games cheatSheet
  */
 
 #include <stdio.h>
@@ -58,6 +61,9 @@ int main()
     char *s64 = "/mnt/c/Users/gjarm/OneDrive/Computing/Apple/Notes/cheatSheet.Apple.txt";
     char *s65 = "/mnt/c/Users/gjarm/OneDrive/Computing/Google/Chrome/Notes/cheatSheet.Chrome.txt";
     char *s66 = "/mnt/c/Users/gjarm/OneDrive/Computing/Blender/Notes/cheatsheet.Blender.txt";
+    char *s67 = "/mnt/c/Users/gjarm/OneDrive/Computing/Languages/Fortran/Notes/cheatSheet.Fortran.txt";
+    char *s68 = "/mnt/c/Users/gjarm/OneDrive/Computing/Languages/Pascal/Notes/cheatSheet.Pascal.txt";
+    char *s69 = "/mnt/c/Users/gjarm/OneDrive/Computing/Games/Notes/cheatSheet.Games.txt";
 
 // create variables for corresponding project files --------------------------------------------------------------------
 
@@ -87,6 +93,9 @@ int main()
     char *s84 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Apple.txt";
     char *s85 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Chrome.txt";
     char *s86 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Blender.txt";
+    char *s87 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Fortran.txt";
+    char *s88 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Pascal.txt";
+    char *s89 = "/mnt/c/Users/gjarm/OneDrive/Projects/Open/cheatsheets/cheatSheet.Games.txt";
 
     system("clear");
     printf("file_stats.c - file statistics on cheatsheets to identify old versions in web project folder");
@@ -119,6 +128,9 @@ int main()
     compareFiles(s64, s84);
     compareFiles(s65, s85);
     compareFiles(s66, s86);
+    compareFiles(s67, s87);
+    compareFiles(s68, s88);
+    compareFiles(s69, s89);
 
     printf("\n");
     printf("Count of NEWER working files: %d", iOldFileCnt);
